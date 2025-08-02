@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import ApplicationAlert from '../components/ApplicationAlert'
+import ApplicationSuccessModal from '../components/ApplicationSuccessModal'
 
 interface AppliedJob {
   id: string
@@ -360,9 +360,9 @@ export default function SavedJobs() {
           </div>
         )}
 
-        {/* Application Alert */}
+        {/* Application Success Modal */}
         {selectedProject && (
-          <ApplicationAlert
+          <ApplicationSuccessModal
             isOpen={showAlert}
             onClose={() => setShowAlert(false)}
             projectTitle={selectedProject.title}

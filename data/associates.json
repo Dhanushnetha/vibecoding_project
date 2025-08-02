@@ -1,0 +1,1353 @@
+{
+  "associates": [
+    {
+      "userId": "CTS001234",
+      "name": "Vibe Coder",
+      "email": "vibe.coder@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "Banking Modernization",
+      "skills": [
+        "React",
+        ".NET",
+        "Linux",
+        "AWS"
+      ],
+      "certifications": [
+        {
+          "name": "AZ-900",
+          "issuer": "Amazon Web Services",
+          "date": "2021-07-01",
+          "link": "https://www.credly.com/badges/47q2gnf7m"
+        },
+        {
+          "name": "AWS",
+          "issuer": "Amazon Web Services",
+          "date": "2023-02-19",
+          "link": "https://www.credly.com/badges/20tyx8fiu"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Accessibility",
+          "description": "",
+          "link": "",
+          "role": "Frontend Developer",
+          "duration": "3 months",
+          "technologies": [
+            "React",
+            "Node.js",
+            "JavaScript",
+            "HTML"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "React",
+        "Node",
+        "Linux",
+        "AWS",
+        "Docker",
+        "MERN stack"
+      ],
+      "preferredLocation": "Hyderabad",
+      "workMode": "Hybrid",
+      "availability": "3-months",
+      "openToOpportunities": false,
+      "createdAt": "2025-01-31T18:19:30.505Z",
+      "updatedAt": "2025-01-31T18:20:25.880Z",
+      "languages": [
+        "English",
+        "Hindi",
+        "Tamil"
+      ],
+      "preferredRoles": [
+        "Technical Lead",
+        "Senior Developer",
+        "Architect"
+      ],
+      "previousShadowProjects": [
+        "DevOps Automation",
+        "ML Pipeline"
+      ],
+      "experience": "2 years",
+      "profileCompleteness": 100,
+      "department": "Digital Engineering",
+      "manager": "Rajesh Kumar",
+      "performanceRating": "Exceeds Expectations",
+      "lastPerformanceReview": "2025-06-15",
+      "joinDate": "2024-02-26",
+      "careerGoals": "Aspiring to lead cross-functional teams and drive digital transformation initiatives in the healthcare sector.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "Remote",
+        "travelWillingness": "None",
+        "projectDuration": "1-3 months",
+        "teamSize": "1-3 members"
+      },
+      "lastUpdated": "2025-06-19T11:17:43.105Z"
+    },
+    {
+      "userId": "CTS002345",
+      "name": "Priya Sharma",
+      "email": "priya.sharma@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "Healthcare Analytics Platform",
+      "skills": [
+        "Python",
+        "Machine Learning",
+        "TensorFlow",
+        "AWS",
+        "Docker"
+      ],
+      "certifications": [
+        {
+          "name": "AWS ML Specialty",
+          "issuer": "Amazon Web Services",
+          "date": "2021-08-12",
+          "link": "https://www.credly.com/badges/52jd9ionq"
+        },
+        {
+          "name": "TensorFlow Developer",
+          "issuer": "Microsoft",
+          "date": "2021-02-26",
+          "link": "https://learn.microsoft.com/en-us/users/user-n8mzum9mt/credentials/n8mzum9mt"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Predictive Analytics",
+          "description": "ML model for patient outcome prediction",
+          "link": "",
+          "role": "Frontend Developer",
+          "duration": "3 months",
+          "technologies": [
+            "Angular",
+            "TypeScript",
+            "RxJS",
+            "NgRx",
+            "SCSS",
+            "Webpack"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "PyTorch",
+        "Kubernetes",
+        "MLOps",
+        "Azure ML"
+      ],
+      "preferredLocation": "Bangalore",
+      "workMode": "Remote",
+      "availability": "2-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-30T15:30:20.505Z",
+      "updatedAt": "2025-08-02T09:21:39.990Z",
+      "appliedJobs": [
+        "1"
+      ],
+      "languages": [
+        "English",
+        "Telugu",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Project Manager",
+        "Scrum Master",
+        "Technical Lead"
+      ],
+      "previousShadowProjects": [
+        "Cloud Migration",
+        "Security Audit"
+      ],
+      "experience": "3 years",
+      "profileCompleteness": 100,
+      "department": "Data & Analytics",
+      "manager": "Sunita Patel",
+      "performanceRating": "Meets Expectations",
+      "lastPerformanceReview": "2025-01-20",
+      "joinDate": "2022-03-11",
+      "careerGoals": "Seeking to become a principal architect specializing in cloud-native microservices and distributed systems.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "Hybrid",
+        "travelWillingness": "Occasional",
+        "projectDuration": "3-6 months",
+        "teamSize": "3-5 members"
+      },
+      "lastUpdated": "2025-05-08T08:52:02.472Z"
+    },
+    {
+      "userId": "CTS003456",
+      "name": "Raj Patel",
+      "email": "raj.patel@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "E-commerce Frontend Revamp",
+      "skills": [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Tailwind CSS",
+        "GraphQL"
+      ],
+      "certifications": [
+        {
+          "name": "React Developer Certification",
+          "issuer": "Meta",
+          "date": "2024-12-12",
+          "link": "https://www.coursera.org/account/accomplishments/certificate/5zr7b69cz"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Modern Dashboard",
+          "description": "React-based analytics dashboard",
+          "link": "",
+          "role": "Lead Developer",
+          "duration": "12 months",
+          "technologies": [
+            "React Native",
+            "Swift",
+            "Kotlin",
+            "Firebase",
+            "GraphQL"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Vue.js",
+        "Svelte",
+        "WebAssembly",
+        "Micro-frontends"
+      ],
+      "preferredLocation": "Pune",
+      "workMode": "Flexible",
+      "availability": "4-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-29T12:45:30.505Z",
+      "updatedAt": "2025-07-31T21:25:43.678Z",
+      "appliedJobs": [
+        "3"
+      ],
+      "languages": [
+        "English",
+        "Marathi",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Full Stack Developer",
+        "Backend Developer",
+        "DevOps Engineer"
+      ],
+      "previousShadowProjects": [
+        "Data Analytics",
+        "Mobile App Development"
+      ],
+      "experience": "4 years",
+      "profileCompleteness": 100,
+      "department": "Cloud & Infrastructure",
+      "manager": "Amit Singh",
+      "performanceRating": "Above Expectations",
+      "lastPerformanceReview": "2025-06-25",
+      "joinDate": "2022-04-07",
+      "careerGoals": "Focused on advancing to a senior data science role with expertise in machine learning and AI applications.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "On-site",
+        "travelWillingness": "Frequent",
+        "projectDuration": "6-12 months",
+        "teamSize": "5-10 members"
+      },
+      "lastUpdated": "2025-07-14T14:39:11.211Z"
+    },
+    {
+      "userId": "CTS004567",
+      "name": "Anisha Reddy",
+      "email": "anisha.reddy@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "Cloud Migration Initiative",
+      "skills": [
+        "Java",
+        "Spring Boot",
+        "Microservices",
+        "Kubernetes",
+        "AWS"
+      ],
+      "certifications": [
+        {
+          "name": "AWS Solutions Architect",
+          "issuer": "Amazon Web Services",
+          "date": "2021-08-01",
+          "link": "https://www.credly.com/badges/601qqeekf"
+        },
+        {
+          "name": "Kubernetes Administrator",
+          "issuer": "Cloud Native Computing Foundation",
+          "date": "2023-07-07",
+          "link": "https://www.credly.com/badges/8gyelxq09"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Microservices Architecture",
+          "description": "Legacy system modernization",
+          "link": "",
+          "role": "Lead Developer",
+          "duration": "12 months",
+          "technologies": [
+            "PHP",
+            "Laravel",
+            "MySQL",
+            "Composer",
+            "PHPUnit"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Istio",
+        "Service Mesh",
+        "Terraform",
+        "Helm"
+      ],
+      "preferredLocation": "Hyderabad",
+      "workMode": "Remote",
+      "availability": "3-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-28T09:20:30.505Z",
+      "updatedAt": "2025-07-31T20:55:59.926Z",
+      "languages": [
+        "English",
+        "Kannada",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Data Scientist",
+        "ML Engineer",
+        "AI Researcher"
+      ],
+      "previousShadowProjects": [
+        "Microservices Architecture",
+        "API Gateway"
+      ],
+      "experience": "5 years",
+      "profileCompleteness": 100,
+      "department": "Cybersecurity",
+      "manager": "Priya Reddy",
+      "performanceRating": "Outstanding",
+      "lastPerformanceReview": "2025-01-30",
+      "joinDate": "2020-08-26",
+      "careerGoals": "Aiming to transition into product management while leveraging technical background in fintech solutions.",
+      "shadowModeInterest": false,
+      "workPreferences": {
+        "remoteWork": "Flexible",
+        "travelWillingness": "Minimal",
+        "projectDuration": "12+ months",
+        "teamSize": "10+ members"
+      },
+      "lastUpdated": "2025-06-16T16:38:34.499Z"
+    },
+    {
+      "userId": "CTS005678",
+      "name": "Kevin Chen",
+      "email": "kevin.chen@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "Mobile Banking App",
+      "skills": [
+        "React Native",
+        "Node.js",
+        "MongoDB",
+        "Firebase",
+        "iOS"
+      ],
+      "certifications": [
+        {
+          "name": "React Native Certified",
+          "issuer": "Meta",
+          "date": "2023-11-05",
+          "link": "https://www.coursera.org/account/accomplishments/certificate/9j8isa2gc"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Cross-platform App",
+          "description": "Banking mobile application",
+          "link": "",
+          "role": "Lead Developer",
+          "duration": "12 months",
+          "technologies": [
+            "Flutter",
+            "Dart",
+            "Firebase",
+            "Provider"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Flutter",
+        "Swift",
+        "Kotlin",
+        "Native Development"
+      ],
+      "preferredLocation": "Chennai",
+      "workMode": "Hybrid",
+      "availability": "3-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-27T14:10:30.505Z",
+      "updatedAt": "2025-07-31T21:22:38.182Z",
+      "appliedJobs": [
+        "4"
+      ],
+      "languages": [
+        "English",
+        "Bengali",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Frontend Developer",
+        "UI/UX Designer",
+        "Product Manager"
+      ],
+      "previousShadowProjects": [
+        "Blockchain Integration",
+        "AI Chatbot"
+      ],
+      "experience": "6 years",
+      "profileCompleteness": 100,
+      "department": "Quality Engineering",
+      "manager": "Vikram Sharma",
+      "performanceRating": "Meets Expectations",
+      "lastPerformanceReview": "2025-06-15",
+      "joinDate": "2018-08-03",
+      "careerGoals": "Working towards becoming a cybersecurity consultant with focus on enterprise security frameworks.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "Remote",
+        "travelWillingness": "None",
+        "projectDuration": "1-3 months",
+        "teamSize": "1-3 members"
+      },
+      "lastUpdated": "2025-08-02T05:13:48.408Z"
+    },
+    {
+      "userId": "CTS006789",
+      "name": "Maya Singh",
+      "email": "maya.singh@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "Data Pipeline Automation",
+      "skills": [
+        "Python",
+        "Apache Spark",
+        "Hadoop",
+        "SQL",
+        "Airflow"
+      ],
+      "certifications": [
+        {
+          "name": "Databricks Certified",
+          "issuer": "Amazon Web Services",
+          "date": "2021-12-27",
+          "link": "https://www.credly.com/badges/u3tedma9e"
+        },
+        {
+          "name": "Apache Spark Developer",
+          "issuer": "Microsoft",
+          "date": "2021-09-28",
+          "link": "https://learn.microsoft.com/en-us/users/user-7y5belq02/credentials/7y5belq02"
+        }
+      ],
+      "projects": [
+        {
+          "title": "ETL Pipeline",
+          "description": "Real-time data processing system",
+          "link": "",
+          "role": "Lead Developer",
+          "duration": "12 months",
+          "technologies": [
+            "Python",
+            "TensorFlow",
+            "PyTorch",
+            "OpenCV",
+            "NLTK",
+            "Jupyter"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Snowflake",
+        "dbt",
+        "Kafka",
+        "Delta Lake"
+      ],
+      "preferredLocation": "Mumbai",
+      "workMode": "Remote",
+      "availability": "5-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-26T11:30:30.505Z",
+      "updatedAt": "2025-08-01T13:28:05.278Z",
+      "appliedJobs": [
+        "22",
+        "3"
+      ],
+      "languages": [
+        "English",
+        "Gujarati",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Cloud Architect",
+        "DevOps Lead",
+        "Infrastructure Engineer"
+      ],
+      "previousShadowProjects": [
+        "React Dashboard",
+        "Node.js Backend"
+      ],
+      "experience": "7 years",
+      "profileCompleteness": 100,
+      "department": "Mobile Development",
+      "manager": "Neha Gupta",
+      "performanceRating": "Above Expectations",
+      "lastPerformanceReview": "2025-01-10",
+      "joinDate": "2018-08-08",
+      "careerGoals": "Planning to lead DevOps transformation initiatives and implement best practices across organizations.",
+      "shadowModeInterest": false,
+      "workPreferences": {
+        "remoteWork": "Hybrid",
+        "travelWillingness": "Occasional",
+        "projectDuration": "3-6 months",
+        "teamSize": "3-5 members"
+      },
+      "lastUpdated": "2025-06-05T07:24:15.190Z"
+    },
+    {
+      "userId": "CTS007890",
+      "name": "Arjun Kumar",
+      "email": "arjun.kumar@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "DevOps Transformation",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "Jenkins",
+        "Terraform",
+        "AWS"
+      ],
+      "certifications": [
+        {
+          "name": "AWS DevOps Professional",
+          "issuer": "Amazon Web Services",
+          "date": "2021-12-12",
+          "link": "https://www.credly.com/badges/mz08x4mfl"
+        },
+        {
+          "name": "Kubernetes Administrator",
+          "issuer": "Cloud Native Computing Foundation",
+          "date": "2023-09-16",
+          "link": "https://www.credly.com/badges/w15jahoev"
+        }
+      ],
+      "projects": [
+        {
+          "title": "CI/CD Pipeline",
+          "description": "Automated deployment system",
+          "link": "",
+          "role": "Lead Developer",
+          "duration": "12 months",
+          "technologies": [
+            "TypeScript",
+            "NestJS",
+            "Prisma",
+            "GraphQL"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "GitOps",
+        "ArgoCD",
+        "Prometheus",
+        "Grafana"
+      ],
+      "preferredLocation": "Bangalore",
+      "workMode": "Flexible",
+      "availability": "4-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-25T16:45:30.505Z",
+      "updatedAt": "2025-01-31T09:30:25.880Z",
+      "languages": [
+        "English",
+        "Malayalam",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "QA Lead",
+        "Test Automation Engineer",
+        "Performance Engineer"
+      ],
+      "previousShadowProjects": [
+        "Kubernetes Deployment",
+        "CI/CD Pipeline"
+      ],
+      "experience": "8 years",
+      "profileCompleteness": 100,
+      "department": "AI & Machine Learning",
+      "manager": "Sanjay Mehta",
+      "performanceRating": "Exceeds Expectations",
+      "lastPerformanceReview": "2025-06-05",
+      "joinDate": "2017-09-22",
+      "careerGoals": "Interested in becoming a full-stack technical lead with expertise in modern web technologies.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "On-site",
+        "travelWillingness": "Frequent",
+        "projectDuration": "6-12 months",
+        "teamSize": "5-10 members"
+      },
+      "lastUpdated": "2025-06-19T19:32:26.791Z"
+    },
+    {
+      "userId": "CTS008901",
+      "name": "Neha Gupta",
+      "email": "neha.gupta@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "Cybersecurity Enhancement",
+      "skills": [
+        "Python",
+        "Network Security",
+        "Ethical Hacking",
+        "SIEM",
+        "Linux"
+      ],
+      "certifications": [
+        {
+          "name": "CISSP",
+          "issuer": "Amazon Web Services",
+          "date": "2021-08-27",
+          "link": "https://www.credly.com/badges/y0t6og7uu"
+        },
+        {
+          "name": "CEH",
+          "issuer": "Microsoft",
+          "date": "2020-02-21",
+          "link": "https://learn.microsoft.com/en-us/users/user-dmewxx7e2/credentials/dmewxx7e2"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Security Monitoring",
+          "description": "SIEM implementation and monitoring",
+          "link": "",
+          "role": "Principal Engineer",
+          "duration": "12 months",
+          "technologies": [
+            "Java",
+            "Spring Boot",
+            "MySQL",
+            "Docker"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Zero Trust",
+        "Cloud Security",
+        "AI Security",
+        "Threat Intelligence"
+      ],
+      "preferredLocation": "Pune",
+      "workMode": "Remote",
+      "availability": "3-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-24T13:20:30.505Z",
+      "updatedAt": "2025-08-01T13:21:17.087Z",
+      "appliedJobs": [
+        "23",
+        "23",
+        "8"
+      ],
+      "languages": [
+        "English",
+        "Punjabi",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Security Engineer",
+        "Cybersecurity Analyst",
+        "Compliance Manager"
+      ],
+      "previousShadowProjects": [
+        "Database Optimization",
+        "Performance Tuning"
+      ],
+      "experience": "9 years",
+      "profileCompleteness": 100,
+      "department": "DevOps & Automation",
+      "manager": "Kavita Joshi",
+      "performanceRating": "Outstanding",
+      "lastPerformanceReview": "2025-01-18",
+      "joinDate": "2015-11-16",
+      "careerGoals": "Pursuing expertise in blockchain technology and decentralized application development.",
+      "shadowModeInterest": false,
+      "workPreferences": {
+        "remoteWork": "Flexible",
+        "travelWillingness": "Minimal",
+        "projectDuration": "12+ months",
+        "teamSize": "10+ members"
+      },
+      "lastUpdated": "2025-06-04T01:25:21.134Z"
+    },
+    {
+      "userId": "CTS009012",
+      "name": "Rohit Verma",
+      "email": "rohit.verma@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "Blockchain Implementation",
+      "skills": [
+        "Solidity",
+        "Web3.js",
+        "Ethereum",
+        "Node.js",
+        "React"
+      ],
+      "certifications": [
+        {
+          "name": "Blockchain Developer",
+          "issuer": "Amazon Web Services",
+          "date": "2023-10-04",
+          "link": "https://www.credly.com/badges/4789rlycx"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Smart Contracts",
+          "description": "Decentralized finance application",
+          "link": "",
+          "role": "Principal Engineer",
+          "duration": "12 months",
+          "technologies": [
+            ".NET Core",
+            "C#",
+            "SQL Server",
+            "Entity Framework",
+            "Azure",
+            "Docker"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Polygon",
+        "IPFS",
+        "DeFi",
+        "NFT Development"
+      ],
+      "preferredLocation": "Hyderabad",
+      "workMode": "Hybrid",
+      "availability": "6-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-23T10:15:30.505Z",
+      "updatedAt": "2025-01-31T12:10:25.880Z",
+      "languages": [
+        "English",
+        "Odia",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Business Analyst",
+        "Product Owner",
+        "Technical Writer"
+      ],
+      "previousShadowProjects": [
+        "Frontend Modernization",
+        "Testing Framework"
+      ],
+      "experience": "10 years",
+      "profileCompleteness": 100,
+      "department": "Blockchain Solutions",
+      "manager": "Ravi Agarwal",
+      "performanceRating": "Above Expectations",
+      "lastPerformanceReview": "2025-06-12",
+      "joinDate": "2014-09-16",
+      "careerGoals": "Aspiring to become a solutions architect for enterprise-scale cloud migration projects.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "Remote",
+        "travelWillingness": "None",
+        "projectDuration": "1-3 months",
+        "teamSize": "1-3 members"
+      },
+      "lastUpdated": "2025-07-12T14:36:06.126Z"
+    },
+    {
+      "userId": "CTS010123",
+      "name": "Sakshi Jain",
+      "email": "sakshi.jain@cognizant.com",
+      "role": "associate",
+      "isManager": false,
+      "currentProject": "IoT Platform Development",
+      "skills": [
+        "C++",
+        "Python",
+        "Arduino",
+        "Raspberry Pi",
+        "MQTT",
+        "AWS IoT"
+      ],
+      "certifications": [
+        {
+          "name": "AWS IoT Core",
+          "issuer": "Amazon Web Services",
+          "date": "2023-08-18",
+          "link": "https://www.credly.com/badges/hioghe869"
+        },
+        {
+          "name": "Embedded Systems",
+          "issuer": "Microsoft",
+          "date": "2020-09-10",
+          "link": "https://learn.microsoft.com/en-us/users/user-6a39jl2w2/credentials/6a39jl2w2"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Smart Home System",
+          "description": "IoT-based home automation",
+          "link": "",
+          "role": "Principal Engineer",
+          "duration": "12 months",
+          "technologies": [
+            "Python",
+            "FastAPI",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "TensorFlow"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Edge Computing",
+        "5G",
+        "AI at Edge",
+        "Industrial IoT"
+      ],
+      "preferredLocation": "Chennai",
+      "workMode": "Remote",
+      "availability": "4-months",
+      "openToOpportunities": true,
+      "createdAt": "2025-01-22T08:30:30.505Z",
+      "updatedAt": "2025-01-30T14:20:25.880Z",
+      "languages": [
+        "English",
+        "Assamese",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Mobile Developer",
+        "Game Developer",
+        "AR/VR Developer"
+      ],
+      "previousShadowProjects": [
+        "IoT Platform",
+        "Real-time Analytics"
+      ],
+      "experience": "12 years",
+      "profileCompleteness": 100,
+      "department": "IoT & Edge Computing",
+      "manager": "Deepika Nair",
+      "performanceRating": "Meets Expectations",
+      "lastPerformanceReview": "2025-01-28",
+      "joinDate": "2013-11-06",
+      "careerGoals": "Focused on advancing to a senior mobile development role with cross-platform expertise.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "Hybrid",
+        "travelWillingness": "Occasional",
+        "projectDuration": "3-6 months",
+        "teamSize": "3-5 members"
+      },
+      "lastUpdated": "2025-05-31T09:55:10.573Z"
+    },
+    {
+      "userId": "CTS101234",
+      "name": "Sarah Johnson",
+      "email": "sarah.johnson@cognizant.com",
+      "role": "associate",
+      "isManager": true,
+      "currentProject": "AI Customer Service Platform",
+      "skills": [
+        "Project Management",
+        "AI/ML Strategy",
+        "Cloud Architecture",
+        "Team Leadership",
+        "Agile/Scrum"
+      ],
+      "certifications": [
+        {
+          "name": "PMP",
+          "issuer": "Project Management Institute",
+          "date": "2023-07-22",
+          "link": "https://www.pmi.org/certifications/certification-resources/registry/enz1livqr"
+        },
+        {
+          "name": "AWS Solutions Architect",
+          "issuer": "Amazon Web Services",
+          "date": "2020-11-07",
+          "link": "https://www.credly.com/badges/rgk7ppvb1"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Digital Transformation Initiative",
+          "description": "Led organization-wide digital transformation",
+          "link": "",
+          "role": "Principal Engineer",
+          "duration": "12 months",
+          "technologies": [
+            "Rust",
+            "Actix",
+            "Diesel",
+            "PostgreSQL",
+            "WebAssembly"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "GenAI",
+        "MLOps",
+        "Serverless Architecture",
+        "Edge Computing"
+      ],
+      "preferredLocation": "Bangalore",
+      "workMode": "Hybrid",
+      "availability": "6-months",
+      "openToOpportunities": true,
+      "department": "Digital Engineering",
+      "experience": "15 years",
+      "specializations": [
+        "AI/ML",
+        "Cloud Solutions",
+        "Digital Transformation"
+      ],
+      "teamSize": "15-20 associates",
+      "createdAt": "2025-01-20T10:00:00.000Z",
+      "updatedAt": "2025-01-31T09:00:00.000Z",
+      "languages": [
+        "English",
+        "Hindi",
+        "Tamil"
+      ],
+      "preferredRoles": [
+        "Technical Lead",
+        "Senior Developer",
+        "Architect"
+      ],
+      "previousShadowProjects": [
+        "E-commerce Platform",
+        "Payment Gateway"
+      ],
+      "profileCompleteness": 100,
+      "manager": "Rajesh Kumar",
+      "performanceRating": "Exceeds Expectations",
+      "lastPerformanceReview": "2025-06-15",
+      "joinDate": "2009-11-27",
+      "careerGoals": "Working towards becoming a data engineering lead specializing in real-time analytics platforms.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "On-site",
+        "travelWillingness": "Frequent",
+        "projectDuration": "6-12 months",
+        "teamSize": "5-10 members"
+      },
+      "lastUpdated": "2025-07-12T12:04:20.698Z"
+    },
+    {
+      "userId": "CTS102345",
+      "name": "Michael Chen",
+      "email": "michael.chen@cognizant.com",
+      "role": "associate",
+      "isManager": true,
+      "currentProject": "Microservices Migration",
+      "skills": [
+        "Cloud Architecture",
+        "DevOps",
+        "Microservices",
+        "Project Management",
+        "Team Leadership"
+      ],
+      "certifications": [
+        {
+          "name": "PMP",
+          "issuer": "Project Management Institute",
+          "date": "2022-04-16",
+          "link": "https://www.pmi.org/certifications/certification-resources/registry/tjr0t4k40"
+        },
+        {
+          "name": "Azure Solutions Architect",
+          "issuer": "Microsoft",
+          "date": "2023-10-23",
+          "link": "https://learn.microsoft.com/en-us/users/user-rz9d3xjc5/credentials/rz9d3xjc5"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Enterprise Cloud Migration",
+          "description": "Migrated legacy systems to cloud infrastructure",
+          "link": "",
+          "role": "Machine Learning Engineer",
+          "duration": "3 months",
+          "technologies": [
+            "Ruby",
+            "Rails",
+            "PostgreSQL",
+            "Sidekiq",
+            "Redis"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Kubernetes",
+        "Istio",
+        "Terraform",
+        "GitOps"
+      ],
+      "preferredLocation": "Hyderabad",
+      "workMode": "Hybrid",
+      "availability": "4-months",
+      "openToOpportunities": true,
+      "department": "Data & Analytics",
+      "experience": "18 years",
+      "specializations": [
+        "Cloud Architecture",
+        "DevOps",
+        "Microservices"
+      ],
+      "teamSize": "12-18 associates",
+      "createdAt": "2025-01-19T11:30:00.000Z",
+      "updatedAt": "2025-01-30T16:45:00.000Z",
+      "languages": [
+        "English",
+        "Telugu",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Project Manager",
+        "Scrum Master",
+        "Technical Lead"
+      ],
+      "previousShadowProjects": [
+        "Social Media App",
+        "Content Management"
+      ],
+      "profileCompleteness": 100,
+      "manager": "Sunita Patel",
+      "performanceRating": "Meets Expectations",
+      "lastPerformanceReview": "2025-01-20",
+      "joinDate": "2006-07-27",
+      "careerGoals": "Aiming to transition into technical project management with focus on agile methodologies.",
+      "shadowModeInterest": false,
+      "workPreferences": {
+        "remoteWork": "Flexible",
+        "travelWillingness": "Minimal",
+        "projectDuration": "12+ months",
+        "teamSize": "10+ members"
+      },
+      "lastUpdated": "2025-07-03T03:42:16.588Z"
+    },
+    {
+      "userId": "CTS103456",
+      "name": "Lisa Wang",
+      "email": "lisa.wang@cognizant.com",
+      "role": "associate",
+      "isManager": true,
+      "currentProject": "Real-time Analytics Dashboard",
+      "skills": [
+        "Data Engineering",
+        "Analytics",
+        "Machine Learning",
+        "Project Management",
+        "Python"
+      ],
+      "certifications": [
+        {
+          "name": "PMP",
+          "issuer": "Project Management Institute",
+          "date": "2023-04-09",
+          "link": "https://www.pmi.org/certifications/certification-resources/registry/j8etu8uxl"
+        },
+        {
+          "name": "Google Cloud Professional",
+          "issuer": "Google Cloud",
+          "date": "2021-01-15",
+          "link": "https://www.credential.net/gqjosyt82"
+        }
+      ],
+      "projects": [
+        {
+          "title": "ML Platform Development",
+          "description": "Built enterprise machine learning platform",
+          "link": "",
+          "role": "Machine Learning Engineer",
+          "duration": "3 months",
+          "technologies": [
+            "Java",
+            "Spring",
+            "Hibernate",
+            "Maven"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "MLOps",
+        "BigQuery",
+        "Apache Beam",
+        "TensorFlow Extended"
+      ],
+      "preferredLocation": "Mumbai",
+      "workMode": "Remote",
+      "availability": "5-months",
+      "openToOpportunities": true,
+      "department": "Cloud & Infrastructure",
+      "experience": "20 years",
+      "specializations": [
+        "Data Engineering",
+        "Analytics",
+        "Machine Learning"
+      ],
+      "teamSize": "10-15 associates",
+      "createdAt": "2025-01-18T14:20:00.000Z",
+      "updatedAt": "2025-01-31T11:30:00.000Z",
+      "languages": [
+        "English",
+        "Marathi",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Full Stack Developer",
+        "Backend Developer",
+        "DevOps Engineer"
+      ],
+      "previousShadowProjects": [
+        "Healthcare System",
+        "Patient Portal"
+      ],
+      "profileCompleteness": 100,
+      "manager": "Amit Singh",
+      "performanceRating": "Above Expectations",
+      "lastPerformanceReview": "2025-06-25",
+      "joinDate": "2005-12-02",
+      "careerGoals": "Seeking to become a senior frontend engineer with expertise in modern React ecosystems.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "Remote",
+        "travelWillingness": "None",
+        "projectDuration": "1-3 months",
+        "teamSize": "1-3 members"
+      },
+      "lastUpdated": "2025-07-16T05:25:48.847Z"
+    },
+    {
+      "userId": "CTS104567",
+      "name": "David Rodriguez",
+      "email": "david.rodriguez@cognizant.com",
+      "role": "associate",
+      "isManager": true,
+      "currentProject": "Security Framework",
+      "skills": [
+        "Cybersecurity",
+        "Risk Management",
+        "Compliance",
+        "Project Management",
+        "Python",
+        "MongoDB"
+      ],
+      "certifications": [
+        {
+          "name": "Docker Certified Associate",
+          "issuer": "Docker Inc.",
+          "date": "2023-12-19",
+          "link": "https://www.credly.com/badges/4l9zrk2h5"
+        },
+        {
+          "name": "MongoDB Certified Developer",
+          "issuer": "MongoDB Inc.",
+          "date": "2024-11-19",
+          "link": "https://university.mongodb.com/certification/certificate/hpt852fp7"
+        },
+        {
+          "name": "React Developer Certification",
+          "issuer": "Meta",
+          "date": "2020-02-10",
+          "link": "https://www.coursera.org/account/accomplishments/certificate/il2skv6e5"
+        }
+      ],
+      "projects": [
+        {
+          "title": "Zero Trust Implementation",
+          "description": "Implemented enterprise zero trust security model",
+          "link": "",
+          "role": "Machine Learning Engineer",
+          "duration": "3 months",
+          "technologies": [
+            "Python",
+            "Flask",
+            "SQLAlchemy",
+            "Pytest",
+            "Gunicorn",
+            "Nginx"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Cloud Security",
+        "AI Security",
+        "Threat Intelligence",
+        "DevSecOps"
+      ],
+      "preferredLocation": "Pune",
+      "workMode": "Hybrid",
+      "availability": "3-months",
+      "openToOpportunities": false,
+      "department": "Cybersecurity",
+      "experience": "22 years",
+      "specializations": [
+        "Cybersecurity",
+        "Risk Management",
+        "Compliance"
+      ],
+      "teamSize": "8-12 associates",
+      "createdAt": "2025-01-17T09:45:00.000Z",
+      "updatedAt": "2025-08-02T18:51:14.753Z",
+      "appliedJobs": [
+        "22",
+        "23",
+        "10",
+        "11"
+      ],
+      "languages": [
+        "English",
+        "Kannada",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Data Scientist",
+        "ML Engineer",
+        "AI Researcher"
+      ],
+      "previousShadowProjects": [
+        "Financial Dashboard",
+        "Risk Assessment"
+      ],
+      "profileCompleteness": 90,
+      "manager": "Priya Reddy",
+      "performanceRating": "Outstanding",
+      "lastPerformanceReview": "2025-01-30",
+      "joinDate": "2002-12-12",
+      "careerGoals": "Planning to lead AI/ML initiatives and implement intelligent automation solutions.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "Hybrid",
+        "travelWillingness": "Occasional",
+        "projectDuration": "3-6 months",
+        "teamSize": "3-5 members"
+      },
+      "lastUpdated": "2025-05-23T07:49:13.440Z"
+    },
+    {
+      "userId": "CTS105678",
+      "name": "Amanda Foster",
+      "email": "amanda.foster@cognizant.com",
+      "role": "associate",
+      "isManager": true,
+      "currentProject": "Cross-platform App",
+      "skills": [
+        "Mobile Development",
+        "User Experience",
+        "React Native",
+        "Project Management",
+        "Team Leadership"
+      ],
+      "certifications": [
+        {
+          "name": "PMP",
+          "issuer": "Project Management Institute",
+          "date": "2022-10-11",
+          "link": "https://www.pmi.org/certifications/certification-resources/registry/44o1ag7jx"
+        },
+        {
+          "name": "Scrum Master",
+          "issuer": "Scrum Alliance",
+          "date": "2024-07-09",
+          "link": "https://www.scrumalliance.org/community/profile/t9yhnocjg"
+        }
+      ],
+      "projects": [
+        {
+          "title": "AR/VR Mobile Experience",
+          "description": "Developed immersive mobile AR/VR application",
+          "link": "",
+          "role": "Machine Learning Engineer",
+          "duration": "3 months",
+          "technologies": [
+            "Python",
+            "Django",
+            "PostgreSQL",
+            "Redis"
+          ]
+        }
+      ],
+      "desiredTech": [
+        "Flutter",
+        "WebRTC",
+        "5G Technologies",
+        "Edge Computing"
+      ],
+      "preferredLocation": "Chennai",
+      "workMode": "Hybrid",
+      "availability": "4-months",
+      "openToOpportunities": true,
+      "department": "Quality Engineering",
+      "experience": "25 years",
+      "specializations": [
+        "Mobile Development",
+        "User Experience",
+        "Emerging Technologies"
+      ],
+      "teamSize": "8-14 associates",
+      "createdAt": "2025-01-16T15:10:00.000Z",
+      "updatedAt": "2025-01-31T08:45:00.000Z",
+      "languages": [
+        "English",
+        "Bengali",
+        "Hindi"
+      ],
+      "preferredRoles": [
+        "Frontend Developer",
+        "UI/UX Designer",
+        "Product Manager"
+      ],
+      "previousShadowProjects": [
+        "Supply Chain Management",
+        "Inventory System"
+      ],
+      "profileCompleteness": 100,
+      "manager": "Vikram Sharma",
+      "performanceRating": "Meets Expectations",
+      "lastPerformanceReview": "2025-06-15",
+      "joinDate": "2000-08-12",
+      "careerGoals": "Interested in becoming a database architect specializing in NoSQL and distributed systems.",
+      "shadowModeInterest": true,
+      "workPreferences": {
+        "remoteWork": "On-site",
+        "travelWillingness": "Frequent",
+        "projectDuration": "6-12 months",
+        "teamSize": "5-10 members"
+      },
+      "lastUpdated": "2025-05-08T01:09:06.700Z"
+    }
+  ]
+}

@@ -22,7 +22,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchProfile()
-  })
+  }, [])
 
   const fetchProfile = async () => {
     try {

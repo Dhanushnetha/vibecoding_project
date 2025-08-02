@@ -1,0 +1,88 @@
+{
+  "applications": [
+    {
+      "id": "1",
+      "projectId": "23",
+      "associateId": "CTS008901",
+      "associateName": "Neha Gupta",
+      "associateEmail": "neha.gupta@cognizant.com",
+      "associateSkills": [
+        "Python",
+        "Network Security",
+        "Ethical Hacking",
+        "SIEM",
+        "Linux"
+      ],
+      "associateExperience": "Not specified",
+      "appliedAt": "2025-08-01T13:20:57.710Z",
+      "status": "Accepted",
+      "coverLetter": "I am excited to apply for the Cybersecurity Threat Detection System position. With my experience in Python, Network Security, Ethical Hacking, I believe I would be a great fit for this role.",
+      "matchScore": 1,
+      "projectTitle": "Cybersecurity Threat Detection System",
+      "updatedAt": "2025-08-01T13:22:20.261Z",
+      "updatedBy": "Sarah Johnson"
+    },
+    {
+      "id": "2",
+      "projectId": "8",
+      "associateId": "CTS008901",
+      "associateName": "Neha Gupta",
+      "associateEmail": "neha.gupta@cognizant.com",
+      "associateSkills": [
+        "Python",
+        "Network Security",
+        "Ethical Hacking",
+        "SIEM",
+        "Linux"
+      ],
+      "associateExperience": "Not specified",
+      "appliedAt": "2025-08-01T13:21:16.998Z",
+      "status": "Declined",
+      "coverLetter": "I am excited to apply for the Cybersecurity Threat Detection System position. With my experience in Python, Network Security, Ethical Hacking, I believe I would be a great fit for this role.",
+      "matchScore": 1,
+      "projectTitle": "Cybersecurity Threat Detection System",
+      "updatedAt": "2025-08-01T13:22:31.141Z",
+      "updatedBy": "Sarah Johnson"
+    },
+    {
+      "id": "3",
+      "projectId": "22",
+      "associateId": "CTS006789",
+      "associateName": "Maya Singh",
+      "associateEmail": "maya.singh@cognizant.com",
+      "associateSkills": [
+        "Python",
+        "Apache Spark",
+        "Hadoop",
+        "SQL",
+        "Airflow"
+      ],
+      "associateExperience": "Not specified",
+      "appliedAt": "2025-08-01T13:27:41.956Z",
+      "status": "Pending",
+      "coverLetter": "I am excited to apply for the Real-Time Analytics Data Pipeline position. With my experience in Python, Apache Spark, Hadoop, I believe I would be a great fit for this role.",
+      "matchScore": 1,
+      "projectTitle": "Real-Time Analytics Data Pipeline"
+    },
+    {
+      "id": "4",
+      "projectId": "3",
+      "associateId": "CTS006789",
+      "associateName": "Maya Singh",
+      "associateEmail": "maya.singh@cognizant.com",
+      "associateSkills": [
+        "Python",
+        "Apache Spark",
+        "Hadoop",
+        "SQL",
+        "Airflow"
+      ],
+      "associateExperience": "Not specified",
+      "appliedAt": "2025-08-01T13:28:05.180Z",
+      "status": "Pending",
+      "coverLetter": "I am excited to apply for the Real-time Data Analytics Dashboard position. With my experience in Python, Apache Spark, Hadoop, I believe I would be a great fit for this role.",
+      "matchScore": 0,
+      "projectTitle": "Real-time Data Analytics Dashboard"
+    }
+  ]
+}

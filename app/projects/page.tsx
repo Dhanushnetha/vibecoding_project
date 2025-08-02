@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import projectsData from '../../data/projects.json'
-import ApplicationAlert from '../components/ApplicationAlert'
+import ApplicationSuccessModal from '../components/ApplicationSuccessModal'
 
 interface AppliedJob {
   id: string
@@ -829,9 +829,9 @@ export default function Projects() {
         </div>
       </main>
 
-        {/* Application Alert */}
+        {/* Application Success Modal */}
       {selectedProject && (
-          <ApplicationAlert
+          <ApplicationSuccessModal
             isOpen={showAlert}
             onClose={() => setShowAlert(false)}
           projectTitle={selectedProject.title}

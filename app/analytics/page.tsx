@@ -10,7 +10,7 @@ export default function Analytics() {
 
   useEffect(() => {
     checkUserProfile()
-  })
+  }, [])
 
   const checkUserProfile = async () => {
     try {
