@@ -74,7 +74,7 @@ export default function Unauthorized() {
             Access Denied
           </h1>
           <p className="text-lg text-gray-600 mb-4">
-            Sorry, you don't have permission to access this area of InnerSwitch.
+            Sorry, you don&apos;t have permission to access this area of InnerSwitch.
           </p>
           
           {/* Role Information */}
@@ -136,7 +136,7 @@ export default function Unauthorized() {
           {userRole === 'associate' && attemptedRoute.startsWith('/pm-dashboard') ? (
             <div className="text-left space-y-3">
               <p className="text-gray-600">
-                The area you're trying to access is restricted to <strong>Project Managers</strong> only.
+                The area you&apos;re trying to access is restricted to <strong>Project Managers</strong> only.
               </p>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <h4 className="font-medium text-blue-900 mb-2">As an Associate, you can:</h4>

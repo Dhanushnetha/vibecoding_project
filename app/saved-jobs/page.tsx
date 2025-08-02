@@ -4,6 +4,20 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import ApplicationAlert from '../components/ApplicationAlert'
 
+interface AppliedJob {
+  id: string
+  title: string
+  company: string
+  location: string
+  duration: string
+  requiredSkills: string[]
+  preferredSkills: string[]
+  description: string
+  urgency: string
+  appliedAt: string
+  status: string
+}
+
 interface Project {
   id: string
   title: string
@@ -53,10 +67,10 @@ export default function SavedJobs() {
         // Save to applied jobs list
         const appliedJobsKey = `applied-jobs-${userId}`
         const existingAppliedJobs = localStorage.getItem(appliedJobsKey)
-        let appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
+        const appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
 
         // Check if already applied
-        const alreadyApplied = appliedJobsList.some((job: any) => job.id === project.id)
+        const alreadyApplied = appliedJobsList.some((job: AppliedJob) => job.id === project.id)
         
         if (!alreadyApplied) {
           const appliedJob = {

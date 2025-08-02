@@ -4,6 +4,23 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import associatesData from '../../../data/associates.json'
 
+interface Certification {
+  name: string
+  issuer: string
+  issuedDate?: string
+  date?: string
+  link?: string
+}
+
+interface Project {
+  title: string
+  description: string
+  link?: string
+  technologies?: string[]
+  role?: string
+  duration?: string
+}
+
 interface Associate {
   userId: string
   name: string
@@ -12,8 +29,8 @@ interface Associate {
   isManager: boolean
   currentProject: string
   skills: string[]
-  certifications: any[]
-  projects: any[]
+  certifications: Certification[]
+  projects: Project[]
   desiredTech: string[]
   preferredLocation: string
   workMode: string
@@ -24,6 +41,7 @@ interface Associate {
   matchingProjects?: number
   lastUpdated?: string
   location?: string
+  [key: string]: unknown
 }
 
 export default function AvailableAssociates() {

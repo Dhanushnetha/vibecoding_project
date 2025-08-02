@@ -5,6 +5,20 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import projectsData from '../../data/projects.json'
 import ApplicationAlert from '../components/ApplicationAlert'
 
+interface AppliedJob {
+  id: string
+  title: string
+  company: string
+  location: string
+  duration: string
+  requiredSkills: string[]
+  preferredSkills: string[]
+  description: string
+  urgency: string
+  appliedAt: string
+  status: string
+}
+
 interface Project {
   id: number;
   title: string;
@@ -18,10 +32,9 @@ interface Project {
   location: string;
   commitment: string;
   urgency: string;
-  postedBy: string;
   postedDate: string;
+  postedBy?: string;  // Make optional
   applicationDeadline: string;
-  applicationsOpen?: boolean;
   teamSize: string;
   budget: string;
   clientIndustry: string;
@@ -32,8 +45,10 @@ interface Project {
   description_detailed: string;
   responsibilities: string[];
   learningOpportunities: string[];
-  applicationCount: number;
   viewCount: number;
+  applicationCount?: number;  // Make optional
+  applicationsOpen?: boolean;
+  createdBy?: string;
   matchScore?: number;
   matchedSkills?: string[];
   matchType?: 'high' | 'medium' | 'low' | 'none';
@@ -85,7 +100,7 @@ export default function Projects() {
           
           if (appliedJobsData) {
             const parsedJobs = JSON.parse(appliedJobsData)
-            const appliedIds: string[] = parsedJobs.map((job: any) => job.id.toString())
+            const appliedIds: string[] = parsedJobs.map((job: AppliedJob) => job.id.toString())
             setAppliedJobs(new Set(appliedIds))
           }
         }
@@ -136,7 +151,6 @@ export default function Projects() {
     const allUserSkills = [...userSkills, ...userDesiredTech].map(skill => skill.toLowerCase())
     const requiredSkills = project.requiredSkills.map(skill => skill.toLowerCase())
     const preferredSkills = project.preferredSkills.map(skill => skill.toLowerCase())
-    const allProjectSkills = [...requiredSkills, ...preferredSkills]
 
     // Find matching skills
     const matchedRequired = requiredSkills.filter(skill => 
@@ -198,10 +212,10 @@ export default function Projects() {
         // Save to applied jobs list
         const appliedJobsKey = `applied-jobs-${userId}`
         const existingAppliedJobs = localStorage.getItem(appliedJobsKey)
-        let appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
+        const appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
 
         // Double-check if already applied (safety check)
-        const alreadyApplied = appliedJobsList.some((job: any) => job.id === project.id.toString())
+        const alreadyApplied = appliedJobsList.some((job: AppliedJob) => job.id === project.id.toString())
         
         if (!alreadyApplied) {
           const appliedJob = {

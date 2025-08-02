@@ -71,7 +71,7 @@ export default function ApplicationModal({ isOpen, onClose, projectTitle, compan
             {/* Message */}
             <div className="text-center mb-6">
               <p className="text-gray-600 mb-4">
-                Your application for <span className="font-semibold text-gray-900">"{projectTitle}"</span> at {company} has been successfully submitted.
+                Your application for <span className="font-semibold text-gray-900">&quot;{projectTitle}&quot;</span> at {company} has been successfully submitted.
               </p>
               
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
@@ -101,7 +101,7 @@ export default function ApplicationModal({ isOpen, onClose, projectTitle, compan
                 </li>
                 <li className="flex items-center space-x-2">
                   <div className="w-1.5 h-1.5 bg-blue-600 rounded-full"></div>
-                  <span>You'll receive an update within 2-3 business days</span>
+                  <span>You&apos;ll receive an update within 2-3 business days</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <div className="w-1.5 h-1.5 bg-blue-600 rounded-full"></div>

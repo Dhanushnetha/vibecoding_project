@@ -4,6 +4,49 @@ import path from 'path'
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'applications.json')
 
+interface Application {
+  id: string
+  projectId: string
+  associateId: string
+  associateName: string
+  associateEmail: string
+  associateSkills: string[]
+  associateExperience: string
+  appliedAt: string
+  status: string
+  coverLetter: string
+  matchScore: number
+  projectTitle: string
+}
+
+interface ApplicationsData {
+  applications: Application[]
+}
+
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  role: string
+  isManager: boolean
+  [key: string]: unknown
+}
+
+interface Project {
+  id: number
+  title: string
+  createdBy: string
+  [key: string]: unknown
+}
+
+interface ProjectsData {
+  projects: Project[]
+}
+
+interface AssociatesData {
+  associates: Associate[]
+}
+
 function ensureDataDirectory() {
   const dataDir = path.dirname(DATA_FILE)
   if (!fs.existsSync(dataDir)) {
@@ -11,12 +54,12 @@ function ensureDataDirectory() {
   }
 }
 
-function readApplicationsData(): any {
+function readApplicationsData(): ApplicationsData {
   try {
     ensureDataDirectory()
     if (fs.existsSync(DATA_FILE)) {
       const data = fs.readFileSync(DATA_FILE, 'utf8')
-      return JSON.parse(data)
+      return JSON.parse(data) as ApplicationsData
     }
     return { applications: [] }
   } catch (error) {
@@ -25,7 +68,7 @@ function readApplicationsData(): any {
   }
 }
 
-function writeApplicationsData(data: any) {
+function writeApplicationsData(data: ApplicationsData): void {
   try {
     ensureDataDirectory()
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2))
@@ -59,12 +102,12 @@ function getUserIdFromRequest(request: NextRequest): string {
   return userIdMatch ? userIdMatch[1] : ''
 }
 
-function readProjectsData(): any {
+function readProjectsData(): ProjectsData {
   try {
     const projectsFile = path.join(process.cwd(), 'data', 'projects.json')
     if (fs.existsSync(projectsFile)) {
       const data = fs.readFileSync(projectsFile, 'utf8')
-      return JSON.parse(data)
+      return JSON.parse(data) as ProjectsData
     }
     return { projects: [] }
   } catch (error) {
@@ -73,12 +116,12 @@ function readProjectsData(): any {
   }
 }
 
-function readAssociatesData(): any {
+function readAssociatesData(): AssociatesData {
   try {
     const associatesFile = path.join(process.cwd(), 'data', 'associates.json')
     if (fs.existsSync(associatesFile)) {
       const data = fs.readFileSync(associatesFile, 'utf8')
-      return JSON.parse(data)
+      return JSON.parse(data) as AssociatesData
     }
     return { associates: [] }
   } catch (error) {
@@ -101,36 +144,36 @@ export async function GET(request: NextRequest) {
     
     // Get user's associateId and check if they're a manager
     const associatesData = readAssociatesData()
-    const currentUser = associatesData.associates.find((a: any) => a.userId === userId)
+    const currentUser = associatesData.associates.find((a: Associate) => a.userId === userId)
     
     if (currentUser && currentUser.isManager) {
       // For PMs, only show applications for their projects
       const projectsData = readProjectsData()
-      const pmProjects = projectsData.projects.filter((p: any) => p.createdBy === currentUser.userId)
-      const pmProjectIds = pmProjects.map((p: any) => p.id.toString())
+      const pmProjects = projectsData.projects.filter((p: Project) => p.createdBy === currentUser.userId)
+      const pmProjectIds = pmProjects.map((p: Project) => p.id.toString())
       
       // Filter applications to only include those for PM's projects
-      filteredApplications = filteredApplications.filter((app: any) => 
+      filteredApplications = filteredApplications.filter((app: Application) => 
         pmProjectIds.includes(app.projectId.toString())
       )
     } else if (currentUser) {
       // For associates, only show their own applications
-      filteredApplications = filteredApplications.filter((app: any) => 
+      filteredApplications = filteredApplications.filter((app: Application) => 
         app.associateId === currentUser.userId
       )
     }
     
     // Apply additional filters if provided
     if (projectId) {
-      filteredApplications = filteredApplications.filter((app: any) => app.projectId === projectId)
+      filteredApplications = filteredApplications.filter((app: Application) => app.projectId === projectId)
     }
     
     if (associateId) {
-      filteredApplications = filteredApplications.filter((app: any) => app.associateId === associateId)
+      filteredApplications = filteredApplications.filter((app: Application) => app.associateId === associateId)
     }
     
     if (status) {
-      filteredApplications = filteredApplications.filter((app: any) => app.status === status)
+      filteredApplications = filteredApplications.filter((app: Application) => app.status === status)
     }
     
     return NextResponse.json({ 
@@ -146,14 +189,13 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const applicationData = await request.json()
-    const userName = getUserNameFromRequest(request)
     
     // Read existing applications
     const applicationsData = readApplicationsData()
     
     // Generate new application ID
     const maxId = applicationsData.applications.length > 0 
-      ? Math.max(...applicationsData.applications.map((a: any) => parseInt(a.id) || 0))
+      ? Math.max(...applicationsData.applications.map((a: Application) => parseInt(a.id) || 0))
       : 0
     const newId = (maxId + 1).toString()
     
@@ -199,7 +241,7 @@ export async function PUT(request: NextRequest) {
     const applicationsData = readApplicationsData()
     
     // Find the application to update
-    const applicationIndex = applicationsData.applications.findIndex((a: any) => a.id === applicationId)
+    const applicationIndex = applicationsData.applications.findIndex((a: Application) => a.id === applicationId)
     
     if (applicationIndex === -1) {
       return NextResponse.json({ error: 'Application not found' }, { status: 404 })

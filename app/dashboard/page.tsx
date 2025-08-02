@@ -18,12 +18,11 @@ export default function Dashboard() {
   const [profile, setProfile] = useState<ProfileData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isUpdating, setIsUpdating] = useState(false)
-  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
     fetchProfile()
-  }, [])
+  })
 
   const fetchProfile = async () => {
     try {

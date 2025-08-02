@@ -252,7 +252,7 @@ export default function MyProjects() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">My Projects</h1>
           <p className="mt-2 text-gray-600">
-            Manage and track all the projects you've posted on InnerSwitch
+            Manage and track all the projects you&apos;ve posted on InnerSwitch
           </p>
           
           {/* Stats */}
@@ -641,7 +641,7 @@ export default function MyProjects() {
                 <h3 className="text-lg leading-6 font-medium text-gray-900 mt-4">Delete Project</h3>
                 <div className="mt-2 px-7 py-3">
                   <p className="text-sm text-gray-500">
-                    Are you sure you want to delete "{projectToDelete?.title}"? This action cannot be undone.
+                    Are you sure you want to delete &quot;{projectToDelete?.title}&quot;? This action cannot be undone.
                   </p>
                 </div>
                 <div className="items-center px-4 py-3">

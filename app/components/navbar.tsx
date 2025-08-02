@@ -10,7 +10,6 @@ export default function Navbar() {
   const [userRole, setUserRole] = useState<string | null>(null)
   const [userName, setUserName] = useState<string | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
-  const [pmName] = useState('Sarah Johnson') // Mock PM name
   const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
 
   useEffect(() => {

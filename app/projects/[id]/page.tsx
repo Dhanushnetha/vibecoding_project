@@ -1,9 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter, useParams } from 'next/navigation'
-import projectsData from '../../../data/projects.json'
+import { useParams, useRouter } from 'next/navigation'
 import ApplicationAlert from '../../components/ApplicationAlert'
+import projectsData from '../../../data/projects.json'
+
+interface AppliedJob {
+  id: string
+  title: string
+  company: string
+  location: string
+  duration: string
+  requiredSkills: string[]
+  preferredSkills: string[]
+  description: string
+  urgency: string
+  appliedAt: string
+  status: string
+}
 
 interface Project {
   id: number;
@@ -18,7 +32,8 @@ interface Project {
   location: string;
   commitment: string;
   urgency: string;
-  postedBy: string;
+  createdBy: string;
+  postedBy?: string;
   postedDate: string;
   applicationDeadline: string;
   applicationsOpen?: boolean;
@@ -31,13 +46,10 @@ interface Project {
   securityClearance: boolean;
   description_detailed: string;
   responsibilities: string[];
-  benefits: string[];
+  benefits?: string[];
   learningOpportunities: string[];
-  applicationCount: number;
+  applicationCount?: number;
   viewCount: number;
-  matchScore?: number;
-  matchedSkills?: string[];
-  matchType?: 'high' | 'medium' | 'low' | 'none';
 }
 
 export default function ProjectDetails() {
@@ -50,9 +62,9 @@ export default function ProjectDetails() {
 
   useEffect(() => {
     const projectId = parseInt(params.id as string)
-    const foundProject = projectsData.projects.find(p => p.id === projectId) as Project
+    const foundProject = projectsData.projects.find(p => p.id === projectId)
     if (foundProject) {
-      setProject(foundProject)
+      setProject(foundProject as Project)
     }
     setIsLoading(false)
   }, [params.id])
@@ -75,10 +87,10 @@ export default function ProjectDetails() {
         // Save to applied jobs list
         const appliedJobsKey = `applied-jobs-${userId}`
         const existingAppliedJobs = localStorage.getItem(appliedJobsKey)
-        let appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
+        const appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
 
         // Check if already applied
-        const alreadyApplied = appliedJobsList.some((job: any) => job.id === project.id.toString())
+        const alreadyApplied = appliedJobsList.some((job: AppliedJob) => job.id === project.id.toString())
         
         if (!alreadyApplied) {
           const appliedJob = {

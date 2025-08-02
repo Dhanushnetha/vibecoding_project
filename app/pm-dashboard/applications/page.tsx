@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 interface Application {
   id: string
@@ -29,21 +28,27 @@ interface Project {
   postedBy: string
 }
 
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  skills: string[]
+  [key: string]: unknown
+}
+
 export default function Applications() {
   const [applications, setApplications] = useState<Application[]>([])
   const [projects, setProjects] = useState<Project[]>([])
-  const [associates, setAssociates] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'pending' | 'accepted' | 'declined'>('all')
   const [selectedProject, setSelectedProject] = useState<string>('all')
   const [showModal, setShowModal] = useState(false)
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null)
   const [processingAction, setProcessingAction] = useState<string | null>(null)
-  const router = useRouter()
 
   useEffect(() => {
     loadApplicationsData()
-  }, [])
+  })
 
   const loadApplicationsData = async () => {
     try {
@@ -53,14 +58,6 @@ export default function Applications() {
       
       if (projectsResponse.ok) {
         setProjects(projectsData.projects || [])
-      }
-
-      // Load associates data
-      const associatesResponse = await fetch('/api/associates')
-      const associatesData = await associatesResponse.json()
-      
-      if (associatesResponse.ok) {
-        setAssociates(associatesData.associates || [])
       }
 
       // Load applications from API
@@ -102,18 +99,18 @@ export default function Applications() {
       // Generate applications for first 3 associates
       const sampleAssociates = allAssociates.slice(0, 3)
       
-      sampleAssociates.forEach((associate: any, index: number) => {
+      sampleAssociates.forEach((associate: Associate, index: number) => {
         const matchScore = calculateMatchScore(project.requiredSkills, associate.skills)
         
         applications.push({
-          id: `${project.id}-${associate.id}`,
+          id: `${project.id}-${associate.userId}`,
           projectId: project.id,
           projectTitle: project.title,
-          associateId: associate.id.toString(),
+          associateId: associate.userId.toString(),
           associateName: associate.name,
           associateEmail: associate.email,
           associateSkills: associate.skills,
-          associateExperience: associate.experience,
+          associateExperience: 'N/A', // Placeholder, actual experience would need to be fetched
           appliedAt: new Date(Date.now() - (index * 24 * 60 * 60 * 1000)).toISOString(),
           status: index === 0 ? 'Pending' : index === 1 ? 'Accepted' : 'Declined',
           coverLetter: `I am excited to apply for the ${project.title} position. With my experience in ${associate.skills.slice(0, 3).join(', ')}, I believe I would be a great fit for this role.`,
@@ -294,7 +291,7 @@ export default function Applications() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Status Filter</label>
                 <select
                   value={selectedFilter}
-                  onChange={(e) => setSelectedFilter(e.target.value as any)}
+                  onChange={(e) => setSelectedFilter(e.target.value as 'all' | 'pending' | 'accepted' | 'declined')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value="all">All Applications</option>

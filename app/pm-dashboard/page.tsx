@@ -3,6 +3,22 @@
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
+interface Project {
+  id: number
+  title: string
+  postedDate: string
+  [key: string]: unknown
+}
+
+interface RecentActivity {
+  type: string
+  title: string
+  time: string
+  action: () => void
+  actionText: string
+  icon: string
+}
+
 export default function PMDashboard() {
   const router = useRouter()
   const [userName, setUserName] = useState<string>('')
@@ -12,7 +28,7 @@ export default function PMDashboard() {
     availableAssociates: 47, // Keep static for associates
     recentApplications: 0
   })
-  const [recentActivity, setRecentActivity] = useState<any[]>([])
+  const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -49,9 +65,9 @@ export default function PMDashboard() {
           // Generate recent activity from projects
           if (projectsData.projects && projectsData.projects.length > 0) {
             const activities = projectsData.projects
-              .sort((a: any, b: any) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime())
+              .sort((a: Project, b: Project) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime())
               .slice(0, 3)
-              .map((project: any) => ({
+              .map((project: Project) => ({
                 type: 'project_posted',
                 title: `New project "${project.title}" posted successfully`,
                 time: formatTimeAgo(project.postedDate),

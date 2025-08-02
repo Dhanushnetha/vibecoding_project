@@ -4,6 +4,14 @@ import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import associatesData from '../../data/associates.json'
 
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  skills: string[]
+  [key: string]: unknown
+}
+
 export default function RoleSelection() {
   const [isLoading, setIsLoading] = useState(false)
   const [userType, setUserType] = useState('associate') // 'associate' or 'pm'
@@ -14,7 +22,7 @@ export default function RoleSelection() {
   // Check if user has completed their associate profile
   const checkProfileCompletion = (userId: string) => {
     // Check if user exists in associates with skills
-    const associate = associatesData.associates.find((a: any) => a.userId === userId)
+    const associate = associatesData.associates.find((a: Associate) => a.userId === userId)
     if (associate && associate.skills && associate.skills.length > 0) {
       return true
     }

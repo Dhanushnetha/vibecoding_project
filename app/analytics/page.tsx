@@ -10,7 +10,7 @@ export default function Analytics() {
 
   useEffect(() => {
     checkUserProfile()
-  }, [])
+  })
 
   const checkUserProfile = async () => {
     try {
@@ -112,7 +112,7 @@ export default function Analytics() {
                 </button>
                 
                 <div className="text-sm text-gray-500">
-                  <p>Once you complete your profile, you'll be able to see:</p>
+                  <p>Once you complete your profile, you&apos;ll be able to see:</p>
                   <ul className="inline-flex flex-wrap gap-x-6 gap-y-1 mt-2">
                     <li>• Profile views</li>
                     <li>• PM contacts</li>
