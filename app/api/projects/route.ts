@@ -100,12 +100,13 @@ export async function PUT(request: NextRequest) {
       responsibilities: formData.responsibilities || existingProject.responsibilities,
       learningOpportunities: formData.learningOpportunities || existingProject.learningOpportunities,
       applicationDeadline: formData.urgency !== existingProject.urgency ? getApplicationDeadline(formData.urgency) : existingProject.applicationDeadline,
-      // Preserve creation data and stats
+      // Preserve creation data, stats, and application status
       postedBy: existingProject.postedBy,
       postedDate: existingProject.postedDate,
       id: existingProject.id,
       applicationCount: existingProject.applicationCount,
-      viewCount: existingProject.viewCount
+      viewCount: existingProject.viewCount,
+      applicationsOpen: existingProject.applicationsOpen !== undefined ? existingProject.applicationsOpen : true
     }
     
     // Replace the project in the array
@@ -129,6 +130,7 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url)
     const projectId = url.searchParams.get('id')
+    const browse = url.searchParams.get('browse') // New parameter for browsing all projects
     
     const projectsData = readProjectsData()
     const userName = getUserNameFromRequest(request)
@@ -141,15 +143,23 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Project not found' }, { status: 404 })
       }
       
-      // Verify ownership for edit access
-      if (project.postedBy !== userName) {
+      // For browsing mode, don't check ownership - allow viewing any project
+      if (!browse && project.postedBy !== userName) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
       }
       
       return NextResponse.json({ project })
     }
     
-    // Filter projects by the requesting PM
+    // If browse mode, return all projects
+    if (browse) {
+      return NextResponse.json({ 
+        projects: projectsData.projects,
+        total: projectsData.projects.length
+      })
+    }
+    
+    // Default: Filter projects by the requesting PM (for PM dashboard)
     const userProjects = projectsData.projects.filter((project: any) => 
       project.postedBy === userName
     )
@@ -217,6 +227,7 @@ export async function POST(request: NextRequest) {
         'Technical leadership opportunities',
         'Industry best practices and methodologies'
       ],
+      applicationsOpen: true, // Applications are open by default
       applicationCount: 0,
       viewCount: 0
     }
@@ -235,6 +246,100 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error in POST /api/projects:', error)
     return NextResponse.json({ error: 'Failed to create project' }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const url = new URL(request.url)
+    const projectId = url.searchParams.get('id')
+    const userName = getUserNameFromRequest(request)
+    
+    if (!projectId) {
+      return NextResponse.json({ error: 'Project ID is required' }, { status: 400 })
+    }
+    
+    // Read existing projects
+    const projectsData = readProjectsData()
+    
+    // Find the project to delete
+    const projectIndex = projectsData.projects.findIndex((p: any) => p.id === parseInt(projectId))
+    
+    if (projectIndex === -1) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+    }
+    
+    const projectToDelete = projectsData.projects[projectIndex]
+    
+    // Verify ownership - only the PM who posted the project can delete it
+    if (projectToDelete.postedBy !== userName) {
+      return NextResponse.json({ error: 'Unauthorized: You can only delete your own projects' }, { status: 403 })
+    }
+    
+    // Remove the project from the array
+    projectsData.projects.splice(projectIndex, 1)
+    
+    // Save updated data
+    writeProjectsData(projectsData)
+    
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Project deleted successfully',
+      deletedProject: {
+        id: projectToDelete.id,
+        title: projectToDelete.title
+      }
+    })
+  } catch (error) {
+    console.error('Error in DELETE /api/projects:', error)
+    return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 })
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const { projectId, action } = await request.json()
+    const userName = getUserNameFromRequest(request)
+    
+    if (!projectId || !action) {
+      return NextResponse.json({ error: 'Project ID and action are required' }, { status: 400 })
+    }
+    
+    // Read existing projects
+    const projectsData = readProjectsData()
+    
+    // Find the project to update
+    const projectIndex = projectsData.projects.findIndex((p: any) => p.id === projectId)
+    
+    if (projectIndex === -1) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+    }
+    
+    const project = projectsData.projects[projectIndex]
+    
+    // Verify ownership
+    if (project.postedBy !== userName) {
+      return NextResponse.json({ error: 'Unauthorized: You can only modify your own projects' }, { status: 403 })
+    }
+    
+    // Handle different actions
+    if (action === 'toggle-applications') {
+      project.applicationsOpen = !project.applicationsOpen
+      
+      // Save updated data
+      writeProjectsData(projectsData)
+      
+      return NextResponse.json({ 
+        success: true, 
+        project: project,
+        message: `Applications ${project.applicationsOpen ? 'opened' : 'closed'} successfully`
+      })
+    }
+    
+    return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
+  } catch (error) {
+    console.error('Error in PATCH /api/projects:', error)
+    return NextResponse.json({ error: 'Failed to update project' }, { status: 500 })
   }
 }
 

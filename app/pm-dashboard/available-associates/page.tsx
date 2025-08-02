@@ -256,11 +256,14 @@ export default function AvailableAssociates() {
                     <div className="mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">Skills</h4>
                       <div className="flex flex-wrap gap-2">
-                        {associate.skills.map((skill, index) => (
+                        {(associate.skills || []).map((skill, index) => (
                           <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm font-medium">
                             {skill}
                           </span>
                         ))}
+                        {(!associate.skills || associate.skills.length === 0) && (
+                          <span className="text-gray-500 text-sm italic">No skills listed</span>
+                        )}
                       </div>
                     </div>
 

@@ -21,6 +21,7 @@ interface Project {
   postedBy: string;
   postedDate: string;
   applicationDeadline: string;
+  applicationsOpen?: boolean;
   teamSize: string;
   budget: string;
   clientIndustry: string;
@@ -538,6 +539,11 @@ export default function Projects() {
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${getUrgencyColor(project.urgency)}`}>
                           {project.urgency} Priority
                         </span>
+                        {project.applicationsOpen === false && (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 border border-red-200">
+                            🚫 Closed
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -636,6 +642,8 @@ export default function Projects() {
                     {/* Apply Button */}
                     <button
                       className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg ${
+                        project.applicationsOpen === false ?
+                        'bg-gray-400 text-gray-600 cursor-not-allowed' :
                         appliedJobs.has(project.id.toString()) ? 
                         'bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white' :
                         applyingToProject === project.id ? 
@@ -649,15 +657,25 @@ export default function Projects() {
                         'bg-blue-600 hover:bg-blue-700 text-white'
                       }`}
                       onClick={() => {
+                        if (project.applicationsOpen === false) {
+                          return; // Do nothing if applications are closed
+                        }
                         if (appliedJobs.has(project.id.toString())) {
                           router.push('/applied-jobs')
                         } else {
                           handleApplyToProject(project)
                         }
                       }}
-                      disabled={applyingToProject === project.id}
+                      disabled={applyingToProject === project.id || project.applicationsOpen === false}
                     >
-                      {appliedJobs.has(project.id.toString()) ? (
+                      {project.applicationsOpen === false ? (
+                        <div className="flex items-center justify-center">
+                          <svg className="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" />
+                          </svg>
+                          Applications Closed
+                        </div>
+                      ) : appliedJobs.has(project.id.toString()) ? (
                         <div className="flex items-center justify-center">
                           <svg className="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

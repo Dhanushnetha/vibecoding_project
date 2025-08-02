@@ -328,7 +328,7 @@ export default function CreateProfile() {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {formData.skills.map((skill, index) => (
+                  {(formData.skills || []).map((skill, index) => (
                     <span
                       key={index}
                       className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
@@ -354,7 +354,7 @@ export default function CreateProfile() {
                 Certifications
               </label>
               <div className="space-y-3">
-                {formData.certifications.map((cert, index) => (
+                {(formData.certifications || []).map((cert, index) => (
                   <div key={index} className="flex gap-2 items-start">
                     <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <input

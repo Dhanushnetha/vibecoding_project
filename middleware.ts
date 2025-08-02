@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const authToken = request.cookies.get('auth-token')?.value
   const userRole = request.cookies.get('user-role')?.value // 'associate' or 'pm'
 
-  const publicRoutes = ['/login', '/unauthorized']
+  const publicRoutes = ['/role-selection', '/auth/login', '/unauthorized']
   const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route))
 
   const apiRoutes = ['/api/']
@@ -24,7 +24,7 @@ export function middleware(request: NextRequest) {
 
   // Check if user is authenticated
   if (!authToken) {
-    const loginUrl = new URL('/login', request.url)
+    const loginUrl = new URL('/auth/login', request.url)
     if (!isPublicRoute) {
       loginUrl.searchParams.set('redirect', pathname)
     }
@@ -62,7 +62,7 @@ export function middleware(request: NextRequest) {
     } else if (userRole === 'associate') {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     } else {
-      return NextResponse.redirect(new URL('/login', request.url))
+      return NextResponse.redirect(new URL('/auth/login', request.url))
     }
   }
 

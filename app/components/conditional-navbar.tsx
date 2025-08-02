@@ -7,7 +7,7 @@ export default function ConditionalNavbar() {
   const pathname = usePathname()
   
   // Pages where navbar should not be shown
-  const hideNavbarPaths = ['/login']
+  const hideNavbarPaths = ['/role-selection', '/auth/login']
   const shouldHideNavbar = hideNavbarPaths.includes(pathname)
 
   if (shouldHideNavbar) {

@@ -23,7 +23,7 @@ export default function NotFound() {
     } else if (userRole === 'associate') {
       return '/dashboard'
     }
-    return '/login'
+    return '/auth/login'
   }
 
   const getQuickLinks = () => {

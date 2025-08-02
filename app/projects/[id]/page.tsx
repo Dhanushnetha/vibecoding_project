@@ -21,6 +21,7 @@ interface Project {
   postedBy: string;
   postedDate: string;
   applicationDeadline: string;
+  applicationsOpen?: boolean;
   teamSize: string;
   budget: string;
   clientIndustry: string;
@@ -188,11 +189,16 @@ export default function ProjectDetails() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
+                  <div className="flex items-center space-x-3 mb-2 flex-wrap">
                     <h1 className="text-3xl font-bold text-gray-900">{project.title}</h1>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getUrgencyColor(project.urgency)}`}>
                       {project.urgency} Priority
                     </span>
+                    {project.applicationsOpen === false && (
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200">
+                        🚫 Applications Closed
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center space-x-4 text-gray-600">
                     <span className="flex items-center space-x-1">
@@ -373,10 +379,21 @@ export default function ProjectDetails() {
 
                 <button 
                   onClick={handleApplyToProject}
-                  disabled={applyingToProject}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-75 disabled:cursor-not-allowed"
+                  disabled={applyingToProject || project.applicationsOpen === false}
+                  className={`w-full px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-75 disabled:cursor-not-allowed ${
+                    project.applicationsOpen === false 
+                      ? 'bg-gray-400 text-gray-600' 
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white'
+                  }`}
                 >
-                  {applyingToProject ? (
+                  {project.applicationsOpen === false ? (
+                    <div className="flex items-center justify-center space-x-2">
+                      <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" />
+                      </svg>
+                      <span>Applications Closed</span>
+                    </div>
+                  ) : applyingToProject ? (
                     <div className="flex items-center justify-center space-x-2">
                       <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

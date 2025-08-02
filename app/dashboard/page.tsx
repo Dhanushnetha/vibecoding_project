@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [profile, setProfile] = useState<ProfileData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function Dashboard() {
 
       if (!userId) {
         console.error('No user ID found in cookies')
-        router.push('/login')
+        router.push('/auth/login')
         return
       }
 
@@ -44,6 +45,11 @@ export default function Dashboard() {
       
       if (data.exists) {
         setProfile(data.profile)
+        // Check if profile is incomplete (no skills)
+        if (!data.profile.skills || data.profile.skills.length === 0) {
+          router.push('/profile/create')
+          return
+        }
       } else {
         // No profile exists, redirect to create
         router.push('/profile/create')
@@ -96,10 +102,21 @@ export default function Dashboard() {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth-token')
-    document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT'
-    router.push('/login')
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    
+    try {
+      // Simulate logout delay
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      localStorage.removeItem('auth-token')
+      document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT'
+      router.push('/auth/login')
+    } catch (error) {
+      console.error('Logout failed:', error)
+    } finally {
+      setIsLoggingOut(false)
+    }
   }
 
   if (isLoading) {
@@ -170,7 +187,7 @@ export default function Dashboard() {
                   Your Skills
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {profile.skills.map((skill, index) => (
+                  {(profile.skills || []).map((skill, index) => (
                     <span
                       key={index}
                       className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
@@ -178,6 +195,9 @@ export default function Dashboard() {
                       {skill}
                     </span>
                   ))}
+                  {(!profile.skills || profile.skills.length === 0) && (
+                    <span className="text-gray-500 text-sm italic">No skills listed</span>
+                  )}
                 </div>
               </div>
 

@@ -330,11 +330,14 @@ export default function AssociateProfile() {
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Skills</h3>
                   <div className="flex flex-wrap gap-2">
-                    {associate.skills.map((skill, index) => (
+                    {(associate.skills || []).map((skill, index) => (
                       <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                         {skill}
                       </span>
                     ))}
+                    {(!associate.skills || associate.skills.length === 0) && (
+                      <span className="text-gray-500 text-sm italic">No skills listed</span>
+                    )}
                   </div>
                 </div>
 
@@ -354,7 +357,7 @@ export default function AssociateProfile() {
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm lg:col-span-2">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Certifications</h3>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {associate.certifications.map((cert, index) => (
+                    {(associate.certifications || []).map((cert, index) => (
                       <div key={index} className="border border-gray-200 rounded-lg p-4">
                         <div className="flex items-start justify-between mb-2">
                           <h4 className="font-semibold text-gray-900">{cert.name}</h4>
@@ -373,6 +376,11 @@ export default function AssociateProfile() {
                         <p className="text-sm text-gray-500">Issued: {new Date(cert.date).toLocaleDateString()}</p>
                       </div>
                     ))}
+                    {(!associate.certifications || associate.certifications.length === 0) && (
+                      <div className="col-span-full">
+                        <span className="text-gray-500 text-sm italic">No certifications listed</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
