@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import profilesData from '../../../data/profiles.json'
+import associatesData from '../../../data/associates.json'
 
 export default function AuthLogin() {
   const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -32,37 +34,63 @@ export default function AuthLogin() {
     }
   }, [router])
 
-  // Get random user from all users
-  const getRandomUser = () => {
-    const allUsers = [...profilesData.associates, ...profilesData.projectManagers]
-    const randomIndex = Math.floor(Math.random() * allUsers.length)
-    return allUsers[randomIndex]
+  // Find user by email
+  const findUserByEmail = (email: string) => {
+    const allUsers = associatesData.associates
+    return allUsers.find(user => user.email.toLowerCase() === email.toLowerCase())
+  }
+
+  // Check if user has completed their associate profile
+  const checkProfileCompletion = (userId: string) => {
+    // Check if user exists in associates with skills
+    const associate = associatesData.associates.find((a: any) => a.userId === userId)
+    if (associate && associate.skills && associate.skills.length > 0) {      
+      return true
+    }    
+    
+    // Note: For now, we don't check userProfiles section during login
+    // This will be checked and updated when they visit the dashboard
+    return false
   }
 
   const handleAuthentication = async () => {
+    if (!email.trim()) {
+      setError('Please enter your email address')
+      return
+    }
+
     setIsLoading(true)
+    setError('')
 
     try {
       // Simulate authentication delay first
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      //await new Promise(resolve => setTimeout(resolve, 2000))
       
-      // Get random user after delay
-      const randomUser = getRandomUser()
+      // Find user by email
+      const user = findUserByEmail(email.trim())
+      
+      if (!user) {
+        setError('Email not found. Please check your email address.')
+        setIsLoading(false)
+        return
+      }
 
       // Set basic auth token and user data in cookies
       document.cookie = 'auth-token=demo-token; path=/; max-age=86400; Secure; SameSite=Strict'
-      document.cookie = `user-id=${randomUser.userId}; path=/; max-age=86400; Secure; SameSite=Strict`
-      document.cookie = `user-name=${encodeURIComponent(randomUser.name)}; path=/; max-age=86400; Secure; SameSite=Strict`
+      document.cookie = `user-id=${user.userId}; path=/; max-age=86400; Secure; SameSite=Strict`
+      document.cookie = `user-name=${encodeURIComponent(user.name)}; path=/; max-age=86400; Secure; SameSite=Strict`
 
       // Check if user is a manager by looking at the isManager property
-      const isManager = randomUser.isManager === true
+      const isManager = user.isManager === true
 
       if (isManager) {
         // Redirect to role selection screen for PMs
         router.push('/role-selection')
       } else {
         // Direct to associate dashboard for regular associates
+        const profileComplete = checkProfileCompletion(user.userId)
         document.cookie = `user-role=associate; path=/; max-age=86400; Secure; SameSite=Strict`
+        document.cookie = `profile-complete=${profileComplete}; path=/; max-age=86400; Secure; SameSite=Strict`
         router.push('/dashboard')
       }
     } catch (error) {
@@ -89,7 +117,36 @@ export default function AuthLogin() {
 
 
           {/* Authentication Form */}
-          <div className="mb-6">
+          <div className="space-y-6">
+            {/* Email Input */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleAuthentication()}
+                placeholder="Enter your Cognizant email"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-500"
+                disabled={isLoading}
+              />
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-700 text-sm flex items-center">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {error}
+                </p>
+              </div>
+            )}
+
             <button
               onClick={handleAuthentication}
               disabled={isLoading}
@@ -112,7 +169,7 @@ export default function AuthLogin() {
           </div>
 
           {/* Security Info */}
-          <div className="mt-8 p-4 bg-gray-50 rounded-xl">
+          <div className="mt-4 p-4 bg-gray-50 rounded-xl">
             <h3 className="text-gray-900 font-medium mb-3 flex items-center">
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -128,9 +185,9 @@ export default function AuthLogin() {
           </div>
 
           {/* Demo Notice */}
-          <div className="mt-6 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-yellow-700 text-xs text-center">
-              <strong>Demo Mode:</strong> This will simulate login with a random user account for demonstration purposes.
+              <strong>Demo Mode:</strong> Enter any email from the user directory to simulate SSO login.
             </p>
           </div>
         </div>

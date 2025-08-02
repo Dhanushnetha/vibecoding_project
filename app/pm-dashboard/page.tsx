@@ -29,20 +29,26 @@ export default function PMDashboard() {
     const fetchDashboardData = async () => {
       try {
         // Fetch PM's projects data
-        const response = await fetch('/api/projects')
-        const data = await response.json()
+        const projectsResponse = await fetch('/api/projects')
+        const projectsData = await projectsResponse.json()
         
-        if (response.ok) {
+        // Fetch applications data to get accurate count
+        const applicationsResponse = await fetch('/api/applications')
+        const applicationsData = await applicationsResponse.json()
+        
+        if (projectsResponse.ok) {
+          const actualApplicationCount = applicationsData.applications ? applicationsData.applications.length : 0
+          
           setStats(prevStats => ({
             ...prevStats,
-            totalProjects: data.total || 0,
-            activeProjects: data.total || 0, // Assume all projects are active for now
-            recentApplications: data.totalApplications || 0
+            totalProjects: projectsData.total || 0,
+            activeProjects: projectsData.total || 0, // Assume all projects are active for now
+            recentApplications: actualApplicationCount
           }))
           
           // Generate recent activity from projects
-          if (data.projects && data.projects.length > 0) {
-            const activities = data.projects
+          if (projectsData.projects && projectsData.projects.length > 0) {
+            const activities = projectsData.projects
               .sort((a: any, b: any) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime())
               .slice(0, 3)
               .map((project: any) => ({

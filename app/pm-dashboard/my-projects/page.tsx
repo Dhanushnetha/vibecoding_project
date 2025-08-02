@@ -66,23 +66,30 @@ export default function MyProjects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('/api/projects')
-        const data = await response.json()
+        // Fetch projects and applications data
+        const projectsResponse = await fetch('/api/projects')
+        const projectsData = await projectsResponse.json()
         
-        if (response.ok) {
+        const applicationsResponse = await fetch('/api/applications')
+        const applicationsData = await applicationsResponse.json()
+        
+        if (projectsResponse.ok) {
           // Sort by posted date (most recent first)
-          const sortedProjects = data.projects.sort((a: Project, b: Project) => 
+          const sortedProjects = projectsData.projects.sort((a: Project, b: Project) => 
             new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime()
           )
           
+          // Get real application count
+          const actualApplicationCount = applicationsData.applications ? applicationsData.applications.length : 0
+          
           setProjects(sortedProjects)
           setStats({
-            totalProjects: data.total || 0,
-            totalApplications: data.totalApplications || 0,
-            totalViews: data.totalViews || 0
+            totalProjects: projectsData.total || 0,
+            totalApplications: actualApplicationCount,
+            totalViews: projectsData.totalViews || 0
           })
         } else {
-          console.error('Failed to fetch projects:', data.error)
+          console.error('Failed to fetch projects:', projectsData.error)
         }
       } catch (error) {
         console.error('Error fetching projects:', error)
@@ -487,13 +494,13 @@ export default function MyProjects() {
                       
                       <div className="flex items-center space-x-2">
                         {/* Edit Button */}
-                        <button
-                          onClick={() => router.push(`/pm-dashboard/my-projects/edit/${project.id}`)}
+                      <button
+                        onClick={() => router.push(`/pm-dashboard/my-projects/edit/${project.id}`)}
                           className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
                           <span>Edit</span>
                         </button>
 
@@ -543,7 +550,7 @@ export default function MyProjects() {
                             </svg>
                           )}
                           <span>Delete</span>
-                        </button>
+                      </button>
                       </div>
                     </div>
                   </div>

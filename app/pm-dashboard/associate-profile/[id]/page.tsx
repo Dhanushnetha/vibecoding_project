@@ -4,16 +4,51 @@ import { useParams, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import associatesData from '../../../../data/associates.json'
 
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  role: string
+  isManager: boolean
+  currentProject: string
+  skills: string[]
+  certifications: any[]
+  projects: any[]
+  desiredTech: string[]
+  preferredLocation: string
+  workMode: string
+  availability: string
+  openToOpportunities: boolean
+  languages: string[]
+  preferredRoles: string[]
+  previousShadowProjects: any[]
+  currentRole?: string
+  employeeId?: string
+  lastUpdated?: string
+  experience?: string
+  profileCompleteness?: number
+  matchingProjects?: number
+  department?: string
+  manager?: string
+  location?: string
+  joinDate?: string
+  costCenter?: string
+  performanceRating?: string
+  lastPerformanceReview?: string
+  careerGoals?: string
+  shadowModeInterest?: boolean
+}
+
 export default function AssociateProfile() {
   const params = useParams()
   const router = useRouter()
-  const [associate, setAssociate] = useState(null)
+  const [associate, setAssociate] = useState<Associate | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
 
   useEffect(() => {
-    const associateId = parseInt(params.id as string)
-    const foundAssociate = associatesData.associates.find(a => a.id === associateId)
+    const associateId = params.id as string
+    const foundAssociate = associatesData.associates.find(a => a.userId === associateId)
     
     if (foundAssociate) {
       setAssociate(foundAssociate)
@@ -21,10 +56,10 @@ export default function AssociateProfile() {
     setLoading(false)
   }, [params.id])
 
-  const handleContactAssociate = (method) => {
+  const handleContactAssociate = (method: string) => {
     const message = method === 'email' 
-      ? `Opening email to contact ${associate.name}...`
-      : `Opening Teams chat with ${associate.name}...`
+      ? `Opening email to contact ${associate?.name}...`
+      : `Opening Teams chat with ${associate?.name}...`
     alert(message)
   }
 
@@ -120,10 +155,10 @@ export default function AssociateProfile() {
                       <div className="text-2xl font-bold text-green-600">{associate.profileCompleteness}%</div>
                       <div className="text-sm text-gray-600">Profile Complete</div>
                     </div>
-                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    {/* <div className="text-center p-3 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-purple-600">{associate.matchingProjects}</div>
                       <div className="text-sm text-gray-600">Matching Projects</div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -207,7 +242,7 @@ export default function AssociateProfile() {
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Location:</span>
-                      <p className="text-gray-900">{associate.location}</p>
+                      <p className="text-gray-900">{associate.preferredLocation}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Availability:</span>
@@ -224,10 +259,10 @@ export default function AssociateProfile() {
                       <span className="text-sm font-medium text-gray-500">Join Date:</span>
                       <p className="text-gray-900">{new Date(associate.joinDate).toLocaleDateString()}</p>
                     </div>
-                    <div>
+                    {/* <div>
                       <span className="text-sm font-medium text-gray-500">Cost Center:</span>
                       <p className="text-gray-900">{associate.costCenter}</p>
-                    </div>
+                    </div> */}
                     <div>
                       <span className="text-sm font-medium text-gray-500">Performance Rating:</span>
                       <p className="text-gray-900">{associate.performanceRating}</p>
@@ -396,7 +431,7 @@ export default function AssociateProfile() {
                   <div className="space-y-3">
                     <div>
                       <span className="text-sm font-medium text-gray-500">Remote Work:</span>
-                      <p className="text-gray-900">{associate.workPreferences.remoteWork}</p>
+                      <p className="text-gray-900">{associate.workMode}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Travel Willingness:</span>

@@ -53,10 +53,16 @@ function getUserNameFromRequest(request: NextRequest): string {
   return 'Unknown PM'
 }
 
+function getUserIdFromRequest(request: NextRequest): string {
+  const cookies = request.headers.get('cookie') || ''
+  const userIdMatch = cookies.match(/user-id=([^;]+)/)
+  return userIdMatch ? userIdMatch[1] : ''
+}
+
 export async function PUT(request: NextRequest) {
   try {
     const { projectId, ...formData } = await request.json()
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     // Read existing projects
     const projectsData = readProjectsData()
@@ -71,7 +77,7 @@ export async function PUT(request: NextRequest) {
     const existingProject = projectsData.projects[projectIndex]
     
     // Verify ownership
-    if (existingProject.postedBy !== userName) {
+    if (existingProject.createdBy !== userId) {
       return NextResponse.json({ error: 'Unauthorized: You can only edit your own projects' }, { status: 403 })
     }
     
@@ -101,7 +107,7 @@ export async function PUT(request: NextRequest) {
       learningOpportunities: formData.learningOpportunities || existingProject.learningOpportunities,
       applicationDeadline: formData.urgency !== existingProject.urgency ? getApplicationDeadline(formData.urgency) : existingProject.applicationDeadline,
       // Preserve creation data, stats, and application status
-      postedBy: existingProject.postedBy,
+      createdBy: existingProject.createdBy,
       postedDate: existingProject.postedDate,
       id: existingProject.id,
       applicationCount: existingProject.applicationCount,
@@ -133,7 +139,7 @@ export async function GET(request: NextRequest) {
     const browse = url.searchParams.get('browse') // New parameter for browsing all projects
     
     const projectsData = readProjectsData()
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     // If requesting a specific project by ID
     if (projectId) {
@@ -144,7 +150,7 @@ export async function GET(request: NextRequest) {
       }
       
       // For browsing mode, don't check ownership - allow viewing any project
-      if (!browse && project.postedBy !== userName) {
+      if (!browse && project.createdBy !== userId) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
       }
       
@@ -161,7 +167,7 @@ export async function GET(request: NextRequest) {
     
     // Default: Filter projects by the requesting PM (for PM dashboard)
     const userProjects = projectsData.projects.filter((project: any) => 
-      project.postedBy === userName
+      project.createdBy === userId
     )
     
     return NextResponse.json({ 
@@ -179,7 +185,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.json()
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     // Read existing projects
     const projectsData = readProjectsData()
@@ -204,7 +210,7 @@ export async function POST(request: NextRequest) {
       location: formData.location,
       commitment: formData.commitment,
       urgency: formData.urgency,
-      postedBy: userName,
+      createdBy: userId,
       postedDate: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
       applicationDeadline: getApplicationDeadline(formData.urgency),
       teamSize: '6-12 members', // Default team size
@@ -253,7 +259,7 @@ export async function DELETE(request: NextRequest) {
   try {
     const url = new URL(request.url)
     const projectId = url.searchParams.get('id')
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     if (!projectId) {
       return NextResponse.json({ error: 'Project ID is required' }, { status: 400 })
@@ -271,8 +277,8 @@ export async function DELETE(request: NextRequest) {
     
     const projectToDelete = projectsData.projects[projectIndex]
     
-    // Verify ownership - only the PM who posted the project can delete it
-    if (projectToDelete.postedBy !== userName) {
+    // Verify ownership - only the PM who created the project can delete it
+    if (projectToDelete.createdBy !== userId) {
       return NextResponse.json({ error: 'Unauthorized: You can only delete your own projects' }, { status: 403 })
     }
     
@@ -299,7 +305,7 @@ export async function DELETE(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     const { projectId, action } = await request.json()
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     if (!projectId || !action) {
       return NextResponse.json({ error: 'Project ID and action are required' }, { status: 400 })
@@ -318,7 +324,7 @@ export async function PATCH(request: NextRequest) {
     const project = projectsData.projects[projectIndex]
     
     // Verify ownership
-    if (project.postedBy !== userName) {
+    if (project.createdBy !== userId) {
       return NextResponse.json({ error: 'Unauthorized: You can only modify your own projects' }, { status: 403 })
     }
     

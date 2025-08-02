@@ -59,7 +59,7 @@ export default function Projects() {
   const [showAlert, setShowAlert] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [appliedJobs, setAppliedJobs] = useState<Set<string>>(new Set())
-  
+
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -413,8 +413,8 @@ export default function Projects() {
               {filteredProjects.length} of {projects.length} projects available
               {userProfile && userProfile.skills.length > 0 && (
                 <span className="ml-2 text-blue-600">• Sorted by skill match</span>
-              )}
-            </div>
+                    )}
+                  </div>
           </div>
 
           {/* Search and Filters */}
@@ -427,7 +427,7 @@ export default function Projects() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
+                      </svg>
                 </div>
                 <input
                   type="text"
@@ -456,9 +456,9 @@ export default function Projects() {
                     {category}
                   </button>
                 ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
           {/* Match Statistics */}
           {userProfile && userProfile.skills.length > 0 && (
@@ -545,7 +545,7 @@ export default function Projects() {
                           </span>
                         )}
                       </div>
-                    </div>
+            </div>
 
                     <p className="text-gray-700 mb-4">{project.description}</p>
 
@@ -557,14 +557,14 @@ export default function Projects() {
                           {project.matchedSkills.map((skill, index) => (
                             <span key={index} className="px-2 py-1 bg-green-200 text-green-800 rounded text-xs font-medium">
                               ✓ {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+                    </span>
+                  ))}
+                </div>
+              </div>
                     )}
 
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-4">
-                      <div>
+              <div>
                         <h4 className="font-medium text-gray-900 mb-2">Required Skills</h4>
                         <div className="flex flex-wrap gap-1">
                           {project.requiredSkills.slice(0, 3).map((skill, index) => (
@@ -574,15 +574,15 @@ export default function Projects() {
                                 : 'bg-red-100 text-red-800'
                             }`}>
                               {project.matchedSkills?.includes(skill) && '✓ '}{skill}
-                            </span>
-                          ))}
+                    </span>
+                  ))}
                           {project.requiredSkills.length > 3 && (
                             <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">
                               +{project.requiredSkills.length - 3} more
                             </span>
                           )}
-                        </div>
-                      </div>
+              </div>
+            </div>
 
                       <div>
                         <h4 className="font-medium text-gray-900 mb-2">Preferred Skills</h4>
@@ -601,8 +601,8 @@ export default function Projects() {
                               +{project.preferredSkills.length - 3} more
                             </span>
                           )}
-                        </div>
-                      </div>
+            </div>
+              </div>
 
                       <div>
                         <h4 className="font-medium text-gray-900 mb-2">Project Details</h4>
@@ -610,9 +610,9 @@ export default function Projects() {
                           <div>📍 {project.location}</div>
                           <div>⏱️ {project.duration}</div>
                           <div>💼 {project.commitment}</div>
-                        </div>
-                      </div>
-                    </div>
+              </div>
+            </div>
+          </div>
 
                     <div className="flex items-center space-x-6 text-sm text-gray-500">
                       <span>👥 {project.teamSize}</span>
@@ -626,21 +626,21 @@ export default function Projects() {
                   <div className="lg:w-64 space-y-4">
                     
                     {/* Stats */}
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <div className="grid grid-cols-2 gap-4 text-center">
-                        <div>
-                          <div className="text-lg font-semibold text-gray-900">{project.applicationCount}</div>
-                          <div className="text-xs text-gray-600">Applications</div>
-                        </div>
-                        <div>
-                          <div className="text-lg font-semibold text-gray-900">{project.viewCount}</div>
-                          <div className="text-xs text-gray-600">Views</div>
-                        </div>
-                      </div>
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div>
+                      <div className="text-lg font-semibold text-gray-900">{project.applicationCount}</div>
+                      <div className="text-xs text-gray-600">Applications</div>
                     </div>
+                    <div>
+                      <div className="text-lg font-semibold text-gray-900">{project.viewCount}</div>
+                      <div className="text-xs text-gray-600">Views</div>
+                    </div>
+                  </div>
+                </div>
 
                     {/* Apply Button */}
-                    <button
+                <button 
                       className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg ${
                         project.applicationsOpen === false ?
                         'bg-gray-400 text-gray-600 cursor-not-allowed' :
@@ -671,8 +671,8 @@ export default function Projects() {
                       {project.applicationsOpen === false ? (
                         <div className="flex items-center justify-center">
                           <svg className="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" />
-                          </svg>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" />
+                      </svg>
                           Applications Closed
                         </div>
                       ) : appliedJobs.has(project.id.toString()) ? (
@@ -681,20 +681,20 @@ export default function Projects() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                           View Application
-                        </div>
+                    </div>
                       ) : applyingToProject === project.id ? (
                         <div className="flex items-center justify-center">
                           <svg className="animate-spin h-5 w-5 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
                           Applying...
-                        </div>
-                      ) : (
+                    </div>
+                  ) : (
                         project.matchType === 'high' ? '🎯 Apply Now (Great Match!)' :
                         project.matchType === 'medium' ? '⭐ Apply Now (Good Match!)' :
-                        'Apply Now'
-                      )}
+                    'Apply Now'
+                  )}
                     </button>
 
                     {/* Secondary Actions */}
@@ -714,13 +714,13 @@ export default function Projects() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                         </svg>
                         <span>Share</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                </button>
               </div>
+            </div>
+                </div>
+                </div>
             ))}
-          </div>
+                </div>
 
           {/* Pagination */}
           {totalPages > 1 && (
@@ -768,7 +768,7 @@ export default function Projects() {
                       }
                       return null
                     })}
-                  </div>
+                </div>
 
                   {/* Next Button */}
                   <button
@@ -808,22 +808,22 @@ export default function Projects() {
                 >
                   View all projects
                 </button>
-              </div>
             </div>
+          </div>
           )}
 
         </div>
       </main>
 
-      {/* Application Alert */}
+        {/* Application Alert */}
       {selectedProject && (
-        <ApplicationAlert
-          isOpen={showAlert}
-          onClose={() => setShowAlert(false)}
+          <ApplicationAlert
+            isOpen={showAlert}
+            onClose={() => setShowAlert(false)}
           projectTitle={selectedProject.title}
           company={selectedProject.company}
-        />
-      )}
+          />
+        )}
     </div>
   )
 } 

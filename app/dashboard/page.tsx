@@ -100,24 +100,7 @@ export default function Dashboard() {
     } finally {
       setIsUpdating(false)
     }
-  }
-
-  const handleLogout = async () => {
-    setIsLoggingOut(true)
-    
-    try {
-      // Simulate logout delay
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      localStorage.removeItem('auth-token')
-      document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT'
-      router.push('/auth/login')
-    } catch (error) {
-      console.error('Logout failed:', error)
-    } finally {
-      setIsLoggingOut(false)
-    }
-  }
+  }  
 
   if (isLoading) {
     return (

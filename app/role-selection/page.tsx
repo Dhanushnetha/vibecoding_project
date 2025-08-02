@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import associatesData from '../../data/associates.json'
 
 export default function RoleSelection() {
   const [isLoading, setIsLoading] = useState(false)
@@ -10,11 +11,22 @@ export default function RoleSelection() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  // Check if user has completed their associate profile
+  const checkProfileCompletion = (userId: string) => {
+    // Check if user exists in associates with skills
+    const associate = associatesData.associates.find((a: any) => a.userId === userId)
+    if (associate && associate.skills && associate.skills.length > 0) {
+      return true
+    }
+    return false
+  }
+
   useEffect(() => {
     // Get user info from cookies (should be set by auth/login)
     const cookies = document.cookie.split(';')
     const nameCookie = cookies.find(cookie => cookie.trim().startsWith('user-name='))
     const authCookie = cookies.find(cookie => cookie.trim().startsWith('auth-token='))
+    const roleCookie = cookies.find(cookie => cookie.trim().startsWith('user-role='))
     
     if (nameCookie) {
       const name = decodeURIComponent(nameCookie.split('=')[1])
@@ -26,7 +38,19 @@ export default function RoleSelection() {
       router.push('/auth/login')
       return
     }
-  }, [])
+
+    // If user already has a role selected, redirect to appropriate dashboard
+    if (roleCookie) {
+      const userRole = roleCookie.split('=')[1]
+      if (userRole === 'pm') {
+        router.push('/pm-dashboard')
+        return
+      } else if (userRole === 'associate') {
+        router.push('/dashboard')
+        return
+      }
+    }
+  }, [router])
 
   const handleRoleSelection = async (selectedRole: 'associate' | 'pm') => {
     setIsLoading(true)
@@ -38,6 +62,17 @@ export default function RoleSelection() {
 
       // Set the selected role in cookies
       document.cookie = `user-role=${selectedRole}; path=/; max-age=86400; Secure; SameSite=Strict`
+
+      // If selecting associate role, check profile completion
+      if (selectedRole === 'associate') {
+        const cookies = document.cookie.split(';')
+        const userIdCookie = cookies.find(cookie => cookie.trim().startsWith('user-id='))
+        const userId = userIdCookie ? userIdCookie.split('=')[1] : ''
+        
+        // For PMs acting as associates, check if they have a complete associate profile
+        const profileComplete = checkProfileCompletion(userId)
+        document.cookie = `profile-complete=${profileComplete}; path=/; max-age=86400; Secure; SameSite=Strict`
+      }
 
       const redirectTo = searchParams.get('redirect')
 

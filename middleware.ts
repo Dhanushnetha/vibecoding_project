@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
   const pmRoutes = ['/pm-dashboard']
   const isPMRoute = pmRoutes.some(route => pathname.startsWith(route))
 
-  const associateRoutes = ['/dashboard', '/projects', '/about', '/analytics', '/profile', '/settings', '/admin']
+  const associateRoutes = ['/dashboard', '/projects', '/applied-jobs', '/about', '/analytics', '/profile', '/settings', '/admin']
   const isAssociateRoute = associateRoutes.some(route => pathname.startsWith(route))
 
   // Allow access to public routes
@@ -36,6 +36,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Ensure PMs complete role selection before accessing other routes
+  if (!userRole && !pathname.startsWith('/role-selection')) {
+    // User is authenticated but hasn't selected a role yet
+    // This happens when PMs haven't completed role selection
+    const roleSelectionUrl = new URL('/role-selection', request.url)
+    return NextResponse.redirect(roleSelectionUrl)
+  }
+
   // Check role-based access for authenticated users
   if (isPMRoute) {
     if (userRole !== 'pm') {
@@ -52,6 +60,20 @@ export function middleware(request: NextRequest) {
       const unauthorizedUrl = new URL('/unauthorized', request.url)
       unauthorizedUrl.searchParams.set('route', pathname)
       return NextResponse.redirect(unauthorizedUrl)
+    }
+
+    // Check if associate has incomplete profile using the completion flag
+    const profileRequiredRoutes = ['/dashboard', '/projects', '/applied-jobs', '/saved-jobs', '/analytics']
+    const needsProfileCompletion = profileRequiredRoutes.some(route => pathname.startsWith(route))
+    
+    if (needsProfileCompletion && userRole === 'associate') {
+      const profileComplete = request.cookies.get('profile-complete')?.value
+      // If profile is not marked as complete, redirect to profile creation
+      if (profileComplete !== 'true') {
+        const profileCreateUrl = new URL('/profile/create', request.url)
+        profileCreateUrl.searchParams.set('redirect', pathname)
+        return NextResponse.redirect(profileCreateUrl)
+      }
     }
   }
 

@@ -53,6 +53,40 @@ function getUserNameFromRequest(request: NextRequest): string {
   return 'Unknown User'
 }
 
+function getUserIdFromRequest(request: NextRequest): string {
+  const cookies = request.headers.get('cookie') || ''
+  const userIdMatch = cookies.match(/user-id=([^;]+)/)
+  return userIdMatch ? userIdMatch[1] : ''
+}
+
+function readProjectsData(): any {
+  try {
+    const projectsFile = path.join(process.cwd(), 'data', 'projects.json')
+    if (fs.existsSync(projectsFile)) {
+      const data = fs.readFileSync(projectsFile, 'utf8')
+      return JSON.parse(data)
+    }
+    return { projects: [] }
+  } catch (error) {
+    console.error('Error reading projects data:', error)
+    return { projects: [] }
+  }
+}
+
+function readAssociatesData(): any {
+  try {
+    const associatesFile = path.join(process.cwd(), 'data', 'associates.json')
+    if (fs.existsSync(associatesFile)) {
+      const data = fs.readFileSync(associatesFile, 'utf8')
+      return JSON.parse(data)
+    }
+    return { associates: [] }
+  } catch (error) {
+    console.error('Error reading associates data:', error)
+    return { associates: [] }
+  }
+}
+
 export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url)
@@ -61,28 +95,43 @@ export async function GET(request: NextRequest) {
     const status = url.searchParams.get('status')
     
     const applicationsData = readApplicationsData()
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     let filteredApplications = applicationsData.applications || []
     
-    // Filter by project ID if provided
+    // Get user's associateId and check if they're a manager
+    const associatesData = readAssociatesData()
+    const currentUser = associatesData.associates.find((a: any) => a.userId === userId)
+    
+    if (currentUser && currentUser.isManager) {
+      // For PMs, only show applications for their projects
+      const projectsData = readProjectsData()
+      const pmProjects = projectsData.projects.filter((p: any) => p.createdBy === currentUser.userId)
+      const pmProjectIds = pmProjects.map((p: any) => p.id.toString())
+      
+      // Filter applications to only include those for PM's projects
+      filteredApplications = filteredApplications.filter((app: any) => 
+        pmProjectIds.includes(app.projectId.toString())
+      )
+    } else if (currentUser) {
+      // For associates, only show their own applications
+      filteredApplications = filteredApplications.filter((app: any) => 
+        app.associateId === currentUser.userId
+      )
+    }
+    
+    // Apply additional filters if provided
     if (projectId) {
       filteredApplications = filteredApplications.filter((app: any) => app.projectId === projectId)
     }
     
-    // Filter by associate ID if provided
     if (associateId) {
       filteredApplications = filteredApplications.filter((app: any) => app.associateId === associateId)
     }
     
-    // Filter by status if provided
     if (status) {
       filteredApplications = filteredApplications.filter((app: any) => app.status === status)
     }
-    
-    // For PMs, only show applications for their projects
-    // For associates, only show their own applications
-    // This is a simplified logic - in a real app, you'd have proper role-based access control
     
     return NextResponse.json({ 
       applications: filteredApplications,
