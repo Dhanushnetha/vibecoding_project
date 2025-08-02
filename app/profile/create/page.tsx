@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface ProfileData {
   currentProject?: string
@@ -20,6 +20,7 @@ export default function CreateProfile() {
   const [isEditMode, setIsEditMode] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const [formData, setFormData] = useState<ProfileData>({
     currentProject: '',
@@ -238,7 +239,16 @@ export default function CreateProfile() {
       const data = await response.json()
 
       if (data.success) {
-        router.push('/dashboard')
+        // Mark profile as complete in cookies
+        document.cookie = 'profile-complete=true; path=/; max-age=86400; Secure; SameSite=Strict'
+        
+        // Check if there's a redirect URL from middleware
+        const redirectUrl = searchParams.get('redirect')
+        if (redirectUrl) {
+          router.push(redirectUrl)
+        } else {
+          router.push('/dashboard')
+        }
       } else {
         console.error('Failed to save profile:', data.error)
       }
@@ -328,7 +338,7 @@ export default function CreateProfile() {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {formData.skills.map((skill, index) => (
+                  {(formData.skills || []).map((skill, index) => (
                     <span
                       key={index}
                       className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
@@ -354,7 +364,7 @@ export default function CreateProfile() {
                 Certifications
               </label>
               <div className="space-y-3">
-                {formData.certifications.map((cert, index) => (
+                {(formData.certifications || []).map((cert, index) => (
                   <div key={index} className="flex gap-2 items-start">
                     <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <input
@@ -503,14 +513,14 @@ export default function CreateProfile() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               >
                 <option value="">Select preferred location</option>
-                <option value="remote">Remote</option>
-                <option value="bangalore">Bangalore</option>
-                <option value="chennai">Chennai</option>
-                <option value="hyderabad">Hyderabad</option>
-                <option value="pune">Pune</option>
-                <option value="mumbai">Mumbai</option>
-                <option value="noida">Noida</option>
-                <option value="kolkata">Kolkata</option>
+                <option value="Remote">Remote</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Noida">Noida</option>
+                <option value="Kolkata">Kolkata</option>
               </select>
               {errors.preferredLocation && (
                 <p className="text-red-500 text-sm mt-1">{errors.preferredLocation}</p>
@@ -581,7 +591,10 @@ export default function CreateProfile() {
               </button>
               <button
                 type="button"
-                onClick={() => router.push('/dashboard')}
+                onClick={() => {
+                  const redirectUrl = searchParams.get('redirect')
+                  router.push(redirectUrl || '/dashboard')
+                }}
                 className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
               >
                 Cancel

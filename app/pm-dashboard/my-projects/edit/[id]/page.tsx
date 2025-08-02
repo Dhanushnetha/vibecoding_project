@@ -3,6 +3,30 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 
+interface FormData {
+  title: string
+  company: string
+  department: string
+  description: string
+  description_detailed: string
+  requiredSkills: string[]
+  preferredSkills: string[]
+  duration: string
+  location: string
+  commitment: string
+  urgency: string
+  category: string
+  teamSize: string
+  budget: string
+  clientIndustry: string
+  projectType: string
+  workModel: string
+  travelRequired: string
+  securityClearance: boolean
+  responsibilities: string[]
+  learningOpportunities: string[]
+}
+
 export default function EditProject() {
   const router = useRouter()
   const params = useParams()
@@ -10,7 +34,7 @@ export default function EditProject() {
   
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: '',
     company: 'Cognizant Technology Solutions',
     department: '',

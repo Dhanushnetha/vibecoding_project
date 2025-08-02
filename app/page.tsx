@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function Home() {
@@ -19,7 +18,7 @@ export default function Home() {
               </h1>
             </div>
             <p className="mx-auto max-w-2xl text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed">
-              Cognizant's Internal Mobility and Talent Discovery Platform.
+              Cognizant&apos;s Internal Mobility and Talent Discovery Platform.
               <br className="hidden sm:block" />
               <span className="font-medium text-blue-600">Connect talent with opportunities across the organization.</span>
             </p>

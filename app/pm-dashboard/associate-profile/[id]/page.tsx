@@ -4,16 +4,77 @@ import { useParams, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import associatesData from '../../../../data/associates.json'
 
+interface Certification {
+  name: string
+  issuer: string
+  issuedDate?: string
+  date?: string
+  link?: string
+  [key: string]: unknown
+}
+
+interface Project {
+  title: string
+  description: string
+  link?: string
+  technologies?: string[]
+  role?: string
+  duration?: string
+  startDate?: string
+  [key: string]: unknown
+}
+
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  role: string
+  currentRole?: string
+  isManager: boolean
+  currentProject: string
+  skills: string[]
+  certifications?: Certification[]
+  projects?: Project[]
+  desiredTech?: string[]
+  preferredLocation?: string
+  workMode?: string
+  availability?: string
+  openToOpportunities?: boolean
+  experience?: string
+  profileCompleteness?: number
+  matchingProjects?: number
+  lastUpdated?: string
+  location?: string
+  languages?: string[]
+  preferredRoles?: string[]
+  previousShadowProjects?: string[]
+  department?: string
+  manager?: string
+  performanceRating?: string
+  lastPerformanceReview?: string
+  joinDate?: string
+  careerGoals?: string
+  shadowModeInterest?: boolean
+  workPreferences?: WorkPreferences
+  employeeId?: string
+}
+
+interface WorkPreferences {
+  travelWillingness?: string;
+  projectDuration?: string;
+  teamSize?: string;
+}
+
 export default function AssociateProfile() {
   const params = useParams()
   const router = useRouter()
-  const [associate, setAssociate] = useState(null)
+  const [associate, setAssociate] = useState<Associate | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
 
   useEffect(() => {
-    const associateId = parseInt(params.id as string)
-    const foundAssociate = associatesData.associates.find(a => a.id === associateId)
+    const associateId = params.id as string
+    const foundAssociate = associatesData.associates.find(a => a.userId === associateId)
     
     if (foundAssociate) {
       setAssociate(foundAssociate)
@@ -21,10 +82,10 @@ export default function AssociateProfile() {
     setLoading(false)
   }, [params.id])
 
-  const handleContactAssociate = (method) => {
+  const handleContactAssociate = (method: string) => {
     const message = method === 'email' 
-      ? `Opening email to contact ${associate.name}...`
-      : `Opening Teams chat with ${associate.name}...`
+      ? `Opening email to contact ${associate?.name}...`
+      : `Opening Teams chat with ${associate?.name}...`
     alert(message)
   }
 
@@ -44,7 +105,7 @@ export default function AssociateProfile() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Associate Not Found</h1>
-          <p className="text-gray-600 mb-6">The associate you're looking for doesn't exist.</p>
+          <p className="text-gray-600 mb-6">The associate you&apos;re looking for doesn&apos;t exist.</p>
           <button
             onClick={() => router.back()}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
@@ -120,10 +181,10 @@ export default function AssociateProfile() {
                       <div className="text-2xl font-bold text-green-600">{associate.profileCompleteness}%</div>
                       <div className="text-sm text-gray-600">Profile Complete</div>
                     </div>
-                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    {/* <div className="text-center p-3 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-purple-600">{associate.matchingProjects}</div>
                       <div className="text-sm text-gray-600">Matching Projects</div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -207,7 +268,7 @@ export default function AssociateProfile() {
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Location:</span>
-                      <p className="text-gray-900">{associate.location}</p>
+                      <p className="text-gray-900">{associate.preferredLocation}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Availability:</span>
@@ -222,23 +283,23 @@ export default function AssociateProfile() {
                   <div className="space-y-3">
                     <div>
                       <span className="text-sm font-medium text-gray-500">Join Date:</span>
-                      <p className="text-gray-900">{new Date(associate.joinDate).toLocaleDateString()}</p>
+                      <p className="text-gray-900">{associate.joinDate ? new Date(associate.joinDate).toLocaleDateString() : 'N/A'}</p>
                     </div>
-                    <div>
+                    {/* <div>
                       <span className="text-sm font-medium text-gray-500">Cost Center:</span>
                       <p className="text-gray-900">{associate.costCenter}</p>
-                    </div>
+                    </div> */}
                     <div>
                       <span className="text-sm font-medium text-gray-500">Performance Rating:</span>
                       <p className="text-gray-900">{associate.performanceRating}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Last Review:</span>
-                      <p className="text-gray-900">{new Date(associate.lastPerformanceReview).toLocaleDateString()}</p>
+                      <p className="text-gray-900">{associate.lastPerformanceReview ? new Date(associate.lastPerformanceReview).toLocaleDateString() : 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Languages:</span>
-                      <p className="text-gray-900">{associate.languages.join(', ')}</p>
+                      <p className="text-gray-900">{associate.languages?.join(', ')}</p>
                     </div>
                   </div>
                 </div>
@@ -254,7 +315,7 @@ export default function AssociateProfile() {
                     <div>
                       <span className="text-sm font-medium text-gray-500">Preferred Roles:</span>
                       <div className="flex flex-wrap gap-2 mt-2">
-                        {associate.preferredRoles.map((role, index) => (
+                        {associate.preferredRoles?.map((role, index) => (
                           <span key={index} className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
                             {role}
                           </span>
@@ -271,7 +332,7 @@ export default function AssociateProfile() {
                         }`}>
                           {associate.shadowModeInterest ? 'Yes' : 'No'}
                         </span>
-                        {associate.previousShadowProjects.length > 0 && (
+                        {associate.previousShadowProjects && associate.previousShadowProjects.length > 0 && (
                           <span className="text-sm text-gray-500">
                             ({associate.previousShadowProjects.length} previous projects)
                           </span>
@@ -289,7 +350,7 @@ export default function AssociateProfile() {
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                   <h3 className="text-lg font-semibold text-gray-900 mb-6">Project Experience</h3>
                   <div className="space-y-6">
-                    {associate.projects.map((project, index) => (
+                    {associate.projects?.map((project, index) => (
                       <div key={index} className="border-l-4 border-blue-500 pl-6 pb-6 last:pb-0">
                         <div className="flex items-start justify-between mb-3">
                           <div>
@@ -309,7 +370,7 @@ export default function AssociateProfile() {
                         </div>
                         <p className="text-gray-700 mb-3">{project.description}</p>
                         <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech, techIndex) => (
+                          {project.technologies?.map((tech, techIndex) => (
                             <span key={techIndex} className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
                               {tech}
                             </span>
@@ -330,11 +391,14 @@ export default function AssociateProfile() {
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Skills</h3>
                   <div className="flex flex-wrap gap-2">
-                    {associate.skills.map((skill, index) => (
+                    {(associate.skills || []).map((skill, index) => (
                       <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                         {skill}
                       </span>
                     ))}
+                    {(!associate.skills || associate.skills.length === 0) && (
+                      <span className="text-gray-500 text-sm italic">No skills listed</span>
+                    )}
                   </div>
                 </div>
 
@@ -342,7 +406,7 @@ export default function AssociateProfile() {
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Interested Technologies</h3>
                   <div className="flex flex-wrap gap-2">
-                    {associate.desiredTech.map((tech, index) => (
+                    {associate.desiredTech?.map((tech, index) => (
                       <span key={index} className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
                         {tech}
                       </span>
@@ -354,7 +418,7 @@ export default function AssociateProfile() {
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm lg:col-span-2">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Certifications</h3>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {associate.certifications.map((cert, index) => (
+                    {(associate.certifications || []).map((cert, index) => (
                       <div key={index} className="border border-gray-200 rounded-lg p-4">
                         <div className="flex items-start justify-between mb-2">
                           <h4 className="font-semibold text-gray-900">{cert.name}</h4>
@@ -370,9 +434,14 @@ export default function AssociateProfile() {
                           )}
                         </div>
                         <p className="text-sm text-gray-600">{cert.issuer}</p>
-                        <p className="text-sm text-gray-500">Issued: {new Date(cert.date).toLocaleDateString()}</p>
+                        <p className="text-sm text-gray-500">Issued: {cert.issuedDate ? new Date(cert.issuedDate).toLocaleDateString() : 'N/A'}</p>
                       </div>
                     ))}
+                    {(!associate.certifications || associate.certifications.length === 0) && (
+                      <div className="col-span-full">
+                        <span className="text-gray-500 text-sm italic">No certifications listed</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -388,25 +457,25 @@ export default function AssociateProfile() {
                   <div className="space-y-3">
                     <div>
                       <span className="text-sm font-medium text-gray-500">Remote Work:</span>
-                      <p className="text-gray-900">{associate.workPreferences.remoteWork}</p>
+                      <p className="text-gray-900">{associate.workMode}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Travel Willingness:</span>
-                      <p className="text-gray-900">{associate.workPreferences.travelWillingness}</p>
+                      <p className="text-gray-900">{associate.workPreferences?.travelWillingness}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Preferred Project Duration:</span>
-                      <p className="text-gray-900">{associate.workPreferences.projectDuration}</p>
+                      <p className="text-gray-900">{associate.workPreferences?.projectDuration}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-500">Preferred Team Size:</span>
-                      <p className="text-gray-900">{associate.workPreferences.teamSize}</p>
+                      <p className="text-gray-900">{associate.workPreferences?.teamSize}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Shadow Mode History */}
-                {associate.previousShadowProjects.length > 0 && (
+                {associate.previousShadowProjects && associate.previousShadowProjects.length > 0 && (
                   <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Shadow Mode History</h3>
                     <div className="space-y-2">
@@ -440,7 +509,7 @@ export default function AssociateProfile() {
                     </div>
                     <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-lg font-semibold text-blue-600">
-                        {new Date(associate.lastUpdated).toLocaleDateString()}
+                        {associate.lastUpdated ? new Date(associate.lastUpdated).toLocaleDateString() : 'N/A'}
                       </div>
                       <div className="text-sm text-gray-600">Last Updated</div>
                     </div>

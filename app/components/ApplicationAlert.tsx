@@ -53,7 +53,7 @@ export default function ApplicationAlert({ isOpen, onClose, projectTitle, compan
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-green-800 mb-1">Application Submitted!</h3>
               <p className="text-sm text-gray-700">
-                Your application for <span className="font-semibold">"{projectTitle}"</span> at {company} has been submitted.
+                Your application for <span className="font-semibold">&quot;{projectTitle}&quot;</span> at {company} has been submitted.
               </p>
             </div>
           </div>

@@ -4,10 +4,50 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import associatesData from '../../../data/associates.json'
 
+interface Certification {
+  name: string
+  issuer: string
+  issuedDate?: string
+  date?: string
+  link?: string
+}
+
+interface Project {
+  title: string
+  description: string
+  link?: string
+  technologies?: string[]
+  role?: string
+  duration?: string
+}
+
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  role: string
+  isManager: boolean
+  currentProject: string
+  skills: string[]
+  certifications: Certification[]
+  projects: Project[]
+  desiredTech: string[]
+  preferredLocation: string
+  workMode: string
+  availability: string
+  openToOpportunities: boolean
+  experience?: string
+  profileCompleteness?: number
+  matchingProjects?: number
+  lastUpdated?: string
+  location?: string
+  [key: string]: unknown
+}
+
 export default function AvailableAssociates() {
   const router = useRouter()
-  const [associates, setAssociates] = useState([])
-  const [filteredAssociates, setFilteredAssociates] = useState([])
+  const [associates, setAssociates] = useState<Associate[]>([])
+  const [filteredAssociates, setFilteredAssociates] = useState<Associate[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [skillFilter, setSkillFilter] = useState('')
@@ -48,7 +88,7 @@ export default function AvailableAssociates() {
     // Location filter
     if (locationFilter) {
       filtered = filtered.filter(associate =>
-        associate.location.toLowerCase().includes(locationFilter.toLowerCase())
+        (associate.preferredLocation || '').toLowerCase().includes(locationFilter.toLowerCase())
       )
     }
 
@@ -62,27 +102,27 @@ export default function AvailableAssociates() {
   const endIndex = startIndex + associatesPerPage
   const currentAssociates = filteredAssociates.slice(startIndex, endIndex)
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page)
     // Scroll to top of associates list
     window.scrollTo({ top: 300, behavior: 'smooth' })
   }
 
-  const handleContactAssociate = (associate, method) => {
+  const handleContactAssociate = (associate: Associate, method: string) => {
     const message = method === 'email' 
       ? `Opening email to contact ${associate.name}...`
       : `Opening Teams chat with ${associate.name}...`
     alert(message)
   }
 
-  const handleViewProfile = (associateId) => {
+  const handleViewProfile = (associateId: string) => {
     router.push(`/pm-dashboard/associate-profile/${associateId}`)
   }
 
   const uniqueSkills = [...new Set(associates.flatMap(a => a.skills))].sort()
-  const uniqueLocations = [...new Set(associates.map(a => a.location))].sort()
+  const uniqueLocations = [...new Set(associates.map(a => a.location || a.preferredLocation || '').filter(Boolean))].sort()
 
-  const renderPaginationButton = (page, label = null) => {
+  const renderPaginationButton = (page: number, label: string | null = null) => {
     const isActive = page === currentPage
     const displayLabel = label || page
 
@@ -204,7 +244,7 @@ export default function AvailableAssociates() {
           {/* Associates List */}
           <div className="space-y-4">
             {currentAssociates.map((associate) => (
-              <div key={associate.id} className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div key={associate.userId} className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
                 
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                   
@@ -218,7 +258,7 @@ export default function AvailableAssociates() {
                       </div>
                       <div>
                         <h3 className="text-xl font-semibold text-gray-900">{associate.name}</h3>
-                        <p className="text-gray-600">{associate.experience} experience • {associate.location}</p>
+                        <p className="text-gray-600">{associate.experience || 'Experience not specified'} • {associate.preferredLocation || 'Location not specified'}</p>
                       </div>
                       <div className="ml-auto">
                         <div className="flex items-center space-x-2">
@@ -245,10 +285,10 @@ export default function AvailableAssociates() {
                           <div className="flex-1 bg-gray-200 rounded-full h-2">
                             <div 
                               className="bg-blue-600 h-2 rounded-full" 
-                              style={{ width: `${associate.profileCompleteness}%` }}
+                              style={{ width: `${associate.profileCompleteness || 85}%` }}
                             ></div>
                           </div>
-                          <span className="text-xs text-gray-600">{associate.profileCompleteness}%</span>
+                          <span className="text-xs text-gray-600">{associate.profileCompleteness || 85}%</span>
                         </div>
                       </div>
                     </div>
@@ -256,18 +296,21 @@ export default function AvailableAssociates() {
                     <div className="mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">Skills</h4>
                       <div className="flex flex-wrap gap-2">
-                        {associate.skills.map((skill, index) => (
+                        {(associate.skills || []).map((skill, index) => (
                           <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm font-medium">
                             {skill}
                           </span>
                         ))}
+                        {(!associate.skills || associate.skills.length === 0) && (
+                          <span className="text-gray-500 text-sm italic">No skills listed</span>
+                        )}
                       </div>
                     </div>
 
                     <div className="flex items-center space-x-4 text-sm text-gray-500">
                       <span>📧 {associate.email}</span>
-                      <span>📈 {associate.matchingProjects} matching projects</span>
-                      <span>🔄 Updated {associate.lastUpdated}</span>
+                      <span>📈 {associate.matchingProjects || 0} matching projects</span>
+                      <span>🔄 Updated {associate.lastUpdated || 'recently'}</span>
                     </div>
                   </div>
 
@@ -294,7 +337,7 @@ export default function AvailableAssociates() {
                     </button>
 
                     <button 
-                      onClick={() => handleViewProfile(associate.id)}
+                      onClick={() => handleViewProfile(associate.userId)}
                       className="flex items-center justify-center space-x-2 border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

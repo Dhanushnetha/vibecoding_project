@@ -1,0 +1,936 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI-Powered Customer Service Platform",
+      "description": "Building an intelligent customer service platform with chatbots, sentiment analysis, and automated ticket routing to improve customer satisfaction.",
+      "company": "Cognizant Digital Business",
+      "division": "Banking & Financial Services",
+      "category": "AI/ML",
+      "requiredSkills": [
+        "Python",
+        "TensorFlow",
+        "NLP",
+        "React"
+      ],
+      "preferredSkills": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "PostgreSQL"
+      ],
+      "duration": "8 months",
+      "location": "Hyderabad",
+      "commitment": "Full-time",
+      "urgency": "High",
+      "createdBy": "CTS101234",
+      "postedDate": "2024-01-25",
+      "applicationDeadline": "2024-02-15",
+      "teamSize": "8-12 members",
+      "budget": "Medium",
+      "clientIndustry": "Financial Services",
+      "projectType": "Greenfield",
+      "workModel": "Hybrid",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "We're building a next-generation customer service platform that leverages AI to provide personalized customer experiences. The platform will include real-time chatbots, sentiment analysis of customer interactions, and intelligent ticket routing based on complexity and agent expertise. This is a high-visibility project with direct impact on customer satisfaction metrics.",
+      "responsibilities": [
+        "Develop and train machine learning models for customer intent recognition",
+        "Build responsive React-based admin dashboard for customer service managers",
+        "Implement real-time chat functionality with WebSocket connections",
+        "Design and develop RESTful APIs for bot interactions",
+        "Collaborate with UX team to create intuitive customer interfaces"
+      ],
+      "learningOpportunities": [
+        "Advanced NLP and conversational AI techniques",
+        "Large-scale real-time system architecture",
+        "Customer experience optimization strategies",
+        "Modern MLOps practices and model deployment"
+      ],
+      "viewCount": 156
+    },
+    {
+      "id": 2,
+      "title": "Cloud-Native Microservices Migration",
+      "description": "Migrate legacy monolithic applications to cloud-native microservices architecture using container orchestration and modern DevOps practices.",
+      "company": "Cognizant Technology Solutions",
+      "division": "Cloud & Infrastructure",
+      "category": "Cloud/DevOps",
+      "requiredSkills": [
+        "Java",
+        "Spring Boot",
+        "Docker",
+        "Kubernetes"
+      ],
+      "preferredSkills": [
+        "AWS",
+        "Terraform",
+        "Jenkins",
+        "Monitoring"
+      ],
+      "duration": "12 months",
+      "location": "Bangalore",
+      "commitment": "Full-time",
+      "urgency": "Medium",
+      "createdBy": "CTS101234",
+      "postedDate": "2024-01-23",
+      "applicationDeadline": "2024-02-20",
+      "teamSize": "12-15 members",
+      "budget": "High",
+      "clientIndustry": "Healthcare",
+      "projectType": "Modernization",
+      "workModel": "Hybrid",
+      "travelRequired": "Occasional",
+      "securityClearance": false,
+      "description_detailed": "This project involves migrating a large-scale healthcare management system from a monolithic architecture to cloud-native microservices. The migration will improve scalability, reliability, and enable faster feature deployment. We'll be using modern containerization technologies and implementing comprehensive monitoring and observability.",
+      "responsibilities": [
+        "Analyze existing monolithic codebase and identify service boundaries",
+        "Design and implement microservices using Spring Boot and REST APIs",
+        "Set up CI/CD pipelines for automated testing and deployment",
+        "Implement service mesh for inter-service communication",
+        "Establish monitoring and logging for distributed system observability"
+      ],
+      "learningOpportunities": [
+        "Modern microservices architecture patterns",
+        "Container orchestration with Kubernetes",
+        "Cloud infrastructure automation",
+        "Distributed system design and debugging"
+      ],
+      "viewCount": 134
+    },
+    {
+      "id": 3,
+      "title": "Real-time Data Analytics Dashboard",
+      "description": "Develop a comprehensive analytics dashboard for real-time business intelligence with interactive visualizations and automated reporting capabilities.",
+      "company": "Cognizant Digital Engineering",
+      "division": "Data & Analytics",
+      "category": "Data/Analytics",
+      "requiredSkills": [
+        "React",
+        "D3.js",
+        "Python",
+        "Apache Kafka"
+      ],
+      "preferredSkills": [
+        "Elasticsearch",
+        "Redis",
+        "Node.js",
+        "TypeScript"
+      ],
+      "duration": "6 months",
+      "location": "Chennai",
+      "commitment": "Full-time",
+      "urgency": "High",
+      "postedDate": "2024-01-22",
+      "applicationDeadline": "2024-02-10",
+      "teamSize": "6-8 members",
+      "budget": "Medium",
+      "clientIndustry": "Retail",
+      "projectType": "Greenfield",
+      "workModel": "Remote",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "Build a state-of-the-art analytics dashboard that provides real-time insights into business operations. The dashboard will feature interactive charts, customizable widgets, and automated alert systems. It will process millions of data points in real-time and provide actionable insights to business stakeholders.",
+      "responsibilities": [
+        "Develop responsive React-based dashboard with interactive visualizations",
+        "Implement real-time data streaming using Apache Kafka",
+        "Create custom D3.js components for complex data visualizations",
+        "Build backend APIs for data aggregation and filtering",
+        "Implement automated reporting and alert mechanisms"
+      ],
+      "learningOpportunities": [
+        "Advanced data visualization techniques",
+        "Real-time data processing architectures",
+        "Modern frontend development with React",
+        "Big data technologies and streaming platforms"
+      ],
+      "viewCount": 201,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 4,
+      "title": "Mobile Banking Application Revamp",
+      "description": "Complete redesign and development of mobile banking application with enhanced security, accessibility, and user experience features.",
+      "company": "Cognizant Financial Services",
+      "division": "Digital Banking",
+      "category": "Mobile",
+      "requiredSkills": [
+        "React Native",
+        "Node.js",
+        "MongoDB",
+        "RESTful APIs"
+      ],
+      "preferredSkills": [
+        "TypeScript",
+        "Redux",
+        "Jest",
+        "Security Protocols"
+      ],
+      "duration": "10 months",
+      "location": "Mumbai",
+      "commitment": "Full-time",
+      "urgency": "Medium",
+      "postedDate": "2024-01-20",
+      "applicationDeadline": "2024-02-25",
+      "teamSize": "10-12 members",
+      "budget": "High",
+      "clientIndustry": "Banking",
+      "projectType": "Redesign",
+      "workModel": "Hybrid",
+      "travelRequired": "Occasional",
+      "securityClearance": true,
+      "description_detailed": "Revamp the existing mobile banking application to provide a world-class user experience while maintaining the highest security standards. The new app will feature biometric authentication, real-time notifications, and advanced financial planning tools. This project requires expertise in mobile development and financial industry regulations.",
+      "responsibilities": [
+        "Develop cross-platform mobile app using React Native",
+        "Implement secure authentication and authorization mechanisms",
+        "Design and develop backend APIs for banking operations",
+        "Integrate with third-party payment gateways and financial services",
+        "Ensure compliance with banking regulations and security standards"
+      ],
+      "learningOpportunities": [
+        "Mobile banking security best practices",
+        "Cross-platform mobile development",
+        "Financial services industry knowledge",
+        "Advanced mobile UX/UI patterns"
+      ],
+      "viewCount": 98,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 5,
+      "title": "Blockchain Supply Chain Tracking",
+      "description": "Implement blockchain-based supply chain tracking system for enhanced transparency, traceability, and fraud prevention in global logistics.",
+      "company": "Cognizant Digital Business",
+      "division": "Emerging Technologies",
+      "category": "Blockchain",
+      "requiredSkills": [
+        "Solidity",
+        "Web3.js",
+        "Node.js",
+        "React"
+      ],
+      "preferredSkills": [
+        "Ethereum",
+        "IPFS",
+        "Truffle",
+        "MongoDB"
+      ],
+      "duration": "9 months",
+      "location": "Pune",
+      "commitment": "Full-time",
+      "urgency": "Low",
+      "postedDate": "2024-01-18",
+      "applicationDeadline": "2024-03-01",
+      "teamSize": "6-8 members",
+      "budget": "Medium",
+      "clientIndustry": "Logistics",
+      "projectType": "Innovation",
+      "workModel": "Hybrid",
+      "travelRequired": "Occasional",
+      "securityClearance": false,
+      "description_detailed": "Develop an innovative blockchain-based system for tracking products throughout the supply chain. This cutting-edge project will provide immutable records of product journey, enhance transparency, and reduce fraud in global logistics. Great opportunity to work with emerging technologies and solve real-world problems.",
+      "responsibilities": [
+        "Design and develop smart contracts for supply chain tracking",
+        "Build Web3-enabled frontend for supply chain visualization",
+        "Implement IPFS integration for distributed file storage",
+        "Develop backend APIs for blockchain interaction",
+        "Create comprehensive testing framework for smart contracts"
+      ],
+      "learningOpportunities": [
+        "Blockchain development and smart contract programming",
+        "Decentralized application (DApp) architecture",
+        "Web3 technologies and cryptocurrency integration",
+        "Supply chain management and logistics optimization"
+      ],
+      "viewCount": 87,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 6,
+      "title": "Edge Computing IoT Platform",
+      "description": "Build an edge computing platform for IoT devices to enable real-time data processing, reduce latency, and improve overall system efficiency.",
+      "company": "Cognizant IoT Works",
+      "division": "Internet of Things",
+      "category": "IoT/Edge",
+      "requiredSkills": [
+        "C++",
+        "Python",
+        "Linux",
+        "MQTT"
+      ],
+      "preferredSkills": [
+        "Docker",
+        "Kubernetes",
+        "AWS IoT",
+        "TensorFlow Lite"
+      ],
+      "duration": "7 months",
+      "location": "Hyderabad",
+      "commitment": "Full-time",
+      "urgency": "High",
+      "postedDate": "2024-01-16",
+      "applicationDeadline": "2024-02-08",
+      "teamSize": "8-10 members",
+      "budget": "Medium",
+      "clientIndustry": "Manufacturing",
+      "projectType": "Greenfield",
+      "workModel": "On-site",
+      "travelRequired": "Frequent",
+      "securityClearance": false,
+      "description_detailed": "Develop a comprehensive edge computing platform that brings computation closer to IoT devices. The platform will enable real-time processing of sensor data, reduce bandwidth usage, and provide faster response times for critical manufacturing operations. This project involves working with cutting-edge hardware and software technologies.",
+      "responsibilities": [
+        "Develop edge computing software for IoT gateways",
+        "Implement real-time data processing algorithms",
+        "Design secure communication protocols for IoT devices",
+        "Build monitoring and management dashboard for edge nodes",
+        "Optimize system performance for resource-constrained environments"
+      ],
+      "learningOpportunities": [
+        "Edge computing architectures and optimization",
+        "IoT protocols and device management",
+        "Real-time systems and embedded programming",
+        "Industrial automation and manufacturing processes"
+      ],
+      "viewCount": 72,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 7,
+      "title": "Automated Testing Framework",
+      "description": "Develop a comprehensive automated testing framework with AI-powered test generation, cross-browser compatibility, and continuous integration.",
+      "company": "Cognizant Quality Engineering",
+      "division": "Testing & QA",
+      "category": "Testing/QA",
+      "requiredSkills": [
+        "Java",
+        "Selenium",
+        "TestNG",
+        "REST Assured"
+      ],
+      "preferredSkills": [
+        "Python",
+        "Cypress",
+        "Jenkins",
+        "Docker"
+      ],
+      "duration": "5 months",
+      "location": "Bangalore",
+      "commitment": "Full-time",
+      "urgency": "Medium",
+      "postedDate": "2024-01-14",
+      "applicationDeadline": "2024-02-18",
+      "teamSize": "5-7 members",
+      "budget": "Low",
+      "clientIndustry": "Technology",
+      "projectType": "Framework",
+      "workModel": "Remote",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "Create a next-generation automated testing framework that leverages AI to generate intelligent test cases and provides comprehensive coverage across multiple platforms. The framework will integrate with CI/CD pipelines and provide detailed reporting and analytics for testing metrics.",
+      "responsibilities": [
+        "Design modular and scalable test automation framework",
+        "Implement AI-powered test case generation algorithms",
+        "Develop cross-browser and cross-platform testing capabilities",
+        "Create detailed reporting and analytics dashboard",
+        "Integrate framework with CI/CD pipelines"
+      ],
+      "learningOpportunities": [
+        "Advanced test automation strategies",
+        "AI/ML applications in software testing",
+        "DevOps integration and continuous testing",
+        "Quality engineering best practices"
+      ],
+      "viewCount": 189,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 8,
+      "title": "Cybersecurity Threat Detection System",
+      "description": "Build an advanced cybersecurity system using machine learning to detect and prevent sophisticated cyber threats in real-time.",
+      "company": "Cognizant Security Solutions",
+      "division": "Cybersecurity",
+      "category": "Security",
+      "requiredSkills": [
+        "Python",
+        "Machine Learning",
+        "Network Security",
+        "Linux"
+      ],
+      "preferredSkills": [
+        "TensorFlow",
+        "Wireshark",
+        "Splunk",
+        "AWS Security"
+      ],
+      "duration": "11 months",
+      "location": "Chennai",
+      "commitment": "Full-time",
+      "urgency": "High",
+      "postedDate": "2024-01-12",
+      "applicationDeadline": "2024-02-05",
+      "teamSize": "10-12 members",
+      "budget": "High",
+      "clientIndustry": "Government",
+      "projectType": "Security",
+      "workModel": "On-site",
+      "travelRequired": "Minimal",
+      "securityClearance": true,
+      "description_detailed": "Develop a state-of-the-art cybersecurity threat detection system that uses advanced machine learning algorithms to identify and neutralize cyber threats before they can cause damage. This high-security project requires expertise in both cybersecurity and AI/ML technologies.",
+      "responsibilities": [
+        "Develop ML models for anomaly detection and threat identification",
+        "Implement real-time network traffic analysis",
+        "Build automated incident response mechanisms",
+        "Create comprehensive security monitoring dashboard",
+        "Design secure APIs for threat intelligence sharing"
+      ],
+      "learningOpportunities": [
+        "Advanced cybersecurity threat analysis",
+        "Machine learning applications in security",
+        "Network security and penetration testing",
+        "Government security standards and compliance"
+      ],
+      "viewCount": 45,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 9,
+      "title": "AR/VR Training Simulator",
+      "description": "Create immersive AR/VR training simulators for industrial workers to practice complex procedures in a safe virtual environment.",
+      "company": "Cognizant Digital Experience",
+      "division": "Extended Reality",
+      "category": "AR/VR",
+      "requiredSkills": [
+        "Unity",
+        "C#",
+        "3D Modeling",
+        "VR SDKs"
+      ],
+      "preferredSkills": [
+        "Blender",
+        "AR Foundation",
+        "WebXR",
+        "Cloud Services"
+      ],
+      "duration": "8 months",
+      "location": "Mumbai",
+      "commitment": "Full-time",
+      "urgency": "Low",
+      "postedDate": "2024-01-10",
+      "applicationDeadline": "2024-02-28",
+      "teamSize": "6-8 members",
+      "budget": "Medium",
+      "clientIndustry": "Oil & Gas",
+      "projectType": "Innovation",
+      "workModel": "Hybrid",
+      "travelRequired": "Occasional",
+      "securityClearance": false,
+      "description_detailed": "Develop cutting-edge AR/VR training simulators that allow industrial workers to practice complex and dangerous procedures in a completely safe virtual environment. This innovative project combines 3D graphics, immersive technologies, and educational design to revolutionize industrial training.",
+      "responsibilities": [
+        "Develop immersive VR training scenarios using Unity",
+        "Create realistic 3D models and environments",
+        "Implement haptic feedback and gesture recognition",
+        "Build progress tracking and assessment systems",
+        "Optimize performance for various VR/AR devices"
+      ],
+      "learningOpportunities": [
+        "Advanced VR/AR development techniques",
+        "3D graphics programming and optimization",
+        "Human-computer interaction design",
+        "Industrial training and safety protocols"
+      ],
+      "viewCount": 93,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 10,
+      "title": "Serverless Microservices API Gateway",
+      "description": "Design and implement a serverless API gateway architecture for microservices with auto-scaling, monitoring, and cost optimization.",
+      "company": "Cognizant Cloud Services",
+      "division": "Serverless Computing",
+      "category": "Serverless",
+      "requiredSkills": [
+        "AWS Lambda",
+        "API Gateway",
+        "Node.js",
+        "DynamoDB"
+      ],
+      "preferredSkills": [
+        "Serverless Framework",
+        "CloudFormation",
+        "GraphQL",
+        "Monitoring"
+      ],
+      "duration": "6 months",
+      "location": "Pune",
+      "commitment": "Full-time",
+      "urgency": "Medium",
+      "postedDate": "2024-01-08",
+      "applicationDeadline": "2024-02-22",
+      "teamSize": "4-6 members",
+      "budget": "Low",
+      "clientIndustry": "Fintech",
+      "projectType": "Architecture",
+      "workModel": "Remote",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "Build a modern serverless API gateway that provides seamless integration between microservices while offering superior performance, cost efficiency, and scalability. This project focuses on cloud-native development and modern architectural patterns.",
+      "responsibilities": [
+        "Design serverless architecture for API gateway",
+        "Implement Lambda functions for business logic",
+        "Set up automated deployment pipelines",
+        "Configure monitoring and alerting systems",
+        "Optimize costs and performance for serverless workloads"
+      ],
+      "learningOpportunities": [
+        "Serverless architecture patterns and best practices",
+        "Cloud-native development and deployment",
+        "Cost optimization strategies for cloud services",
+        "Modern API design and management"
+      ],
+      "viewCount": 167,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 11,
+      "title": "Digital Twin Manufacturing Platform",
+      "description": "Develop a digital twin platform for manufacturing processes to enable predictive maintenance, process optimization, and real-time monitoring.",
+      "company": "Cognizant Industrial IoT",
+      "division": "Smart Manufacturing",
+      "category": "Digital Twin",
+      "requiredSkills": [
+        "Python",
+        "IoT",
+        "Machine Learning",
+        "3D Visualization"
+      ],
+      "preferredSkills": [
+        "TensorFlow",
+        "Azure IoT",
+        "Three.js",
+        "Time Series DB"
+      ],
+      "duration": "12 months",
+      "location": "Hyderabad",
+      "commitment": "Full-time",
+      "urgency": "Medium",
+      "postedDate": "2024-01-06",
+      "applicationDeadline": "2024-03-15",
+      "teamSize": "12-15 members",
+      "budget": "High",
+      "clientIndustry": "Automotive",
+      "projectType": "Innovation",
+      "workModel": "Hybrid",
+      "travelRequired": "Frequent",
+      "securityClearance": false,
+      "description_detailed": "Create a comprehensive digital twin platform that mirrors real-world manufacturing processes in a virtual environment. The platform will enable predictive analytics, process optimization, and real-time decision making for smart manufacturing operations.",
+      "responsibilities": [
+        "Develop digital twin models for manufacturing equipment",
+        "Implement predictive maintenance algorithms",
+        "Build real-time 3D visualization interface",
+        "Design IoT data ingestion and processing pipeline",
+        "Create analytics dashboard for manufacturing insights"
+      ],
+      "learningOpportunities": [
+        "Digital twin technology and implementation",
+        "Industrial IoT and sensor integration",
+        "Predictive analytics for manufacturing",
+        "3D visualization and simulation techniques"
+      ],
+      "viewCount": 112,
+      "createdBy": "CTS102345"
+    },
+    {
+      "id": 12,
+      "title": "Multi-Cloud Data Pipeline",
+      "description": "Build a robust multi-cloud data pipeline for ETL operations with automated data quality checks, monitoring, and disaster recovery.",
+      "company": "Cognizant Data Engineering",
+      "division": "Big Data & Analytics",
+      "category": "Data Engineering",
+      "requiredSkills": [
+        "Apache Spark",
+        "Python",
+        "SQL",
+        "ETL"
+      ],
+      "preferredSkills": [
+        "Airflow",
+        "Kafka",
+        "Snowflake",
+        "Terraform"
+      ],
+      "duration": "9 months",
+      "location": "Bangalore",
+      "commitment": "Full-time",
+      "urgency": "High",
+      "postedDate": "2024-01-04",
+      "applicationDeadline": "2024-02-12",
+      "teamSize": "8-10 members",
+      "budget": "Medium",
+      "clientIndustry": "Retail",
+      "projectType": "Data Platform",
+      "workModel": "Remote",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "Design and implement a enterprise-grade multi-cloud data pipeline that can handle petabyte-scale data processing with high reliability and performance. The pipeline will support multiple data sources, formats, and destinations while ensuring data quality and governance.",
+      "responsibilities": [
+        "Design scalable data pipeline architecture",
+        "Implement ETL processes using Apache Spark",
+        "Set up automated data quality and validation checks",
+        "Build monitoring and alerting for pipeline health",
+        "Implement disaster recovery and backup strategies"
+      ],
+      "learningOpportunities": [
+        "Large-scale data processing with Apache Spark",
+        "Multi-cloud architecture and data governance",
+        "Modern data engineering tools and practices",
+        "Data quality and reliability engineering"
+      ],
+      "viewCount": 178,
+      "createdBy": "CTS103456"
+    },
+    {
+      "id": 21,
+      "title": "Kubernetes Container Orchestration Platform",
+      "description": "Design and implement a robust Kubernetes platform with automated deployment, scaling, monitoring, and CI/CD integration for enterprise applications.",
+      "company": "Cognizant Cloud Infrastructure",
+      "division": "Cloud & Infrastructure",
+      "category": "Cloud/DevOps",
+      "requiredSkills": [
+        "Kubernetes",
+        "Docker",
+        "Jenkins",
+        "Terraform"
+      ],
+      "preferredSkills": [
+        "Helm",
+        "Prometheus",
+        "Grafana",
+        "AWS EKS"
+      ],
+      "duration": "8 months",
+      "location": "Hyderabad",
+      "commitment": "Full-time transition available",
+      "urgency": "High",
+      "postedDate": "2025-01-28",
+      "applicationDeadline": "2025-02-11",
+      "teamSize": "10-15 members",
+      "budget": "High",
+      "clientIndustry": "Technology",
+      "projectType": "Greenfield",
+      "workModel": "Hybrid",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "Build a comprehensive Kubernetes orchestration platform that enables seamless container deployment, auto-scaling, and monitoring. This platform will serve multiple client applications and requires expertise in cloud-native technologies and DevOps practices.",
+      "responsibilities": [
+        "Design and implement Kubernetes cluster architecture",
+        "Set up automated CI/CD pipelines using Jenkins and GitOps",
+        "Implement monitoring and alerting with Prometheus and Grafana",
+        "Configure auto-scaling and resource optimization",
+        "Establish security policies and network configurations"
+      ],
+      "learningOpportunities": [
+        "Advanced Kubernetes administration and troubleshooting",
+        "Cloud-native application development patterns",
+        "Infrastructure as Code with Terraform",
+        "Container security and best practices"
+      ],
+      "viewCount": 142,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 22,
+      "title": "Real-Time Analytics Data Pipeline",
+      "description": "Build a scalable real-time data pipeline using Apache Kafka, Spark Streaming, and modern data warehousing solutions for business intelligence.",
+      "company": "Cognizant Data & Analytics",
+      "division": "Data Engineering",
+      "category": "Data",
+      "requiredSkills": [
+        "Apache Kafka",
+        "Spark",
+        "Python",
+        "SQL"
+      ],
+      "preferredSkills": [
+        "Snowflake",
+        "Airflow",
+        "dbt",
+        "Tableau"
+      ],
+      "duration": "9 months",
+      "location": "Mumbai",
+      "commitment": "Full-time opportunity",
+      "urgency": "Medium",
+      "postedDate": "2025-01-26",
+      "applicationDeadline": "2025-02-16",
+      "teamSize": "8-12 members",
+      "budget": "Medium",
+      "clientIndustry": "Retail",
+      "projectType": "Greenfield",
+      "workModel": "Remote",
+      "travelRequired": "Occasional",
+      "securityClearance": false,
+      "description_detailed": "Develop a high-throughput data pipeline that processes millions of events per second from various sources. The pipeline will enable real-time analytics and machine learning model training while ensuring data quality and governance.",
+      "responsibilities": [
+        "Design and implement Kafka-based streaming architecture",
+        "Develop Spark Streaming jobs for real-time data processing",
+        "Build data quality validation and monitoring systems",
+        "Create automated data pipelines with Apache Airflow",
+        "Implement data governance and security measures"
+      ],
+      "learningOpportunities": [
+        "Stream processing and event-driven architectures",
+        "Modern data engineering tools and practices",
+        "Data quality and reliability engineering",
+        "Cloud data warehouse optimization"
+      ],
+      "viewCount": 118,
+      "createdBy": "CTS104567"
+    },
+    {
+      "id": 23,
+      "title": "Cybersecurity Threat Detection System",
+      "description": "Develop an AI-powered cybersecurity platform with real-time threat detection, incident response automation, and compliance reporting.",
+      "company": "Cognizant Cybersecurity",
+      "division": "Security Solutions",
+      "category": "Security",
+      "requiredSkills": [
+        "Python",
+        "Machine Learning",
+        "SIEM",
+        "Network Security"
+      ],
+      "preferredSkills": [
+        "TensorFlow",
+        "Elasticsearch",
+        "Splunk",
+        "MITRE ATT&CK"
+      ],
+      "duration": "12 months",
+      "location": "Pune",
+      "commitment": "Full-time opportunity",
+      "urgency": "High",
+      "postedDate": "2025-01-25",
+      "applicationDeadline": "2025-02-08",
+      "teamSize": "12-18 members",
+      "budget": "High",
+      "clientIndustry": "Financial Services",
+      "projectType": "Greenfield",
+      "workModel": "Hybrid",
+      "travelRequired": "Minimal",
+      "securityClearance": true,
+      "description_detailed": "Build a next-generation cybersecurity platform that uses machine learning to detect and respond to threats in real-time. This high-visibility project will protect critical infrastructure and requires deep expertise in security technologies.",
+      "responsibilities": [
+        "Develop ML models for anomaly detection and threat identification",
+        "Implement real-time security event correlation and analysis",
+        "Build automated incident response and remediation workflows",
+        "Create compliance reporting and audit trail systems",
+        "Design secure APIs and integration with existing security tools"
+      ],
+      "learningOpportunities": [
+        "Advanced cybersecurity and threat intelligence",
+        "Machine learning for security applications",
+        "Incident response and forensics",
+        "Compliance frameworks and regulatory requirements"
+      ],
+      "viewCount": 167,
+      "applicationsOpen": true,
+      "createdBy": "CTS104567"
+    },
+    {
+      "id": 24,
+      "title": "Cross-Platform Mobile App Development",
+      "description": "Create a modern cross-platform mobile application with offline capabilities, push notifications, and seamless user experience across iOS and Android.",
+      "company": "Cognizant Mobile Solutions",
+      "division": "Mobile Development",
+      "category": "Mobile",
+      "requiredSkills": [
+        "React Native",
+        "TypeScript",
+        "Redux",
+        "Native APIs"
+      ],
+      "preferredSkills": [
+        "Firebase",
+        "GraphQL",
+        "Jest",
+        "Detox"
+      ],
+      "duration": "7 months",
+      "location": "Chennai",
+      "commitment": "Part-time transition (50% for 3 months)",
+      "urgency": "Medium",
+      "postedDate": "2025-01-24",
+      "applicationDeadline": "2025-02-14",
+      "teamSize": "6-10 members",
+      "budget": "Medium",
+      "clientIndustry": "Healthcare",
+      "projectType": "Greenfield",
+      "workModel": "Flexible",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "Develop a feature-rich mobile application that provides excellent user experience across platforms. The app will include offline synchronization, real-time notifications, and integration with backend services using modern mobile development practices.",
+      "responsibilities": [
+        "Develop cross-platform mobile app using React Native",
+        "Implement offline data synchronization and caching",
+        "Build push notification system and real-time features",
+        "Create responsive UI components and animations",
+        "Integrate with REST APIs and implement state management"
+      ],
+      "learningOpportunities": [
+        "Modern mobile development with React Native",
+        "Offline-first application architecture",
+        "Mobile UI/UX design principles",
+        "Mobile app performance optimization"
+      ],
+      "viewCount": 95,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 25,
+      "title": "Machine Learning Model Deployment Platform",
+      "description": "Build an MLOps platform for automated model training, validation, deployment, and monitoring with A/B testing capabilities.",
+      "company": "Cognizant AI & Analytics",
+      "division": "Artificial Intelligence",
+      "category": "AI/ML",
+      "requiredSkills": [
+        "Python",
+        "MLflow",
+        "Docker",
+        "Kubernetes"
+      ],
+      "preferredSkills": [
+        "TensorFlow",
+        "PyTorch",
+        "Kubeflow",
+        "AWS SageMaker"
+      ],
+      "duration": "10 months",
+      "location": "Bangalore",
+      "commitment": "Full-time opportunity",
+      "urgency": "Medium",
+      "postedDate": "2025-01-22",
+      "applicationDeadline": "2025-02-12",
+      "teamSize": "8-14 members",
+      "budget": "High",
+      "clientIndustry": "Technology",
+      "projectType": "Greenfield",
+      "workModel": "Hybrid",
+      "travelRequired": "Occasional",
+      "securityClearance": false,
+      "description_detailed": "Create a comprehensive MLOps platform that streamlines the entire machine learning lifecycle from development to production. This platform will enable data scientists to deploy models efficiently while ensuring reliability and performance.",
+      "responsibilities": [
+        "Design and implement automated ML pipeline architecture",
+        "Build model versioning and experiment tracking systems",
+        "Develop automated testing and validation frameworks",
+        "Implement model monitoring and performance tracking",
+        "Create self-service deployment interfaces for data scientists"
+      ],
+      "learningOpportunities": [
+        "MLOps practices and production ML systems",
+        "Containerization and orchestration for ML workloads",
+        "Model monitoring and performance optimization",
+        "A/B testing and experimentation frameworks"
+      ],
+      "viewCount": 203,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 26,
+      "title": "Blockchain Supply Chain Management",
+      "description": "Develop a blockchain-based supply chain management system with smart contracts, traceability, and transparency features for enterprise clients.",
+      "company": "Cognizant Blockchain Solutions",
+      "division": "Emerging Technologies",
+      "category": "Blockchain",
+      "requiredSkills": [
+        "Solidity",
+        "Web3.js",
+        "Node.js",
+        "React"
+      ],
+      "preferredSkills": [
+        "Ethereum",
+        "Hyperledger",
+        "IPFS",
+        "Truffle"
+      ],
+      "duration": "8 months",
+      "location": "Hyderabad",
+      "commitment": "Shadow mode (15% time for 1 month)",
+      "urgency": "Low",
+      "postedDate": "2025-01-20",
+      "applicationDeadline": "2025-02-19",
+      "teamSize": "6-8 members",
+      "budget": "Medium",
+      "clientIndustry": "Manufacturing",
+      "projectType": "Greenfield",
+      "workModel": "Remote",
+      "travelRequired": "Minimal",
+      "securityClearance": false,
+      "description_detailed": "Build a revolutionary blockchain platform that brings transparency and traceability to complex supply chains. This project involves cutting-edge distributed ledger technology and smart contract development.",
+      "responsibilities": [
+        "Develop smart contracts for supply chain operations",
+        "Build decentralized application (DApp) interfaces",
+        "Implement IPFS for distributed file storage",
+        "Create blockchain integration APIs and services",
+        "Design consensus mechanisms and governance protocols"
+      ],
+      "learningOpportunities": [
+        "Blockchain development and smart contract programming",
+        "Distributed systems and consensus algorithms",
+        "Decentralized application architecture",
+        "Cryptocurrency and token economics"
+      ],
+      "viewCount": 76,
+      "createdBy": "CTS101234"
+    },
+    {
+      "id": 27,
+      "title": "Enterprise API Management Platform",
+      "description": "Create a comprehensive API management platform with rate limiting, authentication, monitoring, and developer portal for enterprise API governance.",
+      "company": "Cognizant Digital Engineering",
+      "division": "API Solutions",
+      "category": "Backend",
+      "requiredSkills": [
+        "Java",
+        "Spring Boot",
+        "Redis",
+        "PostgreSQL"
+      ],
+      "preferredSkills": [
+        "Kong",
+        "OAuth2",
+        "OpenAPI",
+        "Grafana"
+      ],
+      "duration": "6 months",
+      "location": "Bangalore",
+      "commitment": "Contract-based (3-6 months)",
+      "urgency": "Medium",
+      "postedDate": "2025-01-18",
+      "applicationDeadline": "2025-02-08",
+      "teamSize": "8-10 members",
+      "budget": "Medium",
+      "clientIndustry": "Financial Services",
+      "projectType": "Enhancement",
+      "workModel": "Hybrid",
+      "travelRequired": "Occasional",
+      "securityClearance": true,
+      "description_detailed": "Develop a robust API management platform that enables secure, scalable, and well-governed API ecosystems for enterprise clients. This platform will handle millions of API calls daily with high availability requirements.",
+      "responsibilities": [
+        "Design and implement API gateway architecture",
+        "Build authentication and authorization systems",
+        "Develop rate limiting and throttling mechanisms",
+        "Create developer portal and API documentation system",
+        "Implement comprehensive monitoring and analytics"
+      ],
+      "learningOpportunities": [
+        "Enterprise API design and governance",
+        "High-performance system architecture",
+        "Security patterns for API management",
+        "Developer experience and portal design"
+      ],
+      "viewCount": 134,
+      "createdBy": "CTS101234"
+    }
+  ]
+}

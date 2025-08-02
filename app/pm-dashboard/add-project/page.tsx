@@ -3,10 +3,24 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+interface FormData {
+  title: string
+  company: string
+  department: string
+  description: string
+  requiredSkills: string[]
+  preferredSkills: string[]
+  duration: string
+  location: string
+  commitment: string
+  urgency: string
+  category: string
+}
+
 export default function AddProject() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: '',
     company: 'Cognizant Technology Solutions',
     department: '',
@@ -62,7 +76,7 @@ export default function AddProject() {
     'Project-based assignment'
   ]
 
-  const handleAddSkill = (type) => {
+  const handleAddSkill = (type: 'required' | 'preferred') => {
     const input = type === 'required' ? skillInput : preferredSkillInput
     const setInput = type === 'required' ? setSkillInput : setPreferredSkillInput
     const skillsKey = type === 'required' ? 'requiredSkills' : 'preferredSkills'
@@ -76,7 +90,7 @@ export default function AddProject() {
     }
   }
 
-  const handleRemoveSkill = (type, skillToRemove) => {
+  const handleRemoveSkill = (type: 'required' | 'preferred', skillToRemove: string) => {
     const skillsKey = type === 'required' ? 'requiredSkills' : 'preferredSkills'
     setFormData(prev => ({
       ...prev,
@@ -84,7 +98,7 @@ export default function AddProject() {
     }))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 

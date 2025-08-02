@@ -1,5 +1,48 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
 export default function Analytics() {
-  // Mock data for demo purposes
+  const [hasProfile, setHasProfile] = useState<boolean | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
+
+  useEffect(() => {
+    checkUserProfile()
+  }, [])
+
+  const checkUserProfile = async () => {
+    try {
+      // Get user ID from cookies
+      const cookies = document.cookie.split(';')
+      const userIdCookie = cookies.find(cookie => cookie.trim().startsWith('user-id='))
+      const userId = userIdCookie ? userIdCookie.split('=')[1] : null
+
+      if (!userId) {
+        router.push('/auth/login')
+        return
+      }
+
+      const response = await fetch('/api/profile', {
+        headers: { 'user-id': userId }
+      })
+      const data = await response.json()
+      
+      if (data.exists && data.profile.skills && data.profile.skills.length > 0) {
+        setHasProfile(true)
+      } else {
+        setHasProfile(false)
+      }
+    } catch (error) {
+      console.error('Failed to check profile:', error)
+      setHasProfile(false)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Mock data for demo purposes (only shown if profile exists)
   const analyticsData = {
     profileViews: {
       total: 47,
@@ -24,6 +67,65 @@ export default function Analytics() {
       { date: '2024-01-18', type: 'teams', pm: 'Lisa Wang', project: 'Data Analytics' },
       { date: '2024-01-15', type: 'email', pm: 'Tom Brown', project: 'Frontend Redesign' }
     ]
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading analytics...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (hasProfile === false) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+        <main className="container mx-auto px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm text-center">
+              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                No Analytics Data Available
+              </h1>
+              
+              <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                Analytics are only available after you complete your profile. Create your profile first to start tracking your visibility and engagement with Project Managers.
+              </p>
+              
+              <div className="space-y-4">
+                <button
+                  onClick={() => router.push('/profile/create')}
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  Create Your Profile
+                </button>
+                
+                <div className="text-sm text-gray-500">
+                  <p>Once you complete your profile, you&apos;ll be able to see:</p>
+                  <ul className="inline-flex flex-wrap gap-x-6 gap-y-1 mt-2">
+                    <li>• Profile views</li>
+                    <li>• PM contacts</li>
+                    <li>• Engagement trends</li>
+                    <li>• Activity history</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
   }
 
   return (

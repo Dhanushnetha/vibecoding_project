@@ -2,7 +2,43 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'profiles.json')
+const DATA_FILE = path.join(process.cwd(), 'data', 'associates.json')
+
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  role: string
+  isManager: boolean
+  currentProject?: string
+  skills: string[]
+  certifications: Array<{
+    name: string
+    issuer: string
+    issuedDate: string
+    link?: string
+  }>
+  projects: Array<{
+    title: string
+    description: string
+    link?: string
+    technologies?: string[]
+    role?: string
+    duration?: string
+  }>
+  desiredTech: string[]
+  preferredLocation: string
+  workMode: string
+  availability: string
+  openToOpportunities: boolean
+  createdAt: string
+  updatedAt: string
+  [key: string]: unknown
+}
+
+interface ProfilesData {
+  associates: Associate[]
+}
 
 function ensureDataDirectory() {
   const dataDir = path.dirname(DATA_FILE)
@@ -11,24 +47,24 @@ function ensureDataDirectory() {
   }
 }
 
-function readProfilesData(): any {
+function readProfilesData(): ProfilesData {
   try {
     ensureDataDirectory()
     if (!fs.existsSync(DATA_FILE)) {
       // Create initial empty structure
-      const initialData = { associates: [], projectManagers: [], userProfiles: {} }
+      const initialData = { associates: [] }
       fs.writeFileSync(DATA_FILE, JSON.stringify(initialData, null, 2))
       return initialData
     }
     const data = fs.readFileSync(DATA_FILE, 'utf8')
-    return JSON.parse(data)
+    return JSON.parse(data) as ProfilesData
   } catch (error) {
     console.error('Error reading profiles:', error)
-    return { associates: [], projectManagers: [], userProfiles: {} }
+    return { associates: [] }
   }
 }
 
-function writeProfilesData(data: any) {
+function writeProfilesData(data: ProfilesData): void {
   try {
     ensureDataDirectory()
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2))
@@ -62,23 +98,13 @@ export async function GET(request: NextRequest) {
     const userId = getUserIdFromRequest(request)
     const profilesData = readProfilesData()
     
-    // First check if user exists in associates or PMs (these are the predefined users)
-    const associate = profilesData.associates?.find((a: any) => a.userId === userId)
+    // Check if user exists in associates
+    const associate = profilesData.associates?.find((a: Associate) => a.userId === userId)
     if (associate) {
       return NextResponse.json({ exists: true, profile: associate })
     }
     
-    const pm = profilesData.projectManagers?.find((pm: any) => pm.userId === userId)
-    if (pm) {
-      return NextResponse.json({ exists: true, profile: pm })
-    }
-    
-    // If not found in predefined users, check user profiles (for custom created profiles)
-    const userProfile = profilesData.userProfiles?.[userId]
-    if (userProfile) {
-      return NextResponse.json({ exists: true, profile: userProfile })
-    }
-    
+    // User not found
     return NextResponse.json({ exists: false, profile: null })
   } catch (error) {
     console.error('GET profile error:', error)
@@ -91,22 +117,28 @@ export async function POST(request: NextRequest) {
     const userId = getUserIdFromRequest(request)
     const profileData = await request.json()
     
-    const profile = {
-      ...profileData,
+    const profilesData = readProfilesData()
+    
+    // Check if user already exists in associates
+    const existingIndex = profilesData.associates.findIndex((a: Associate) => a.userId === userId)
+    
+    const profile: Associate = {
       userId,
-      createdAt: new Date().toISOString(),
+      associateId: `A${userId.substring(3)}`, // Convert CTS001234 to A001234
+      role: 'associate',
+      isManager: false,
+      ...profileData,
+      createdAt: existingIndex === -1 ? new Date().toISOString() : profilesData.associates[existingIndex].createdAt,
       updatedAt: new Date().toISOString()
     }
     
-    const profilesData = readProfilesData()
-    
-    // Initialize userProfiles if it doesn't exist
-    if (!profilesData.userProfiles) {
-      profilesData.userProfiles = {}
+    if (existingIndex === -1) {
+      // Add new associate
+      profilesData.associates.push(profile)
+    } else {
+      // Update existing associate
+      profilesData.associates[existingIndex] = { ...profilesData.associates[existingIndex], ...profile }
     }
-    
-    // Store in userProfiles section for custom profiles
-    profilesData.userProfiles[userId] = profile
     
     writeProfilesData(profilesData)
     return NextResponse.json({ success: true, profile })
@@ -122,46 +154,15 @@ export async function PUT(request: NextRequest) {
     const profileData = await request.json()
     const profilesData = readProfilesData()
     
-    // Try to find existing profile in associates
-    const associateIndex = profilesData.associates?.findIndex((a: any) => a.userId === userId)
+    // Find existing profile in associates
+    const associateIndex = profilesData.associates?.findIndex((a: Associate) => a.userId === userId)
     if (associateIndex !== -1) {
-      const updatedProfile = {
+      const updatedProfile: Associate = {
         ...profilesData.associates[associateIndex],
         ...profileData,
         updatedAt: new Date().toISOString()
       }
       profilesData.associates[associateIndex] = updatedProfile
-      writeProfilesData(profilesData)
-      return NextResponse.json({ success: true, profile: updatedProfile })
-    }
-    
-    // Try to find existing profile in PMs
-    const pmIndex = profilesData.projectManagers?.findIndex((pm: any) => pm.userId === userId)
-    if (pmIndex !== -1) {
-      const updatedProfile = {
-        ...profilesData.projectManagers[pmIndex],
-        ...profileData,
-        updatedAt: new Date().toISOString()
-      }
-      profilesData.projectManagers[pmIndex] = updatedProfile
-      writeProfilesData(profilesData)
-      return NextResponse.json({ success: true, profile: updatedProfile })
-    }
-    
-    // Try to find existing profile in userProfiles
-    const existingProfile = profilesData.userProfiles?.[userId]
-    if (existingProfile) {
-      const updatedProfile = {
-        ...existingProfile,
-        ...profileData,
-        updatedAt: new Date().toISOString()
-      }
-      
-      if (!profilesData.userProfiles) {
-        profilesData.userProfiles = {}
-      }
-      profilesData.userProfiles[userId] = updatedProfile
-      
       writeProfilesData(profilesData)
       return NextResponse.json({ success: true, profile: updatedProfile })
     }

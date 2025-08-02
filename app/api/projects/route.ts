@@ -4,6 +4,46 @@ import path from 'path'
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'projects.json')
 
+interface Project {
+  id: number
+  title: string
+  company?: string
+  division?: string
+  department?: string
+  description: string
+  requiredSkills: string[]
+  preferredSkills: string[]
+  duration: string
+  location: string
+  commitment: string
+  urgency: string
+  category: string
+  postedDate: string
+  applicationDeadline: string
+  teamSize?: string
+  budget?: string
+  clientIndustry?: string
+  projectType?: string
+  workModel?: string
+  travelRequired?: string
+  securityClearance?: boolean
+  description_detailed?: string
+  responsibilities?: string[]
+  learningOpportunities?: string[]
+  viewCount: number
+  createdBy: string
+  applicationStatus?: string
+  applicationCount?: number
+  applicationsOpen?: boolean
+  [key: string]: unknown
+}
+
+interface ProjectsData {
+  projects: Project[]
+  total?: number
+  totalViews?: number
+}
+
 function ensureDataDirectory() {
   const dataDir = path.dirname(DATA_FILE)
   if (!fs.existsSync(dataDir)) {
@@ -11,12 +51,12 @@ function ensureDataDirectory() {
   }
 }
 
-function readProjectsData(): any {
+function readProjectsData(): ProjectsData {
   try {
     ensureDataDirectory()
     if (fs.existsSync(DATA_FILE)) {
       const data = fs.readFileSync(DATA_FILE, 'utf8')
-      return JSON.parse(data)
+      return JSON.parse(data) as ProjectsData
     }
     return { projects: [] }
   } catch (error) {
@@ -25,7 +65,7 @@ function readProjectsData(): any {
   }
 }
 
-function writeProjectsData(data: any) {
+function writeProjectsData(data: ProjectsData): void {
   try {
     ensureDataDirectory()
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2))
@@ -35,10 +75,12 @@ function writeProjectsData(data: any) {
   }
 }
 
-function getUserNameFromRequest(request: NextRequest): string {
-  // Try to get user name from cookie
+// Removed unused function getUserNameFromRequest
+
+function getUserIdFromRequest(request: NextRequest): string {
+  // Try to get user id from cookie
   const cookies = request.headers.get('cookie') || ''
-  const userNameMatch = cookies.match(/user-name=([^;]+)/)
+  const userNameMatch = cookies.match(/user-id=([^;]+)/)
   
   if (userNameMatch) {
     return decodeURIComponent(userNameMatch[1])
@@ -56,13 +98,13 @@ function getUserNameFromRequest(request: NextRequest): string {
 export async function PUT(request: NextRequest) {
   try {
     const { projectId, ...formData } = await request.json()
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     // Read existing projects
     const projectsData = readProjectsData()
     
     // Find the project to update
-    const projectIndex = projectsData.projects.findIndex((p: any) => p.id === projectId)
+    const projectIndex = projectsData.projects.findIndex((p: Project) => p.id === projectId)
     
     if (projectIndex === -1) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 })
@@ -71,7 +113,7 @@ export async function PUT(request: NextRequest) {
     const existingProject = projectsData.projects[projectIndex]
     
     // Verify ownership
-    if (existingProject.postedBy !== userName) {
+    if (existingProject.createdBy !== userId) {
       return NextResponse.json({ error: 'Unauthorized: You can only edit your own projects' }, { status: 403 })
     }
     
@@ -100,12 +142,13 @@ export async function PUT(request: NextRequest) {
       responsibilities: formData.responsibilities || existingProject.responsibilities,
       learningOpportunities: formData.learningOpportunities || existingProject.learningOpportunities,
       applicationDeadline: formData.urgency !== existingProject.urgency ? getApplicationDeadline(formData.urgency) : existingProject.applicationDeadline,
-      // Preserve creation data and stats
-      postedBy: existingProject.postedBy,
+      // Preserve creation data, stats, and application status
+      createdBy: existingProject.createdBy,
       postedDate: existingProject.postedDate,
       id: existingProject.id,
       applicationCount: existingProject.applicationCount,
-      viewCount: existingProject.viewCount
+      viewCount: existingProject.viewCount,
+      applicationsOpen: existingProject.applicationsOpen !== undefined ? existingProject.applicationsOpen : true
     }
     
     // Replace the project in the array
@@ -129,36 +172,44 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url)
     const projectId = url.searchParams.get('id')
+    const browse = url.searchParams.get('browse') // New parameter for browsing all projects
     
     const projectsData = readProjectsData()
-    const userName = getUserNameFromRequest(request)
-    
+    const userId = getUserIdFromRequest(request)    
     // If requesting a specific project by ID
     if (projectId) {
-      const project = projectsData.projects.find((p: any) => p.id === parseInt(projectId))
+      const project = projectsData.projects.find((p: Project) => p.id === parseInt(projectId))
       
       if (!project) {
         return NextResponse.json({ error: 'Project not found' }, { status: 404 })
       }
       
-      // Verify ownership for edit access
-      if (project.postedBy !== userName) {
+      // For browsing mode, don't check ownership - allow viewing any project
+      if (!browse && project.createdBy !== userId) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
       }
       
       return NextResponse.json({ project })
     }
     
-    // Filter projects by the requesting PM
-    const userProjects = projectsData.projects.filter((project: any) => 
-      project.postedBy === userName
+    // If browse mode, return all projects
+    if (browse) {
+      return NextResponse.json({ 
+        projects: projectsData.projects,
+        total: projectsData.projects.length
+      })
+    }
+    
+    // Default: Filter projects by the requesting PM (for PM dashboard)
+    const userProjects = projectsData.projects.filter((project: Project) => 
+      project.createdBy === userId
     )
     
     return NextResponse.json({ 
       projects: userProjects,
       total: userProjects.length,
-      totalApplications: userProjects.reduce((sum: number, project: any) => sum + (project.applicationCount || 0), 0),
-      totalViews: userProjects.reduce((sum: number, project: any) => sum + (project.viewCount || 0), 0)
+      totalApplications: userProjects.reduce((sum: number, project: Project) => sum + (project.applicationCount || 0), 0),
+      totalViews: userProjects.reduce((sum: number, project: Project) => sum + (project.viewCount || 0), 0)
     })
   } catch (error) {
     console.error('Error in GET /api/projects:', error)
@@ -169,14 +220,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.json()
-    const userName = getUserNameFromRequest(request)
+    const userId = getUserIdFromRequest(request)
     
     // Read existing projects
     const projectsData = readProjectsData()
     
     // Generate new project ID
     const maxId = projectsData.projects.length > 0 
-      ? Math.max(...projectsData.projects.map((p: any) => p.id || 0))
+      ? Math.max(...projectsData.projects.map((p: Project) => p.id || 0))
       : 0
     const newId = maxId + 1
     
@@ -194,7 +245,7 @@ export async function POST(request: NextRequest) {
       location: formData.location,
       commitment: formData.commitment,
       urgency: formData.urgency,
-      postedBy: userName,
+      createdBy: userId,
       postedDate: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
       applicationDeadline: getApplicationDeadline(formData.urgency),
       teamSize: '6-12 members', // Default team size
@@ -217,6 +268,7 @@ export async function POST(request: NextRequest) {
         'Technical leadership opportunities',
         'Industry best practices and methodologies'
       ],
+      applicationsOpen: true, // Applications are open by default
       applicationCount: 0,
       viewCount: 0
     }
@@ -235,6 +287,100 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error in POST /api/projects:', error)
     return NextResponse.json({ error: 'Failed to create project' }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const url = new URL(request.url)
+    const projectId = url.searchParams.get('id')
+    const userId = getUserIdFromRequest(request)
+    
+    if (!projectId) {
+      return NextResponse.json({ error: 'Project ID is required' }, { status: 400 })
+    }
+    
+    // Read existing projects
+    const projectsData = readProjectsData()
+    
+    // Find the project to delete
+    const projectIndex = projectsData.projects.findIndex((p: Project) => p.id === parseInt(projectId))
+    
+    if (projectIndex === -1) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+    }
+    
+    const projectToDelete = projectsData.projects[projectIndex]
+    
+    // Verify ownership - only the PM who created the project can delete it
+    if (projectToDelete.createdBy !== userId) {
+      return NextResponse.json({ error: 'Unauthorized: You can only delete your own projects' }, { status: 403 })
+    }
+    
+    // Remove the project from the array
+    projectsData.projects.splice(projectIndex, 1)
+    
+    // Save updated data
+    writeProjectsData(projectsData)
+    
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Project deleted successfully',
+      deletedProject: {
+        id: projectToDelete.id,
+        title: projectToDelete.title
+      }
+    })
+  } catch (error) {
+    console.error('Error in DELETE /api/projects:', error)
+    return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 })
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const { projectId, action } = await request.json()
+    const userId = getUserIdFromRequest(request)
+    
+    if (!projectId || !action) {
+      return NextResponse.json({ error: 'Project ID and action are required' }, { status: 400 })
+    }
+    
+    // Read existing projects
+    const projectsData = readProjectsData()
+    
+    // Find the project to update
+    const projectIndex = projectsData.projects.findIndex((p: Project) => p.id === projectId)
+    
+    if (projectIndex === -1) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+    }
+    
+    const project = projectsData.projects[projectIndex]
+    
+    // Verify ownership
+    if (project.createdBy !== userId) {
+      return NextResponse.json({ error: 'Unauthorized: You can only modify your own projects' }, { status: 403 })
+    }
+    
+    // Handle different actions
+    if (action === 'toggle-applications') {
+      project.applicationsOpen = !project.applicationsOpen
+      
+      // Save updated data
+      writeProjectsData(projectsData)
+      
+      return NextResponse.json({ 
+        success: true, 
+        project: project,
+        message: `Applications ${project.applicationsOpen ? 'opened' : 'closed'} successfully`
+      })
+    }
+    
+    return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
+  } catch (error) {
+    console.error('Error in PATCH /api/projects:', error)
+    return NextResponse.json({ error: 'Failed to update project' }, { status: 500 })
   }
 }
 

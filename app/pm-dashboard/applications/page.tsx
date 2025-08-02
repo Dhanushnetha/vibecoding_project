@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 interface Application {
   id: string
@@ -29,17 +28,22 @@ interface Project {
   postedBy: string
 }
 
+interface Associate {
+  userId: string
+  name: string
+  email: string
+  skills: string[]
+  [key: string]: unknown
+}
+
 export default function Applications() {
   const [applications, setApplications] = useState<Application[]>([])
   const [projects, setProjects] = useState<Project[]>([])
-  const [associates, setAssociates] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'pending' | 'accepted' | 'declined'>('all')
   const [selectedProject, setSelectedProject] = useState<string>('all')
-  const [showModal, setShowModal] = useState(false)
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null)
   const [processingAction, setProcessingAction] = useState<string | null>(null)
-  const router = useRouter()
 
   useEffect(() => {
     loadApplicationsData()
@@ -53,14 +57,6 @@ export default function Applications() {
       
       if (projectsResponse.ok) {
         setProjects(projectsData.projects || [])
-      }
-
-      // Load associates data
-      const associatesResponse = await fetch('/api/associates')
-      const associatesData = await associatesResponse.json()
-      
-      if (associatesResponse.ok) {
-        setAssociates(associatesData.associates || [])
       }
 
       // Load applications from API
@@ -102,18 +98,18 @@ export default function Applications() {
       // Generate applications for first 3 associates
       const sampleAssociates = allAssociates.slice(0, 3)
       
-      sampleAssociates.forEach((associate: any, index: number) => {
+      sampleAssociates.forEach((associate: Associate, index: number) => {
         const matchScore = calculateMatchScore(project.requiredSkills, associate.skills)
         
         applications.push({
-          id: `${project.id}-${associate.id}`,
+          id: `${project.id}-${associate.userId}`,
           projectId: project.id,
           projectTitle: project.title,
-          associateId: associate.id.toString(),
+          associateId: associate.userId.toString(),
           associateName: associate.name,
           associateEmail: associate.email,
           associateSkills: associate.skills,
-          associateExperience: associate.experience,
+          associateExperience: 'N/A', // Placeholder, actual experience would need to be fetched
           appliedAt: new Date(Date.now() - (index * 24 * 60 * 60 * 1000)).toISOString(),
           status: index === 0 ? 'Pending' : index === 1 ? 'Accepted' : 'Declined',
           coverLetter: `I am excited to apply for the ${project.title} position. With my experience in ${associate.skills.slice(0, 3).join(', ')}, I believe I would be a great fit for this role.`,
@@ -159,9 +155,10 @@ export default function Applications() {
             : app
         ))
         
-        // Close modal
-        setShowModal(false)
-        setSelectedApplication(null)
+        // Update selected application if it's the same one
+        if (selectedApplication && selectedApplication.id === applicationId) {
+          setSelectedApplication(prev => prev ? { ...prev, status: newStatus } : null)
+        }
       } else {
         console.error('Failed to update application status')
       }
@@ -172,9 +169,12 @@ export default function Applications() {
     }
   }
 
-  const openApplicationModal = (application: Application) => {
-    setSelectedApplication(application)
-    setShowModal(true)
+  const toggleApplicationDetails = (application: Application) => {
+    if (selectedApplication?.id === application.id) {
+      setSelectedApplication(null) // Close if same application
+    } else {
+      setSelectedApplication(application) // Open new application
+    }
   }
 
   const filteredApplications = applications.filter(app => {
@@ -294,7 +294,7 @@ export default function Applications() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Status Filter</label>
                 <select
                   value={selectedFilter}
-                  onChange={(e) => setSelectedFilter(e.target.value as any)}
+                  onChange={(e) => setSelectedFilter(e.target.value as 'all' | 'pending' | 'accepted' | 'declined')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value="all">All Applications</option>
@@ -375,24 +375,28 @@ export default function Applications() {
                       </div>
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => openApplicationModal(application)}
-                          className="px-3 py-1 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
+                          onClick={() => toggleApplicationDetails(application)}
+                          className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                            selectedApplication?.id === application.id 
+                              ? 'bg-gradient-to-r from-pink-500 to-blue-500 text-white shadow-lg' 
+                              : 'text-blue-600 hover:text-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-blue-500 border border-blue-200 hover:border-transparent'
+                          }`}
                         >
-                          View Details
+                          {selectedApplication?.id === application.id ? 'Hide Details' : 'View Details'}
                         </button>
                         {application.status === 'Pending' && (
                           <div className="flex space-x-1">
                             <button
                               onClick={() => handleStatusUpdate(application.id, 'Accepted')}
                               disabled={processingAction === application.id}
-                              className="px-3 py-1 text-sm font-medium text-green-600 hover:text-green-800 hover:bg-green-50 rounded-md transition-colors disabled:opacity-50"
+                              className="px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-lg transition-all duration-200 disabled:opacity-50 shadow-sm"
                             >
                               {processingAction === application.id ? 'Processing...' : 'Accept'}
                             </button>
                             <button
                               onClick={() => handleStatusUpdate(application.id, 'Declined')}
                               disabled={processingAction === application.id}
-                              className="px-3 py-1 text-sm font-medium text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50"
+                              className="px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-lg transition-all duration-200 disabled:opacity-50 shadow-sm"
                             >
                               {processingAction === application.id ? 'Processing...' : 'Decline'}
                             </button>
@@ -408,80 +412,158 @@ export default function Applications() {
         </div>
       </main>
 
-      {/* Application Detail Modal */}
-      {showModal && selectedApplication && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium text-gray-900">Application Details</h3>
-                <button
-                  onClick={() => {
-                    setShowModal(false)
-                    setSelectedApplication(null)
-                  }}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+      {/* Centered Application Details Modal */}
+      {selectedApplication && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Transparent Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setSelectedApplication(null)}
+          />
+          
+          {/* Centered Modal */}
+          <div className={`relative w-full max-w-4xl max-h-[90vh] transform transition-all duration-300 ease-out ${
+            selectedApplication ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+          }`}>
+            <div className="h-full bg-white/80 backdrop-blur-md rounded-2xl border border-gray-200/50 shadow-2xl overflow-hidden">
+              {/* Header */}
+              <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-200/50 px-6 py-4 z-10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center">
+                    <div className="w-3 h-3 bg-gradient-to-r from-pink-500 to-blue-500 rounded-full mr-3"></div>
+                    Application Details
+                  </h3>
+                  <button
+                    onClick={() => setSelectedApplication(null)}
+                    className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 rounded-lg transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-gray-900">Associate Information</h4>
-                  <div className="mt-2 space-y-2">
-                    <p><span className="font-medium">Name:</span> {selectedApplication.associateName}</p>
-                    <p><span className="font-medium">Email:</span> {selectedApplication.associateEmail}</p>
-                    <p><span className="font-medium">Experience:</span> {selectedApplication.associateExperience}</p>
-                    <p><span className="font-medium">Skills:</span> {selectedApplication.associateSkills.join(', ')}</p>
+
+              {/* Content */}
+              <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(90vh-100px)]">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Associate Information */}
+                  <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/30 shadow-sm">
+                    <h4 className="font-semibold text-gray-900 mb-4 flex items-center text-lg">
+                      <div className="w-3 h-3 bg-gradient-to-r from-pink-500 to-blue-500 rounded-full mr-3"></div>
+                      Associate Information
+                    </h4>
+                    <div className="grid gap-4">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+                          <span className="text-lg font-bold text-white">
+                            {selectedApplication.associateName.split(' ').map(n => n[0]).join('')}
+                          </span>
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-gray-900 text-lg">{selectedApplication.associateName}</h5>
+                          <p className="text-gray-600">{selectedApplication.associateEmail}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid gap-3">
+                        <div>
+                          <span className="font-medium text-gray-700 text-sm">Experience:</span>
+                          <p className="text-gray-900 mt-1">{selectedApplication.associateExperience}</p>
+                        </div>
+                        
+                        <div>
+                          <span className="font-medium text-gray-700 text-sm">Skills:</span>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {selectedApplication.associateSkills.map((skill, index) => (
+                              <span key={index} className="px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full text-sm font-medium border border-blue-200/50">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Project Information */}
+                  <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/30 shadow-sm">
+                    <h4 className="font-semibold text-gray-900 mb-4 flex items-center text-lg">
+                      <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mr-3"></div>
+                      Project Information
+                    </h4>
+                    <div className="grid gap-3">
+                      <div>
+                        <span className="font-medium text-gray-700 text-sm">Project:</span>
+                        <p className="text-gray-900 mt-1 text-lg font-medium">{selectedApplication.projectTitle}</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <span className="font-medium text-gray-700 text-sm">Match Score:</span>
+                          <div className="mt-1">
+                            <span className={`text-2xl font-bold ${getMatchScoreColor(selectedApplication.matchScore)}`}>
+                              {selectedApplication.matchScore}%
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <span className="font-medium text-gray-700 text-sm">Status:</span>
+                          <div className="mt-1">
+                            <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border ${getStatusColor(selectedApplication.status)}`}>
+                              {selectedApplication.status}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <span className="font-medium text-gray-700 text-sm">Applied:</span>
+                        <p className="text-gray-900 mt-1">{new Date(selectedApplication.appliedAt).toLocaleDateString()}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                
-                <div>
-                  <h4 className="font-medium text-gray-900">Project Information</h4>
-                  <div className="mt-2 space-y-2">
-                    <p><span className="font-medium">Project:</span> {selectedApplication.projectTitle}</p>
-                    <p><span className="font-medium">Match Score:</span> 
-                      <span className={`ml-1 font-medium ${getMatchScoreColor(selectedApplication.matchScore)}`}>
-                        {selectedApplication.matchScore}%
-                      </span>
-                    </p>
-                    <p><span className="font-medium">Applied:</span> {new Date(selectedApplication.appliedAt).toLocaleDateString()}</p>
-                    <p><span className="font-medium">Status:</span> 
-                      <span className={`ml-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(selectedApplication.status)}`}>
-                        {selectedApplication.status}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                
+
+                {/* Cover Letter */}
                 {selectedApplication.coverLetter && (
-                  <div>
-                    <h4 className="font-medium text-gray-900">Cover Letter</h4>
-                    <p className="mt-2 text-gray-700 bg-gray-50 p-3 rounded-lg">
-                      {selectedApplication.coverLetter}
-                    </p>
+                  <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/30 shadow-sm">
+                    <h4 className="font-semibold text-gray-900 mb-4 flex items-center text-lg">
+                      <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mr-3"></div>
+                      Cover Letter
+                    </h4>
+                    <div className="bg-gradient-to-br from-gray-50/80 to-blue-50/60 p-4 rounded-xl border border-gray-200/40">
+                      <p className="text-gray-700 leading-relaxed">
+                        {selectedApplication.coverLetter}
+                      </p>
+                    </div>
                   </div>
                 )}
-                
+
+                {/* Action Buttons */}
                 {selectedApplication.status === 'Pending' && (
-                  <div className="flex space-x-3 pt-4 border-t">
-                    <button
-                      onClick={() => handleStatusUpdate(selectedApplication.id, 'Accepted')}
-                      disabled={processingAction === selectedApplication.id}
-                      className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
-                    >
-                      {processingAction === selectedApplication.id ? 'Processing...' : 'Accept Application'}
-                    </button>
-                    <button
-                      onClick={() => handleStatusUpdate(selectedApplication.id, 'Declined')}
-                      disabled={processingAction === selectedApplication.id}
-                      className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
-                    >
-                      {processingAction === selectedApplication.id ? 'Processing...' : 'Decline Application'}
-                    </button>
+                  <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/30 shadow-sm">
+                    <h4 className="font-semibold text-gray-900 mb-4 flex items-center text-lg">
+                      <div className="w-3 h-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mr-3"></div>
+                      Actions
+                    </h4>
+                    <div className="flex space-x-4">
+                      <button
+                        onClick={() => handleStatusUpdate(selectedApplication.id, 'Accepted')}
+                        disabled={processingAction === selectedApplication.id}
+                        className="flex-1 px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 disabled:opacity-50 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl text-center"
+                      >
+                        {processingAction === selectedApplication.id ? 'Processing...' : '✓ Accept Application'}
+                      </button>
+                      <button
+                        onClick={() => handleStatusUpdate(selectedApplication.id, 'Declined')}
+                        disabled={processingAction === selectedApplication.id}
+                        className="flex-1 px-6 py-4 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 disabled:opacity-50 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl text-center"
+                      >
+                        {processingAction === selectedApplication.id ? 'Processing...' : '✗ Decline Application'}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

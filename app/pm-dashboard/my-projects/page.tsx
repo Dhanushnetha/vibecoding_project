@@ -19,6 +19,7 @@ interface Project {
   postedBy: string;
   postedDate: string;
   applicationDeadline: string;
+  applicationsOpen?: boolean;
   teamSize: string;
   budget: string;
   clientIndustry: string;
@@ -44,6 +45,12 @@ export default function MyProjects() {
     totalApplications: 0,
     totalViews: 0
   })
+  const [deletingProjectId, setDeletingProjectId] = useState<number | null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [togglingApplications, setTogglingApplications] = useState<number | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -59,23 +66,30 @@ export default function MyProjects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('/api/projects')
-        const data = await response.json()
+        // Fetch projects and applications data
+        const projectsResponse = await fetch('/api/projects')
+        const projectsData = await projectsResponse.json()
         
-        if (response.ok) {
+        const applicationsResponse = await fetch('/api/applications')
+        const applicationsData = await applicationsResponse.json()
+        
+        if (projectsResponse.ok) {
           // Sort by posted date (most recent first)
-          const sortedProjects = data.projects.sort((a: Project, b: Project) => 
+          const sortedProjects = projectsData.projects.sort((a: Project, b: Project) => 
             new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime()
           )
           
+          // Get real application count
+          const actualApplicationCount = applicationsData.applications ? applicationsData.applications.length : 0
+          
           setProjects(sortedProjects)
           setStats({
-            totalProjects: data.total || 0,
-            totalApplications: data.totalApplications || 0,
-            totalViews: data.totalViews || 0
+            totalProjects: projectsData.total || 0,
+            totalApplications: actualApplicationCount,
+            totalViews: projectsData.totalViews || 0
           })
         } else {
-          console.error('Failed to fetch projects:', data.error)
+          console.error('Failed to fetch projects:', projectsData.error)
         }
       } catch (error) {
         console.error('Error fetching projects:', error)
@@ -131,6 +145,95 @@ export default function MyProjects() {
     return colors[category] || 'bg-gray-100 text-gray-800'
   }
 
+  const handleDeleteProject = async (project: Project) => {
+    setProjectToDelete(project)
+    setShowDeleteModal(true)
+  }
+
+  const confirmDeleteProject = async () => {
+    if (!projectToDelete) return
+    
+    setDeletingProjectId(projectToDelete.id)
+    
+    try {
+      const response = await fetch(`/api/projects?id=${projectToDelete.id}`, {
+        method: 'DELETE'
+      })
+      
+      const data = await response.json()
+      
+      if (response.ok) {
+        // Remove project from local state
+        setProjects(prevProjects => prevProjects.filter(p => p.id !== projectToDelete.id))
+        
+        // Update stats
+        setStats(prevStats => ({
+          ...prevStats,
+          totalProjects: prevStats.totalProjects - 1,
+          totalApplications: prevStats.totalApplications - (projectToDelete.applicationCount || 0),
+          totalViews: prevStats.totalViews - (projectToDelete.viewCount || 0)
+        }))
+        
+        setSuccessMessage(`Project "${projectToDelete.title}" deleted successfully!`)
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 5000)
+      } else {
+        console.error('Failed to delete project:', data.error)
+        alert(`Failed to delete project: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Error deleting project:', error)
+      alert('An error occurred while deleting the project')
+    } finally {
+      setDeletingProjectId(null)
+      setShowDeleteModal(false)
+      setProjectToDelete(null)
+    }
+  }
+
+  const handleToggleApplications = async (project: Project) => {
+    setTogglingApplications(project.id)
+    
+    try {
+      const response = await fetch('/api/projects', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          projectId: project.id,
+          action: 'toggle-applications'
+        })
+      })
+      
+      const data = await response.json()
+      
+      if (response.ok) {
+        // Update the project in local state
+        setProjects(prevProjects => 
+          prevProjects.map(p => 
+            p.id === project.id 
+              ? { ...p, applicationsOpen: data.project.applicationsOpen }
+              : p
+          )
+        )
+        
+        const status = data.project.applicationsOpen ? 'opened' : 'closed'
+        setSuccessMessage(`Applications ${status} for "${project.title}"`)
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 3000)
+      } else {
+        console.error('Failed to toggle applications:', data.error)
+        alert(`Failed to toggle applications: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Error toggling applications:', error)
+      alert('An error occurred while toggling applications')
+    } finally {
+      setTogglingApplications(null)
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -149,7 +252,7 @@ export default function MyProjects() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">My Projects</h1>
           <p className="mt-2 text-gray-600">
-            Manage and track all the projects you've posted on InnerSwitch
+            Manage and track all the projects you&apos;ve posted on InnerSwitch
           </p>
           
           {/* Stats */}
@@ -370,23 +473,85 @@ export default function MyProjects() {
 
                     {/* Footer */}
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                      <div className="text-sm text-gray-600">
+                      <div className="flex items-center space-x-4 text-sm text-gray-600">
                         <span className="flex items-center">
                           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                           Deadline: {formatDate(project.applicationDeadline)}
                         </span>
+                        <span className={`flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          project.applicationsOpen === false 
+                            ? 'bg-red-100 text-red-700' 
+                            : 'bg-green-100 text-green-700'
+                        }`}>
+                          <div className={`w-2 h-2 rounded-full mr-1 ${
+                            project.applicationsOpen === false ? 'bg-red-500' : 'bg-green-500'
+                          }`}></div>
+                          Applications {project.applicationsOpen === false ? 'Closed' : 'Open'}
+                        </span>
                       </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        {/* Edit Button */}
                       <button
                         onClick={() => router.push(`/pm-dashboard/my-projects/edit/${project.id}`)}
-                        className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                          className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        <span>Edit Project</span>
+                          <span>Edit</span>
+                        </button>
+
+                        {/* Toggle Applications Button */}
+                        <button
+                          onClick={() => handleToggleApplications(project)}
+                          disabled={togglingApplications === project.id}
+                          className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            project.applicationsOpen === false
+                              ? 'bg-green-600 hover:bg-green-700 text-white'
+                              : 'bg-yellow-600 hover:bg-yellow-700 text-white'
+                          } disabled:opacity-50 disabled:cursor-not-allowed`}
+                        >
+                          {togglingApplications === project.id ? (
+                            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          ) : project.applicationsOpen === false ? (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                          )}
+                          <span>
+                            {project.applicationsOpen === false ? 'Open Applications' : 'Close Applications'}
+                          </span>
+                        </button>
+
+                        {/* Delete Button */}
+                        <button
+                          onClick={() => handleDeleteProject(project)}
+                          disabled={deletingProjectId === project.id}
+                          className="flex items-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {deletingProjectId === project.id ? (
+                            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          )}
+                          <span>Delete</span>
                       </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -433,6 +598,85 @@ export default function MyProjects() {
               </div>
             )}
           </>
+        )}
+
+        {/* Success Message */}
+        {showSuccessMessage && (
+          <div className="fixed top-4 right-4 bg-green-50 border border-green-200 rounded-lg p-4 shadow-lg z-50">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-green-800">{successMessage}</p>
+              </div>
+              <div className="ml-auto pl-3">
+                <div className="-mx-1.5 -my-1.5">
+                  <button
+                    onClick={() => setShowSuccessMessage(false)}
+                    className="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+              <div className="mt-3 text-center">
+                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                  <svg className="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </div>
+                <h3 className="text-lg leading-6 font-medium text-gray-900 mt-4">Delete Project</h3>
+                <div className="mt-2 px-7 py-3">
+                  <p className="text-sm text-gray-500">
+                    Are you sure you want to delete &quot;{projectToDelete?.title}&quot;? This action cannot be undone.
+                  </p>
+                </div>
+                <div className="items-center px-4 py-3">
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() => {
+                        setShowDeleteModal(false)
+                        setProjectToDelete(null)
+                      }}
+                      className="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={confirmDeleteProject}
+                      disabled={deletingProjectId !== null}
+                      className="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {deletingProjectId !== null ? (
+                        <div className="flex items-center">
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Deleting...
+                        </div>
+                      ) : (
+                        'Delete'
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>
