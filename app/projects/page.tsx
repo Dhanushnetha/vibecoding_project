@@ -86,7 +86,7 @@ export default function Projects() {
     }
   }, [searchParams])
 
-  // Load applied jobs to check for duplicates
+  // Load applied projects to check for duplicates
   useEffect(() => {
     const loadAppliedJobs = () => {
       try {
@@ -95,7 +95,7 @@ export default function Projects() {
         const userId = userIdCookie ? userIdCookie.split('=')[1] : null
 
         if (userId) {
-          const appliedJobsKey = `applied-jobs-${userId}`
+          const appliedJobsKey = `applied-projects-${userId}`
           const appliedJobsData = localStorage.getItem(appliedJobsKey)
           
           if (appliedJobsData) {
@@ -105,7 +105,7 @@ export default function Projects() {
           }
         }
       } catch (error) {
-        console.error('Error loading applied jobs:', error)
+        console.error('Error loading applied projects:', error)
       }
     }
 
@@ -209,8 +209,8 @@ export default function Projects() {
       const userId = userIdCookie ? userIdCookie.split('=')[1] : null
 
       if (userId) {
-        // Save to applied jobs list
-        const appliedJobsKey = `applied-jobs-${userId}`
+        // Save to applied projects list
+        const appliedJobsKey = `applied-projects-${userId}`
         const existingAppliedJobs = localStorage.getItem(appliedJobsKey)
         const appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
 
@@ -675,7 +675,7 @@ export default function Projects() {
                           return; // Do nothing if applications are closed
                         }
                         if (appliedJobs.has(project.id.toString())) {
-                          router.push('/applied-jobs')
+                          router.push('/applied-projects')
                         } else {
                           handleApplyToProject(project)
                         }

@@ -47,7 +47,8 @@
         "Customer experience optimization strategies",
         "Modern MLOps practices and model deployment"
       ],
-      "viewCount": 156
+      "viewCount": 156,
+      "applicationCount": 24
     },
     {
       "id": 2,
@@ -96,7 +97,8 @@
         "Cloud infrastructure automation",
         "Distributed system design and debugging"
       ],
-      "viewCount": 134
+      "viewCount": 134,
+      "applicationCount": 19
     },
     {
       "id": 3,
@@ -145,7 +147,8 @@
         "Big data technologies and streaming platforms"
       ],
       "viewCount": 201,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 32
     },
     {
       "id": 4,
@@ -194,7 +197,8 @@
         "Advanced mobile UX/UI patterns"
       ],
       "viewCount": 98,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 11
     },
     {
       "id": 5,
@@ -243,7 +247,8 @@
         "Supply chain management and logistics optimization"
       ],
       "viewCount": 87,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 9
     },
     {
       "id": 6,
@@ -292,7 +297,8 @@
         "Industrial automation and manufacturing processes"
       ],
       "viewCount": 72,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 14
     },
     {
       "id": 7,
@@ -341,7 +347,8 @@
         "Quality engineering best practices"
       ],
       "viewCount": 189,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 27
     },
     {
       "id": 8,
@@ -390,7 +397,8 @@
         "Government security standards and compliance"
       ],
       "viewCount": 45,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 6
     },
     {
       "id": 9,
@@ -439,7 +447,8 @@
         "Industrial training and safety protocols"
       ],
       "viewCount": 93,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 8
     },
     {
       "id": 10,
@@ -488,7 +497,8 @@
         "Modern API design and management"
       ],
       "viewCount": 167,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 21
     },
     {
       "id": 11,
@@ -537,7 +547,8 @@
         "3D visualization and simulation techniques"
       ],
       "viewCount": 112,
-      "createdBy": "CTS102345"
+      "createdBy": "CTS102345",
+      "applicationCount": 13
     },
     {
       "id": 12,
@@ -586,7 +597,8 @@
         "Data quality and reliability engineering"
       ],
       "viewCount": 178,
-      "createdBy": "CTS103456"
+      "createdBy": "CTS103456",
+      "applicationCount": 29
     },
     {
       "id": 21,
@@ -635,7 +647,8 @@
         "Container security and best practices"
       ],
       "viewCount": 142,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 22
     },
     {
       "id": 22,
@@ -684,7 +697,9 @@
         "Cloud data warehouse optimization"
       ],
       "viewCount": 118,
-      "createdBy": "CTS104567"
+      "createdBy": "CTS104567",
+      "applicationsOpen": false,
+      "applicationCount": 7
     },
     {
       "id": 23,
@@ -734,7 +749,8 @@
       ],
       "viewCount": 167,
       "applicationsOpen": true,
-      "createdBy": "CTS104567"
+      "createdBy": "CTS104567",
+      "applicationCount": 26
     },
     {
       "id": 24,
@@ -783,7 +799,8 @@
         "Mobile app performance optimization"
       ],
       "viewCount": 95,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 12
     },
     {
       "id": 25,
@@ -832,7 +849,8 @@
         "A/B testing and experimentation frameworks"
       ],
       "viewCount": 203,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 31
     },
     {
       "id": 26,
@@ -881,7 +899,8 @@
         "Cryptocurrency and token economics"
       ],
       "viewCount": 76,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 5
     },
     {
       "id": 27,
@@ -930,7 +949,8 @@
         "Developer experience and portal design"
       ],
       "viewCount": 134,
-      "createdBy": "CTS101234"
+      "createdBy": "CTS101234",
+      "applicationCount": 10
     }
   ]
 }

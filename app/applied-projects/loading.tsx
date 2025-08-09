@@ -9,7 +9,7 @@ export default function AppliedJobsLoading() {
 
   return (
     <LoaderComponent
-      title="Loading Applied Jobs"
+      title="Loading applied projects"
       message="Retrieving your application status and history..."
       icon={appliedJobsIcon}
     />

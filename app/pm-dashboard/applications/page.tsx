@@ -209,7 +209,7 @@ export default function Applications() {
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="container mx-auto px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto space-y-6">
+        <div className="max-w-6xl mx-auto space-y-6">
           {/* Header */}
           <div>
             <div className="flex items-center space-x-3 mb-4">

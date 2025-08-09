@@ -14,13 +14,13 @@ export default function ApplicationAlert({ isOpen, onClose, projectTitle, compan
   const router = useRouter()
   const [isManualClose, setIsManualClose] = useState(false)
 
-  // Auto close and navigate to applied jobs after 3 seconds
+  // Auto close and navigate to applied projects after 3 seconds
   useEffect(() => {
     if (isOpen && !isManualClose) {
       const timer = setTimeout(() => {
         onClose()
-        // Navigate to applied jobs page
-        router.push('/applied-jobs')
+        // Navigate to applied projects page
+        router.push('/applied-projects')
       }, 3000)
 
       return () => clearTimeout(timer)
@@ -66,7 +66,7 @@ export default function ApplicationAlert({ isOpen, onClose, projectTitle, compan
               </svg>
               <div>
                 <p className="text-xs font-medium text-blue-900">PM Notified</p>
-                <p className="text-xs text-blue-700">Redirecting to Applied Jobs...</p>
+                <p className="text-xs text-blue-700">Redirecting to applied projects...</p>
               </div>
             </div>
           </div>

@@ -64,8 +64,8 @@ export default function SavedJobs() {
       const userId = userIdCookie ? userIdCookie.split('=')[1] : null
 
       if (userId) {
-        // Save to applied jobs list
-        const appliedJobsKey = `applied-jobs-${userId}`
+        // Save to applied projects list
+        const appliedJobsKey = `applied-projects-${userId}`
         const existingAppliedJobs = localStorage.getItem(appliedJobsKey)
         const appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
 
@@ -196,7 +196,7 @@ export default function SavedJobs() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
@@ -222,7 +222,7 @@ export default function SavedJobs() {
                 onClick={() => router.push('/projects')}
                 className="text-sm text-blue-600 hover:text-blue-700 font-medium"
               >
-                Browse More Jobs →
+                Browse More Projects →
               </button>
             </div>
           </div>

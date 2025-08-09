@@ -14,7 +14,7 @@ export default function ApplicationSuccessModal({ isOpen, onClose, projectTitle,
 
   const handleOkayClick = () => {
     onClose()
-    router.push('/applied-jobs')
+    router.push('/applied-projects')
   }
 
   if (!isOpen) return null
@@ -113,7 +113,7 @@ export default function ApplicationSuccessModal({ isOpen, onClose, projectTitle,
                 </li>
                 <li className="flex items-center space-x-2">
                   <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
-                  <span>Track status in Applied Jobs</span>
+                  <span>Track status in applied projects</span>
                 </li>
               </ul>
             </div>

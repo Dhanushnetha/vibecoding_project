@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
   const pmRoutes = ['/pm-dashboard']
   const isPMRoute = pmRoutes.some(route => pathname.startsWith(route))
 
-  const associateRoutes = ['/dashboard', '/projects', '/applied-jobs', '/about', '/analytics', '/profile', '/settings', '/admin']
+  const associateRoutes = ['/dashboard', '/projects', '/applied-projects', '/about', '/analytics', '/profile', '/settings', '/admin']
   const isAssociateRoute = associateRoutes.some(route => pathname.startsWith(route))
 
   // Allow access to public routes
@@ -63,7 +63,7 @@ export function middleware(request: NextRequest) {
     }
 
     // Check if associate has incomplete profile using the completion flag
-    const profileRequiredRoutes = ['/dashboard', '/projects', '/applied-jobs', '/saved-jobs', '/analytics']
+    const profileRequiredRoutes = ['/dashboard', '/projects', '/applied-projects', '/saved-jobs', '/analytics']
     const needsProfileCompletion = profileRequiredRoutes.some(route => pathname.startsWith(route))
     
     if (needsProfileCompletion && userRole === 'associate') {

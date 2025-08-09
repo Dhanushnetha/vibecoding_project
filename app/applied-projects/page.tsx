@@ -39,8 +39,8 @@ export default function AppliedJobs() {
         return
       }
 
-      // Load applied jobs from localStorage
-      const appliedJobsKey = `applied-jobs-${userId}`
+      // Load applied projects from localStorage
+      const appliedJobsKey = `applied-projects-${userId}`
       const appliedJobsData = localStorage.getItem(appliedJobsKey)
       
       if (appliedJobsData) {
@@ -48,7 +48,7 @@ export default function AppliedJobs() {
         setAppliedJobs(parsedJobs)
       }
     } catch (error) {
-      console.error('Error loading applied jobs:', error)
+      console.error('Error loading applied projects:', error)
     } finally {
       setIsLoading(false)
     }
@@ -95,7 +95,7 @@ export default function AppliedJobs() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Applied Jobs</h1>
+                <h1 className="text-3xl font-bold text-gray-900">Applied Projects</h1>
                 <p className="text-gray-600">Track your job applications and their status</p>
               </div>
             </div>
@@ -114,13 +114,13 @@ export default function AppliedJobs() {
                   onClick={() => router.push('/projects')}
                   className="text-sm text-blue-600 hover:text-blue-700 font-medium"
                 >
-                  Browse More Jobs →
+                  Browse More Projects →
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Applied Jobs List */}
+          {/* applied projects List */}
           {appliedJobs.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">

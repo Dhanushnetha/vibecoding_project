@@ -61,8 +61,9 @@ export default function AuthLogin() {
     return false
   }
 
-  const handleAuthentication = async () => {
-    if (!email.trim()) {
+  const handleAuthentication = async (overrideEmail?: string) => {
+    const emailToUse = (overrideEmail ?? email).trim()
+    if (!emailToUse) {
       setError('Please enter your email address')
       return
     }
@@ -75,7 +76,7 @@ export default function AuthLogin() {
       //await new Promise(resolve => setTimeout(resolve, 2000))
       
       // Find user by email
-      const user = findUserByEmail(email.trim())
+      const user = findUserByEmail(emailToUse)
       
       if (!user) {
         setError('Email not found. Please check your email address.')
@@ -156,7 +157,7 @@ export default function AuthLogin() {
             )}
 
             <button
-              onClick={handleAuthentication}
+              onClick={() => handleAuthentication()}
               disabled={isLoading}
               className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -176,27 +177,37 @@ export default function AuthLogin() {
             </button>
           </div>
 
-          {/* Security Info */}
-          <div className="mt-4 p-4 bg-gray-50 rounded-xl">
-            <h3 className="text-gray-900 font-medium mb-3 flex items-center">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-              Secure Access
-            </h3>
-            <ul className="text-gray-600 text-xs space-y-1">
-              <li>• Multi-factor authentication enabled</li>
-              <li>• Role-based access control (RBAC)</li>
-              <li>• End-to-end encryption</li>
-              <li>• Session management & monitoring</li>
-            </ul>
-          </div>
-
           {/* Demo Notice */}
           <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-yellow-700 text-xs text-center">
-              <strong>Demo Mode:</strong> Enter any email from the user directory to simulate SSO login.
+              <strong>Demo Mode</strong>
             </p>
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  if (isLoading) return
+                  setEmail('david.rodriguez@cognizant.com')
+                  handleAuthentication('david.rodriguez@cognizant.com')
+                }}
+                disabled={isLoading}
+                className="w-full text-xs py-2 px-3 rounded-md border border-blue-200 text-blue-700 bg-blue-50 hover:bg-blue-100 transition"
+              >
+                Login as PM
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (isLoading) return
+                  setEmail('vibe.coder@cognizant.com')
+                  handleAuthentication('vibe.coder@cognizant.com')
+                }}
+                disabled={isLoading}
+                className="w-full text-xs py-2 px-3 rounded-md border border-purple-200 text-purple-700 bg-purple-50 hover:bg-purple-100 transition"
+              >
+                Login as Associate
+              </button>
+            </div>
           </div>
         </div>
       </div>

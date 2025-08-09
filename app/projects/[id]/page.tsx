@@ -84,8 +84,8 @@ export default function ProjectDetails() {
       const userId = userIdCookie ? userIdCookie.split('=')[1] : null
 
       if (userId) {
-        // Save to applied jobs list
-        const appliedJobsKey = `applied-jobs-${userId}`
+        // Save to applied projects list
+        const appliedJobsKey = `applied-projects-${userId}`
         const existingAppliedJobs = localStorage.getItem(appliedJobsKey)
         const appliedJobsList = existingAppliedJobs ? JSON.parse(existingAppliedJobs) : []
 
